@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":173:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:2:{s:49:"Tests\integration\BaseControllerTest::testApiHelp";d:0.022;s:48:"Tests\integration\BaseControllerTest::testStatus";d:0.002;}}}

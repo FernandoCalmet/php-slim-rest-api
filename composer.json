@@ -1,0 +1,50 @@
+{
+    "name": "fernandocalmet/slim4-api-crud-sql",
+    "description": "Aplicacion CRUD API con Slim4 y SQL",
+    "keywords": [
+        "php",
+        "slim-micro-framework",
+        "rest-api",
+        "mysql",
+        "slim4",
+        "slim",
+        "rest",
+        "api"
+    ],
+    "authors": [
+        {
+            "name": "Fernando Calmet",
+            "email": "fercalmet@gmail.com",
+            "homepage": "https://github.com/fernandocalmet"
+        }
+    ],
+    "require": {
+        "pimple/pimple": "^3.2",
+        "slim/psr7": "^0.5.0",
+        "slim/slim": "^4.4",
+        "vlucas/phpdotenv": "^2.4"
+    },
+    "require-dev": {
+        "maurobonfietti/skel-api-slim-php-crud-generator": "^0.5",
+        "phpunit/phpunit": "^8.0",
+        "symfony/console": "^3.3"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "scripts": {
+        "coverage": "phpunit --coverage-text --coverage-html coverage",
+        "crud": "php console api:generate:endpoints",
+        "down": "docker-compose down",
+        "start": "php -S 127.0.0.1:8080 -t public public/index.php",
+        "test": "phpunit",
+        "up": "docker-compose up -d --build"
+    }
+}
