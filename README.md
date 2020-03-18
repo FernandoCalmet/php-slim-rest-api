@@ -3,12 +3,7 @@
 https://github.com/fernandocalmet  
 ----------
 
-<p>Esta aplicación de muestra está destinada a proporcionar un ejemplo práctico de una aplicación modular desarrollada por mi propio criterio. Específicamente, esta aplicación de muestra demuestra lo siguiente:</p>
-
-<ul>
-	<li>Crear, Eliminar, Modificar, Listar Uno, Listar Todos</li>
-	<li>Acceso de conexión y desconexión de usuarios al sistema.</li>
-</ul>
+<p>Esta aplicación de muestra está destinada a proporcionar un ejemplo práctico de una aplicación modular desarrollada por mi propio criterio.
 
 <p>Tenga en cuenta que si bien este programa de ejemplo funciona, las características mencionadas anteriormente no están destinadas a ser tomadas y utilizadas en aplicaciones comerciales de producción. En otras palabras, este no es un proyecto semilla para ser tomado  e implementado en su entorno de producción.</p>  
 
@@ -22,7 +17,7 @@ https://github.com/fernandocalmet
 - MySQL/MariaDB.
 
 
-### Con Composer:
+### Composer:
 Puede crear un nuevo proyecto ejecutando los siguientes comandos:
 
 ```bash
