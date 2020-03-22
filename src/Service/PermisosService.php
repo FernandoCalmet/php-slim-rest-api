@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -14,39 +16,44 @@ class PermisosService extends BaseService
         $this->permisosRepository = $permisosRepository;
     }
 
-    protected function checkAndGetPermisos(int $permisosId)
+    protected function checkAndGet(int $permisosId)
     {
-        return $this->permisosRepository->checkAndGetPermisos($permisosId);
+        return $this->permisosRepository->checkAndGet($permisosId);
     }
 
-    public function getAllPermisos(): array
+    public function getAll(): array
     {
-        return $this->permisosRepository->getAllPermisos();
+        return $this->permisosRepository->getAll();
     }
 
-    public function getPermisos(int $permisosId)
+    public function getOne(int $permisosId)
     {
-        return $this->checkAndGetPermisos($permisosId);
+        return $this->checkAndGet($permisosId);
     }
 
-    public function createPermisos($input)
+    public function create($input)
     {
         $permisos = json_decode(json_encode($input), false);
 
-        return $this->permisosRepository->createPermisos($permisos);
+        return $this->permisosRepository->create($permisos);
     }
 
-    public function updatePermisos(array $input, int $permisosId)
+    public function update(array $input, int $permisosId)
     {
-        $permisos = $this->checkAndGetPermisos($permisosId);
+        $permisos = $this->checkAndGet($permisosId);
         $data = json_decode(json_encode($input), false);
 
-        return $this->permisosRepository->updatePermisos($permisos, $data);
+        return $this->permisosRepository->update($permisos, $data);
     }
 
-    public function deletePermisos(int $permisosId)
+    public function delete(int $permisosId)
     {
-        $this->checkAndGetPermisos($permisosId);
-        $this->permisosRepository->deletePermisos($permisosId);
+        $this->checkAndGet($permisosId);
+        $this->permisosRepository->delete($permisosId);
+    }
+
+    public function search(int $permisosId): array
+    {
+        return $this->permisosRepository->search($permisosId);
     }
 }

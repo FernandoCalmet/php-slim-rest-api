@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controller\Permisos;
 
@@ -7,7 +9,7 @@ class Create extends Base
     public function __invoke($request, $response)
     {
         $input = $request->getParsedBody();
-        $permisos = $this->getPermisosService()->createPermisos($input);
+        $permisos = $this->getPermisosService()->create($input);
 
         $payload = json_encode($permisos);
         $response->getBody()->write($payload);

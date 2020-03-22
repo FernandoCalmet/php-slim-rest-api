@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controller\Permisos;
 
@@ -6,7 +8,7 @@ class GetAll extends Base
 {
     public function __invoke($request, $response)
     {
-        $permisoss = $this->getPermisosService()->getAllPermisos();
+        $permisoss = $this->getPermisosService()->getAll();
 
         $payload = json_encode($permisoss);
         $response->getBody()->write($payload);

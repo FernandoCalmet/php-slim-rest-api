@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controller\Usuarios;
 
@@ -6,7 +8,7 @@ class GetAll extends Base
 {
     public function __invoke($request, $response)
     {
-        $usuarioss = $this->getUsuariosService()->getAllUsuarios();
+        $usuarioss = $this->getUsuariosService()->getAll();
 
         $payload = json_encode($usuarioss);
         $response->getBody()->write($payload);

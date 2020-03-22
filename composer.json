@@ -1,6 +1,6 @@
 {
     "name": "fernandocalmet/slim4-api-crud-sql",
-    "description": "Aplicacion CRUD API con Slim4 y SQL",   
+    "description": "Aplicacion CRUD API RESTFUL con Slim y SQL",   
     "authors": [
         {
             "name": "Fernando Calmet",
@@ -9,13 +9,18 @@
         }
     ],
     "require": {
+        "firebase/php-jwt": "^5.0",
+        "palanik/corsslim": "dev-slim3",
+        "predis/predis": "^1.1",
+        "respect/validation": "^1.1",
+        "slim/slim": "^3.12.2",
+        "vlucas/phpdotenv": "^2.4",
         "pimple/pimple": "^3.2",
-        "slim/psr7": "^0.5.0",
-        "slim/slim": "^4.4",
-        "vlucas/phpdotenv": "^2.4"
+        "slim/psr7": "^0.5.0"
     },
     "require-dev": {
-        "maurobonfietti/skel-api-slim-php-crud-generator": "^0.5",
+        "maurobonfietti/skel-api-slim-php-crud-generator": "dev-master",
+        "phpstan/phpstan": "^0.10.1",
         "phpunit/phpunit": "^8.0",
         "symfony/console": "^3.3"
     },
@@ -31,11 +36,14 @@
     },
     "minimum-stability": "dev",    
     "scripts": {
-        "coverage": "phpunit --coverage-text --coverage-html coverage",
+        "coverage": "phpunit --coverage-html=coverage --coverage-text",
+        "database": "extras/bin/restart-api.sh",
+        "restart": "extras/bin/restart-api.sh",
         "crud": "php console api:generate:endpoints",
+        "crud2": "./vendor/maurobonfietti/skel-api-slim-php-crud-generator/bin/console api:generate:endpoints",
+        "up": "docker-compose up -d --build",
         "down": "docker-compose down",
-        "start": "php -S localhost:8080 -t public public/index.php",
-        "test": "phpunit",
-        "up": "docker-compose up -d --build"
+        "start": "php -S 127.0.0.1:8080 -t public public/index.php",
+        "test": "phpunit"
     }
 }

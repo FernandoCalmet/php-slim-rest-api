@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -14,39 +16,44 @@ class RolesService extends BaseService
         $this->rolesRepository = $rolesRepository;
     }
 
-    protected function checkAndGetRoles(int $rolesId)
+    protected function checkAndGet(int $rolesId)
     {
-        return $this->rolesRepository->checkAndGetRoles($rolesId);
+        return $this->rolesRepository->checkAndGet($rolesId);
     }
 
-    public function getAllRoles(): array
+    public function getAll(): array
     {
-        return $this->rolesRepository->getAllRoles();
+        return $this->rolesRepository->getAll();
     }
 
-    public function getRoles(int $rolesId)
+    public function getOne(int $rolesId)
     {
-        return $this->checkAndGetRoles($rolesId);
+        return $this->checkAndGet($rolesId);
     }
 
-    public function createRoles($input)
+    public function create($input)
     {
         $roles = json_decode(json_encode($input), false);
 
-        return $this->rolesRepository->createRoles($roles);
+        return $this->rolesRepository->create($roles);
     }
 
-    public function updateRoles(array $input, int $rolesId)
+    public function update(array $input, int $rolesId)
     {
-        $roles = $this->checkAndGetRoles($rolesId);
+        $roles = $this->checkAndGet($rolesId);
         $data = json_decode(json_encode($input), false);
 
-        return $this->rolesRepository->updateRoles($roles, $data);
+        return $this->rolesRepository->update($roles, $data);
     }
 
-    public function deleteRoles(int $rolesId)
+    public function delete(int $rolesId)
     {
-        $this->checkAndGetRoles($rolesId);
-        $this->rolesRepository->deleteRoles($rolesId);
+        $this->checkAndGet($rolesId);
+        $this->rolesRepository->delete($rolesId);
+    }
+
+    public function search(string $rolesName): array
+    {
+        return $this->rolesRepository->search($rolesName);
     }
 }

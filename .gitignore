@@ -1,3 +1,11 @@
 /vendor/
-.env
-.phpunit.result.cache
+/logs/*
+!/logs/README.md
+/coverage/
+*.php_cs.cache
+/nbproject/
+/build/
+/cache/
+/.env
+/.scannerwork/
+/.phpunit.result.cache

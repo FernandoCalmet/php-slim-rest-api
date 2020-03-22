@@ -1,0 +1,25 @@
+build:
+    nodes:
+        my-node:
+            services:
+                redis: 4
+    environment:
+        variables:
+            DB_HOSTNAME: '127.0.0.1'
+            DB_DATABASE: 'example'
+            DB_USERNAME: 'root'
+            DB_PASSWORD: 'root'
+            REDIS_URL: 'localhost'
+        php:
+            version: 7.3
+    project_setup:
+        before:
+            - mysql -e "CREATE DATABASE example"
+            - mysql example < database/database.sql
+        override:
+            - php-scrutinizer-run
+            -
+                command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
+                coverage:
+                    file: 'clover.xml'
+                    format: 'clover'

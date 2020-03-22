@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Repository;
 
@@ -11,7 +13,7 @@ class OperacionesRepository extends BaseRepository
         $this->database = $database;
     }
 
-    public function checkAndGetOperaciones(int $operacionesId)
+    public function checkAndGet(int $operacionesId)
     {
         $query = 'SELECT * FROM `operaciones` WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
@@ -25,7 +27,7 @@ class OperacionesRepository extends BaseRepository
         return $operaciones;
     }
 
-    public function getAllOperaciones(): array
+    public function getAll(): array
     {
         $query = 'SELECT * FROM `operaciones` ORDER BY `id`';
         $statement = $this->getDb()->prepare($query);
@@ -34,38 +36,56 @@ class OperacionesRepository extends BaseRepository
         return $statement->fetchAll();
     }
 
-    public function createOperaciones($operaciones)
+    public function create($operaciones)
     {
-        $query = 'INSERT INTO `operaciones` (`id`, `nombre`, `id_modulo`) VALUES (:id, :nombre, :id_modulo)';
+        $query = 'INSERT INTO `operaciones` (`id`, `id_modulo`, `nombre`) VALUES (:id, :id_modulo, :nombre)';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $operaciones->id);
-	$statement->bindParam('nombre', $operaciones->nombre);
-	$statement->bindParam('id_modulo', $operaciones->id_modulo);
+        $statement->bindParam('id_modulo', $operaciones->id_modulo);
+        $statement->bindParam('nombre', $operaciones->nombre);
+
         $statement->execute();
 
-        return $this->checkAndGetOperaciones((int) $this->getDb()->lastInsertId());
+        return $this->checkAndGet((int) $this->getDb()->lastInsertId());
     }
 
-    public function updateOperaciones($operaciones, $data)
+    public function update($operaciones, $data)
     {
+        if (isset($data->id_modulo)) { $operaciones->id_modulo = $data->id_modulo; }
         if (isset($data->nombre)) { $operaciones->nombre = $data->nombre; }
-        if (isset($data->id_modulo)) { $operaciones->id_modulo = $data->id_modulo; }
 
-        $query = 'UPDATE `operaciones` SET `nombre` = :nombre, `id_modulo` = :id_modulo WHERE `id` = :id';
+
+        $query = 'UPDATE `operaciones` SET `id_modulo` = :id_modulo, `nombre` = :nombre WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $operaciones->id);
-	$statement->bindParam('nombre', $operaciones->nombre);
-	$statement->bindParam('id_modulo', $operaciones->id_modulo);
+        $statement->bindParam('id_modulo', $operaciones->id_modulo);
+        $statement->bindParam('nombre', $operaciones->nombre);
+
         $statement->execute();
 
-        return $this->checkAndGetOperaciones((int) $operaciones->id);
+        return $this->checkAndGet((int) $operaciones->id);
     }
 
-    public function deleteOperaciones(int $operacionesId)
+    public function delete(int $operacionesId)
     {
         $query = 'DELETE FROM `operaciones` WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $operacionesId);
         $statement->execute();
+    }
+
+    public function search(string $operacionesName): array
+    {
+        $query = 'SELECT * FROM `operaciones` WHERE `nombre` LIKE :name ORDER BY `id`';
+        $name = '%' . $operacionesName . '%';        
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('name', $name);
+        $statement->execute();
+        $operaciones = $statement->fetchAll();
+        if (!$operaciones) {
+            throw new OperacionesException('Not found.', 404);
+        }
+
+        return $operaciones;
     }
 }

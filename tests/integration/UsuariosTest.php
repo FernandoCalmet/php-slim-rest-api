@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tests\integration;
 
@@ -6,18 +8,21 @@ class UsuariosTest extends TestCase
 {
     private static $id;
 
-    public function testCreateUsuarios()
+    public function testCreate()
     {
         $params = [
-                '' => '',
-                'correo' => 'aaa',
-		'clave' => 'aaa',
-		'nombre' => 'aaa',
-		'id_rol' => 1,
+            '' => '',
+            'id_rol' => 1,
+            'correo' => 'aaa',
+            'clave' => 'aaa',
+            'dni' => 1,
+            'nombres' => 'aaa',
+            'apellidos' => 'aaa',
+            'telefono' => 1,
         ];
         $app = $this->getAppInstance();
-        $request = $this->createRequest('POST', '/usuarios');
-        $request = $request->withParsedBody($params);
+        $req = $this->createRequest('POST', '/usuarios');
+        $request = $req->withParsedBody($params);
         $response = $app->handle($request);
 
         $result = (string) $response->getBody();
@@ -29,7 +34,7 @@ class UsuariosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetUsuarioss()
+    public function testGetAll()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/usuarios');
@@ -42,7 +47,7 @@ class UsuariosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetUsuarios()
+    public function testGetOne()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/usuarios/' . self::$id);
@@ -55,7 +60,7 @@ class UsuariosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetUsuariosNotFound()
+    public function testGetOneNotFound()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/usuarios/123456789');
@@ -67,11 +72,11 @@ class UsuariosTest extends TestCase
         $this->assertStringContainsString('error', $result);
     }
 
-    public function testUpdateUsuarios()
+    public function testUpdate()
     {
         $app = $this->getAppInstance();
-        $request = $this->createRequest('PUT', '/usuarios/' . self::$id);
-        $request = $request->withParsedBody(['' => '']);
+        $req = $this->createRequest('PUT', '/usuarios/' . self::$id);
+        $request = $req->withParsedBody(['' => '']);
         $response = $app->handle($request);
 
         $result = (string) $response->getBody();
@@ -81,7 +86,7 @@ class UsuariosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testDeleteUsuarios()
+    public function testDelete()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('DELETE', '/usuarios/' . self::$id);

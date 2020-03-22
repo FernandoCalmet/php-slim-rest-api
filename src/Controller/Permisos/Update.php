@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controller\Permisos;
 
@@ -7,7 +9,7 @@ class Update extends Base
     public function __invoke($request, $response, array $args)
     {
         $input = $request->getParsedBody();
-        $permisos = $this->getPermisosService()->updatePermisos($input, (int) $args['id']);
+        $permisos = $this->getPermisosService()->update($input, (int) $args['id']);
 
         $payload = json_encode($permisos);
         $response->getBody()->write($payload);

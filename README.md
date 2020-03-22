@@ -75,7 +75,7 @@ $ docker-compose down
 ### LISTA DE DEPENDENCIAS DE DESARROLLO:
 
 - [phpunit/phpunit](https://github.com/sebastianbergmann/phpunit): El marco de pruebas de unidad PHP.
-- [symfony/console](https://github.com/symfony/console): El componente Consola facilita la creación de interfaces de línea de comandos hermosas y comprobables..
+- [symfony/console](https://github.com/symfony/console): El componente Consola facilita la creación de interfaces de línea de comandos hermosas y comprobables.
 
 ## DOCUMENTACIÓN:
 
@@ -83,3 +83,75 @@ $ docker-compose down
 
 - Help: `GET /`
 - Status: `GET /status`
+
+#### USUARIOS:
+
+- Login: `POST /login`
+
+- Get All: `GET /api/v1/usuarios`
+
+- Get One: `GET /api/v1/usuarios/{id}`
+
+- Create: `POST /api/v1/usuarios`
+
+- Update: `PUT /api/v1/usuarios/{id}`
+
+- Delete: `DELETE /api/v1/usuarios/{id}`
+
+- Query: `DELETE /api/v1/usuarios/search/[{query}]`
+
+#### ROLES:
+
+- Get All: `GET /api/v1/roles`
+
+- Get One: `GET /api/v1/roles/{id}`
+
+- Create: `POST /api/v1/roles`
+
+- Update: `PUT /api/v1/roles/{id}`
+
+- Delete: `DELETE /api/v1/roles/{id}`
+
+- Query: `DELETE /api/v1/roles/search/[{query}]`
+
+#### PERMISOS:
+
+- Get All: `GET /api/v1/permisos`
+
+- Get One: `GET /api/v1/permisos/{id}`
+
+- Create: `POST /api/v1/permisos`
+
+- Update: `PUT /api/v1/permisos/{id}`
+
+- Delete: `DELETE /api/v1/permisos/{id}`
+
+- Query: `DELETE /api/v1/permisos/search/[{query}]`
+
+#### OPERACIONES:
+
+- Get All: `GET /api/v1/operaciones`
+
+- Get One: `GET /api/v1/operaciones/{id}`
+
+- Create: `POST /api/v1/operaciones`
+
+- Update: `PUT /api/v1/operaciones/{id}`
+
+- Delete: `DELETE /api/v1/operaciones/{id}`
+
+- Query: `DELETE /api/v1/operaciones/search/[{query}]`
+
+#### MODULOS:
+
+- Get All: `GET /api/v1/modulos`
+
+- Get One: `GET /api/v1/modulos/{id}`
+
+- Create: `POST /api/v1/modulos`
+
+- Update: `PUT /api/v1/modulos/{id}`
+
+- Delete: `DELETE /api/v1/modulos/{id}`
+
+- Query: `DELETE /api/v1/modulos/search/[{query}]`

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tests\integration;
 
@@ -6,16 +8,16 @@ class PermisosTest extends TestCase
 {
     private static $id;
 
-    public function testCreatePermisos()
+    public function testCreate()
     {
         $params = [
-                '' => '',
-                'id_rol' => 1,
-		'id_operacion' => 1,
+            '' => '',
+            'id_rol' => 1,
+            'id_operacion' => 1,
         ];
         $app = $this->getAppInstance();
-        $request = $this->createRequest('POST', '/permisos');
-        $request = $request->withParsedBody($params);
+        $req = $this->createRequest('POST', '/permisos');
+        $request = $req->withParsedBody($params);
         $response = $app->handle($request);
 
         $result = (string) $response->getBody();
@@ -27,7 +29,7 @@ class PermisosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetPermisoss()
+    public function testGetAll()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/permisos');
@@ -40,7 +42,7 @@ class PermisosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetPermisos()
+    public function testGetOne()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/permisos/' . self::$id);
@@ -53,7 +55,7 @@ class PermisosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetPermisosNotFound()
+    public function testGetOneNotFound()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/permisos/123456789');
@@ -65,11 +67,11 @@ class PermisosTest extends TestCase
         $this->assertStringContainsString('error', $result);
     }
 
-    public function testUpdatePermisos()
+    public function testUpdate()
     {
         $app = $this->getAppInstance();
-        $request = $this->createRequest('PUT', '/permisos/' . self::$id);
-        $request = $request->withParsedBody(['' => '']);
+        $req = $this->createRequest('PUT', '/permisos/' . self::$id);
+        $request = $req->withParsedBody(['' => '']);
         $response = $app->handle($request);
 
         $result = (string) $response->getBody();
@@ -79,7 +81,7 @@ class PermisosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testDeletePermisos()
+    public function testDelete()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('DELETE', '/permisos/' . self::$id);

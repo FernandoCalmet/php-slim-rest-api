@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Repository;
 
@@ -11,7 +13,7 @@ class RolesRepository extends BaseRepository
         $this->database = $database;
     }
 
-    public function checkAndGetRoles(int $rolesId)
+    public function checkAndGet(int $rolesId)
     {
         $query = 'SELECT * FROM `roles` WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
@@ -25,7 +27,7 @@ class RolesRepository extends BaseRepository
         return $roles;
     }
 
-    public function getAllRoles(): array
+    public function getAll(): array
     {
         $query = 'SELECT * FROM `roles` ORDER BY `id`';
         $statement = $this->getDb()->prepare($query);
@@ -34,35 +36,53 @@ class RolesRepository extends BaseRepository
         return $statement->fetchAll();
     }
 
-    public function createRoles($roles)
+    public function create($roles)
     {
         $query = 'INSERT INTO `roles` (`id`, `nombre`) VALUES (:id, :nombre)';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $roles->id);
-	$statement->bindParam('nombre', $roles->nombre);
+	    $statement->bindParam('nombre', $roles->nombre);
+
         $statement->execute();
 
-        return $this->checkAndGetRoles((int) $this->getDb()->lastInsertId());
+        return $this->checkAndGet((int) $this->getDb()->lastInsertId());
     }
 
-    public function updateRoles($roles, $data)
+    public function update($roles, $data)
     {
-        if (isset($data->nombre)) { $roles->nombre = $data->nombre; }
+        if (isset($data->nombre)) { $roles->nombre = $data->nombre; }
+
 
         $query = 'UPDATE `roles` SET `nombre` = :nombre WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $roles->id);
-	$statement->bindParam('nombre', $roles->nombre);
+	    $statement->bindParam('nombre', $roles->nombre);
+
         $statement->execute();
 
-        return $this->checkAndGetRoles((int) $roles->id);
+        return $this->checkAndGet((int) $roles->id);
     }
 
-    public function deleteRoles(int $rolesId)
+    public function delete(int $rolesId)
     {
         $query = 'DELETE FROM `roles` WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $rolesId);
         $statement->execute();
+    }
+
+    public function search(string $rolesName): array
+    {
+        $query = 'SELECT * FROM `roles` WHERE `nombre` LIKE :name ORDER BY `id`';
+        $name = '%' . $rolesName . '%';        
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('name', $name);
+        $statement->execute();
+        $roles = $statement->fetchAll();
+        if (!$roles) {
+            throw new RolesException('Not found.', 404);
+        }
+
+        return $roles;
     }
 }

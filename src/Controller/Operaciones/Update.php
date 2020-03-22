@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controller\Operaciones;
 
@@ -7,7 +9,7 @@ class Update extends Base
     public function __invoke($request, $response, array $args)
     {
         $input = $request->getParsedBody();
-        $operaciones = $this->getOperacionesService()->updateOperaciones($input, (int) $args['id']);
+        $operaciones = $this->getOperacionesService()->update($input, (int) $args['id']);
 
         $payload = json_encode($operaciones);
         $response->getBody()->write($payload);

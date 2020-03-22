@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controller\Modulos;
 
@@ -7,7 +9,7 @@ class Create extends Base
     public function __invoke($request, $response)
     {
         $input = $request->getParsedBody();
-        $modulos = $this->getModulosService()->createModulos($input);
+        $modulos = $this->getModulosService()->create($input);
 
         $payload = json_encode($modulos);
         $response->getBody()->write($payload);

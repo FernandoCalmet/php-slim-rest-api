@@ -1,0 +1,33 @@
+language: php
+
+php:
+  - '7.3'
+
+services:
+  - mysql
+  - redis-server
+
+env:
+  global:
+    - CC_TEST_REPORTER_ID=5acc45b5f48d4ca2a5baa0d22ee9a10890b29a76b3ef34a936fdd0ba8c5d7ba8
+    - DB_HOSTNAME=127.0.0.1
+    - DB_DATABASE=example
+    - DB_USERNAME=root
+    - DB_PASSWORD=root
+    - SECRET_KEY=YourSuperSecret-KeY
+    - REDIS_ENABLED=true
+    - REDIS_URL=localhost
+
+before_install:
+  - mysql -e 'CREATE DATABASE example;'
+
+before_script:
+  - mysql example < database/database.sql
+  - composer install
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter 
+  - chmod +x ./cc-test-reporter 
+  - ./cc-test-reporter before-build
+
+script:
+  - vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --whitelist src
+  - if [ $(phpenv version-name) = "7.3" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi

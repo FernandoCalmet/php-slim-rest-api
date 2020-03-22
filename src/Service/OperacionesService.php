@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -14,39 +16,44 @@ class OperacionesService extends BaseService
         $this->operacionesRepository = $operacionesRepository;
     }
 
-    protected function checkAndGetOperaciones(int $operacionesId)
+    protected function checkAndGet(int $operacionesId)
     {
-        return $this->operacionesRepository->checkAndGetOperaciones($operacionesId);
+        return $this->operacionesRepository->checkAndGet($operacionesId);
     }
 
-    public function getAllOperaciones(): array
+    public function getAll(): array
     {
-        return $this->operacionesRepository->getAllOperaciones();
+        return $this->operacionesRepository->getAll();
     }
 
-    public function getOperaciones(int $operacionesId)
+    public function getOne(int $operacionesId)
     {
-        return $this->checkAndGetOperaciones($operacionesId);
+        return $this->checkAndGet($operacionesId);
     }
 
-    public function createOperaciones($input)
+    public function create($input)
     {
         $operaciones = json_decode(json_encode($input), false);
 
-        return $this->operacionesRepository->createOperaciones($operaciones);
+        return $this->operacionesRepository->create($operaciones);
     }
 
-    public function updateOperaciones(array $input, int $operacionesId)
+    public function update(array $input, int $operacionesId)
     {
-        $operaciones = $this->checkAndGetOperaciones($operacionesId);
+        $operaciones = $this->checkAndGet($operacionesId);
         $data = json_decode(json_encode($input), false);
 
-        return $this->operacionesRepository->updateOperaciones($operaciones, $data);
+        return $this->operacionesRepository->update($operaciones, $data);
     }
 
-    public function deleteOperaciones(int $operacionesId)
+    public function delete(int $operacionesId)
     {
-        $this->checkAndGetOperaciones($operacionesId);
-        $this->operacionesRepository->deleteOperaciones($operacionesId);
+        $this->checkAndGet($operacionesId);
+        $this->operacionesRepository->delete($operacionesId);
+    }
+
+    public function search(string $operacionesName): array
+    {
+        return $this->operacionesRepository->search($operacionesName);
     }
 }

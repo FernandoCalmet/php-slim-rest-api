@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tests\integration;
 
@@ -6,15 +8,15 @@ class ModulosTest extends TestCase
 {
     private static $id;
 
-    public function testCreateModulos()
+    public function testCreate()
     {
         $params = [
-                '' => '',
-                'nombre' => 'aaa',
+            '' => '',
+            'nombre' => 'aaa',
         ];
         $app = $this->getAppInstance();
-        $request = $this->createRequest('POST', '/modulos');
-        $request = $request->withParsedBody($params);
+        $req = $this->createRequest('POST', '/modulos');
+        $request = $req->withParsedBody($params);
         $response = $app->handle($request);
 
         $result = (string) $response->getBody();
@@ -26,7 +28,7 @@ class ModulosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetModuloss()
+    public function testGetAll()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/modulos');
@@ -39,7 +41,7 @@ class ModulosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetModulos()
+    public function testGetOne()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/modulos/' . self::$id);
@@ -52,7 +54,7 @@ class ModulosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetModulosNotFound()
+    public function testGetOneNotFound()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/modulos/123456789');
@@ -64,11 +66,11 @@ class ModulosTest extends TestCase
         $this->assertStringContainsString('error', $result);
     }
 
-    public function testUpdateModulos()
+    public function testUpdate()
     {
         $app = $this->getAppInstance();
-        $request = $this->createRequest('PUT', '/modulos/' . self::$id);
-        $request = $request->withParsedBody(['' => '']);
+        $req = $this->createRequest('PUT', '/modulos/' . self::$id);
+        $request = $req->withParsedBody(['' => '']);
         $response = $app->handle($request);
 
         $result = (string) $response->getBody();
@@ -78,7 +80,7 @@ class ModulosTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testDeleteModulos()
+    public function testDelete()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('DELETE', '/modulos/' . self::$id);

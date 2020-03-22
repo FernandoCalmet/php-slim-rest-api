@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controller\Usuarios;
 
@@ -7,7 +9,7 @@ class Update extends Base
     public function __invoke($request, $response, array $args)
     {
         $input = $request->getParsedBody();
-        $usuarios = $this->getUsuariosService()->updateUsuarios($input, (int) $args['id']);
+        $usuarios = $this->getUsuariosService()->update($input, (int) $args['id']);
 
         $payload = json_encode($usuarios);
         $response->getBody()->write($payload);

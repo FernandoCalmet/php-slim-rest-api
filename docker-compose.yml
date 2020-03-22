@@ -3,7 +3,7 @@ version: '3'
 services:
   nginx:
     image: nginx:latest
-    container_name: slim4-api-skeleton-nginx-container
+    container_name: slim4-api-crud-sql-api-nginx-container
     ports:
       - "8081:80"
     volumes:
@@ -14,7 +14,7 @@ services:
 
   php-fpm:
     build: ./docker/php7
-    container_name: slim4-api-skeleton-php-container
+    container_name: slim4-api-crud-sql-api-container
     links:
       - mysql
     environment:
@@ -23,9 +23,9 @@ services:
       - PHP_FPM_SERVER_PORT=9000
       - PHP_FPM_TIMEOUT=${HTTPD_TIMEOUT_TO_PHP_FPM:-180}
       - DB_HOSTNAME=mysql
-      - DB_DATABASE=slim4_api_skeleton
+      - DB_DATABASE=example
       - DB_USERNAME=root
-      - DB_PASSWORD=
+      - DB_PASSWORD=root
 
     volumes:
      - ./:/var/www/html
@@ -38,9 +38,9 @@ services:
       - 33060:3306
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: slim4_api_skeleton
+      MYSQL_DATABASE: example
       MYSQL_USER: root
-      MYSQL_PASSWORD: 
+      MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: 
     networks:
       - testingnetwork

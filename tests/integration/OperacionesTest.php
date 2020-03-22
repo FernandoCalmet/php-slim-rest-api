@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tests\integration;
 
@@ -6,16 +8,16 @@ class OperacionesTest extends TestCase
 {
     private static $id;
 
-    public function testCreateOperaciones()
+    public function testCreate()
     {
         $params = [
-                '' => '',
-                'nombre' => 'aaa',
-		'id_modulo' => 1,
+            '' => '',
+            'id_modulo' => 1,
+            'nombre' => 'aaa',
         ];
         $app = $this->getAppInstance();
-        $request = $this->createRequest('POST', '/operaciones');
-        $request = $request->withParsedBody($params);
+        $req = $this->createRequest('POST', '/operaciones');
+        $request = $req->withParsedBody($params);
         $response = $app->handle($request);
 
         $result = (string) $response->getBody();
@@ -27,7 +29,7 @@ class OperacionesTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetOperacioness()
+    public function testGetAll()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/operaciones');
@@ -40,7 +42,7 @@ class OperacionesTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetOperaciones()
+    public function testGetOne()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/operaciones/' . self::$id);
@@ -53,7 +55,7 @@ class OperacionesTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetOperacionesNotFound()
+    public function testGetOneNotFound()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/operaciones/123456789');
@@ -65,11 +67,11 @@ class OperacionesTest extends TestCase
         $this->assertStringContainsString('error', $result);
     }
 
-    public function testUpdateOperaciones()
+    public function testUpdate()
     {
         $app = $this->getAppInstance();
-        $request = $this->createRequest('PUT', '/operaciones/' . self::$id);
-        $request = $request->withParsedBody(['' => '']);
+        $req = $this->createRequest('PUT', '/operaciones/' . self::$id);
+        $request = $req->withParsedBody(['' => '']);
         $response = $app->handle($request);
 
         $result = (string) $response->getBody();
@@ -79,7 +81,7 @@ class OperacionesTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testDeleteOperaciones()
+    public function testDelete()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('DELETE', '/operaciones/' . self::$id);

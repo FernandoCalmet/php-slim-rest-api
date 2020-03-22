@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controller\Usuarios;
 
@@ -7,7 +9,7 @@ class Create extends Base
     public function __invoke($request, $response)
     {
         $input = $request->getParsedBody();
-        $usuarios = $this->getUsuariosService()->createUsuarios($input);
+        $usuarios = $this->getUsuariosService()->create($input);
 
         $payload = json_encode($usuarios);
         $response->getBody()->write($payload);

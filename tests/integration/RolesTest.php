@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tests\integration;
 
@@ -6,15 +8,15 @@ class RolesTest extends TestCase
 {
     private static $id;
 
-    public function testCreateRoles()
+    public function testCreate()
     {
         $params = [
-                '' => '',
-                'nombre' => 'aaa',
+            '' => '',
+            'nombre' => 'aaa',
         ];
         $app = $this->getAppInstance();
-        $request = $this->createRequest('POST', '/roles');
-        $request = $request->withParsedBody($params);
+        $req = $this->createRequest('POST', '/roles');
+        $request = $req->withParsedBody($params);
         $response = $app->handle($request);
 
         $result = (string) $response->getBody();
@@ -26,7 +28,7 @@ class RolesTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetRoless()
+    public function testGetAll()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/roles');
@@ -39,7 +41,7 @@ class RolesTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetRoles()
+    public function testGetOne()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/roles/' . self::$id);
@@ -52,7 +54,7 @@ class RolesTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testGetRolesNotFound()
+    public function testGetOneNotFound()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('GET', '/roles/123456789');
@@ -64,11 +66,11 @@ class RolesTest extends TestCase
         $this->assertStringContainsString('error', $result);
     }
 
-    public function testUpdateRoles()
+    public function testUpdate()
     {
         $app = $this->getAppInstance();
-        $request = $this->createRequest('PUT', '/roles/' . self::$id);
-        $request = $request->withParsedBody(['' => '']);
+        $req = $this->createRequest('PUT', '/roles/' . self::$id);
+        $request = $req->withParsedBody(['' => '']);
         $response = $app->handle($request);
 
         $result = (string) $response->getBody();
@@ -78,7 +80,7 @@ class RolesTest extends TestCase
         $this->assertStringNotContainsString('error', $result);
     }
 
-    public function testDeleteRoles()
+    public function testDelete()
     {
         $app = $this->getAppInstance();
         $request = $this->createRequest('DELETE', '/roles/' . self::$id);

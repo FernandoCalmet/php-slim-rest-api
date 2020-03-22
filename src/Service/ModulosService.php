@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -14,39 +16,44 @@ class ModulosService extends BaseService
         $this->modulosRepository = $modulosRepository;
     }
 
-    protected function checkAndGetModulos(int $modulosId)
+    protected function checkAndGet(int $modulosId)
     {
-        return $this->modulosRepository->checkAndGetModulos($modulosId);
+        return $this->modulosRepository->checkAndGet($modulosId);
     }
 
-    public function getAllModulos(): array
+    public function getAll(): array
     {
-        return $this->modulosRepository->getAllModulos();
+        return $this->modulosRepository->getAll();
     }
 
-    public function getModulos(int $modulosId)
+    public function getOne(int $modulosId)
     {
-        return $this->checkAndGetModulos($modulosId);
+        return $this->checkAndGet($modulosId);
     }
 
-    public function createModulos($input)
+    public function create($input)
     {
         $modulos = json_decode(json_encode($input), false);
 
-        return $this->modulosRepository->createModulos($modulos);
+        return $this->modulosRepository->create($modulos);
     }
 
-    public function updateModulos(array $input, int $modulosId)
+    public function update(array $input, int $modulosId)
     {
-        $modulos = $this->checkAndGetModulos($modulosId);
+        $modulos = $this->checkAndGet($modulosId);
         $data = json_decode(json_encode($input), false);
 
-        return $this->modulosRepository->updateModulos($modulos, $data);
+        return $this->modulosRepository->update($modulos, $data);
     }
 
-    public function deleteModulos(int $modulosId)
+    public function delete(int $modulosId)
     {
-        $this->checkAndGetModulos($modulosId);
-        $this->modulosRepository->deleteModulos($modulosId);
+        $this->checkAndGet($modulosId);
+        $this->modulosRepository->delete($modulosId);
+    }
+
+    public function search(string $modulosName): array
+    {
+        return $this->modulosRepository->search($modulosName);
     }
 }
