@@ -9,51 +9,134 @@ use App\Repository\RolesRepository;
 
 class RolesService extends BaseService
 {
+    const REDIS_KEY = 'rol:%s';
+    
     protected $rolesRepository;
 
-    public function __construct(RolesRepository $rolesRepository)
+    protected $redisService;
+
+    public function __construct(RolesRepository $rolesRepository, RedisService $redisService)
     {
         $this->rolesRepository = $rolesRepository;
+        $this->redisService = $redisService;
+    }
+
+    protected function getRolesRepository(): RolesRepository
+    {
+        return $this->rolesRepository;
     }
 
     protected function checkAndGet(int $rolesId)
     {
-        return $this->rolesRepository->checkAndGet($rolesId);
+        return $this->getRolesRepository()->checkAndGet($rolesId);
+    }   
+
+    public function getAllRoles(): array
+    {
+        return $this->getRolesRepository()->getAllRoles();
     }
 
     public function getAll(): array
     {
-        return $this->rolesRepository->getAll();
+        return $this->getRolesRepository()->getAll();
     }
 
     public function getOne(int $rolesId)
     {
-        return $this->checkAndGet($rolesId);
+        if (self::isRedisEnabled() === true) {
+            $rol = $this->getFromCache($rolesId);
+        } else {
+            $rol = $this->getFromDb($rolesId);
+        }
+        return $rol;
     }
 
-    public function create($input)
+    public function create(array $input)
     {
-        $roles = json_decode(json_encode($input), false);
+        $rol = new \stdClass();
+        $data = json_decode(json_encode($input), false);
 
-        return $this->rolesRepository->create($roles);
+        if (empty($data->nombre)) {
+            throw new RolesException('Debes ingresar un Nombre.', 400);
+        }
+        $rol->nombre = self::validateNombre($data->nombre);      
+        
+        $roles = $this->getRolesRepository()->create($rol);
+
+        if (self::isRedisEnabled() === true) {
+            $this->saveInCache($roles->id, $roles);
+        }
+
+        return $roles;
     }
 
     public function update(array $input, int $rolesId)
     {
-        $roles = $this->checkAndGet($rolesId);
+        $rol = $this->getFromDb($rolesId);
         $data = json_decode(json_encode($input), false);
+        
+        if (!isset($data->nombre)) {
+            throw new RolesException('Debes ingresar un Nombre.', 400);
+        }
+        if (isset($data->nombre)) {
+            $rol->nombre = self::validateNombre($data->nombre);
+        }  
+                 
+        $roles = $this->getRolesRepository()->update($rol);
 
-        return $this->rolesRepository->update($roles, $data);
+        if (self::isRedisEnabled() === true) {
+            $this->saveInCache($roles->id, $roles);
+        }
+
+        return $roles;
     }
 
-    public function delete(int $rolesId)
+    public function delete(int $rolId): string
     {
-        $this->checkAndGet($rolesId);
-        $this->rolesRepository->delete($rolesId);
+        $this->getFromDb($rolId);
+        $data = $this->getRolesRepository()->delete($rolId);
+
+        if (self::isRedisEnabled() === true) {
+            $this->deleteFromCache($rolId);
+        }
+        
+        return $data;
     }
 
-    public function search(string $rolesName): array
+    public function search($rolesName): array
+    {        
+        return $this->getRolesRepository()->search($rolesName);
+    }
+
+    protected function getFromDb(int $rolesId)
     {
-        return $this->rolesRepository->search($rolesName);
+        return $this->getRolesRepository()->checkAndGet($rolesId);
+    }   
+
+    public function getFromCache(int $rolesId)
+    {
+        $redisKey = sprintf(self::REDIS_KEY, $rolesId);
+        $key = $this->redisService->generateKey($redisKey);
+        if ($this->redisService->exists($key)) {
+            $rol = $this->redisService->get($key);
+        } else {
+            $rol = $this->getFromDb($rolesId);
+            $this->redisService->setex($key, $rol);
+        }
+        return $rol;
+    }
+
+    public function saveInCache($rolesId, $roles)
+    {
+        $redisKey = sprintf(self::REDIS_KEY, $rolesId);
+        $key = $this->redisService->generateKey($redisKey);
+        $this->redisService->setex($key, $roles);
+    }
+
+    public function deleteFromCache($rolesId)
+    {
+        $redisKey = sprintf(self::REDIS_KEY, $rolesId);
+        $key = $this->redisService->generateKey($redisKey);
+        $this->redisService->del($key);
     }
 }

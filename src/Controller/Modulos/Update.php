@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller\Modulos;
 
+use Slim\Http\Request;
+use Slim\Http\Response;
+
 class Update extends Base
 {
-    public function __invoke($request, $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         $input = $request->getParsedBody();
-        $modulos = $this->getModulosService()->update($input, (int) $args['id']);
+        $modulo = $this->getModulosService()->update($input, (int) $args['id']);
 
-        $payload = json_encode($modulos);
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+        return $this->jsonResponse($response, 'success', $modulo, 200);
     }
 }

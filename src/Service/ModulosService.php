@@ -9,51 +9,132 @@ use App\Repository\ModulosRepository;
 
 class ModulosService extends BaseService
 {
+    const REDIS_KEY = 'modulo:%s';
+    
     protected $modulosRepository;
 
-    public function __construct(ModulosRepository $modulosRepository)
+    protected $redisService;
+
+    public function __construct(ModulosRepository $modulosRepository, RedisService $redisService)
     {
         $this->modulosRepository = $modulosRepository;
+        $this->redisService = $redisService;
+    }
+
+    protected function getModulosRepository(): ModulosRepository
+    {
+        return $this->modulosRepository;
     }
 
     protected function checkAndGet(int $modulosId)
     {
-        return $this->modulosRepository->checkAndGet($modulosId);
+        return $this->getModulosRepository()->checkAndGet($modulosId);
+    }    
+
+    public function getAllModulos(): array
+    {
+        return $this->getModulosRepository()->getAllModulos();
     }
 
     public function getAll(): array
     {
-        return $this->modulosRepository->getAll();
+        return $this->getModulosRepository()->getAll();
     }
 
     public function getOne(int $modulosId)
     {
-        return $this->checkAndGet($modulosId);
+        if (self::isRedisEnabled() === true) {
+            $modulo = $this->getFromCache($modulosId);
+        } else {
+            $modulo = $this->getFromDb($modulosId);
+        }
+        return $modulo;
     }
 
-    public function create($input)
+    public function create(array $input)
     {
-        $modulos = json_decode(json_encode($input), false);
+        $modulo = new \stdClass();
+        $data = json_decode(json_encode($input), false);
 
-        return $this->modulosRepository->create($modulos);
+        if (empty($data->nombre)) {
+            throw new ModulosException('Debes ingresar un Nombre.', 400);
+        }
+        $modulo->nombre = self::validateNombre($data->nombre);     
+
+        $modulos = $this->getModulosRepository()->create($modulo);
+        
+        if (self::isRedisEnabled() === true) {
+            $this->saveInCache($modulos->id, $modulos);
+        }
+
+        return $modulos;
     }
 
     public function update(array $input, int $modulosId)
     {
-        $modulos = $this->checkAndGet($modulosId);
+        $modulo = $this->getFromDb($modulosId, (int) $input['decoded']->sub);
         $data = json_decode(json_encode($input), false);
 
-        return $this->modulosRepository->update($modulos, $data);
+        if (!isset($data->nombre)) {
+            throw new ModulosException('Debes ingresar un Nombre.', 400);
+        }
+        if (isset($data->nombre)) {
+            $modulo->nombre = self::validateNombre($data->nombre);
+        }           
+
+        $modulos = $this->getModulosRepository()->update($modulo);
+        
+        if (self::isRedisEnabled() === true) {
+            $this->saveInCache($modulos->id, $modulos);
+        }
+
+        return $modulos;
     }
 
     public function delete(int $modulosId)
     {
-        $this->checkAndGet($modulosId);
-        $this->modulosRepository->delete($modulosId);
+        $this->getFromDb($modulosId);
+        $data = $this->getModulosRepository()->delete($modulosId);
+        if (self::isRedisEnabled() === true) {
+            $this->deleteFromCache($modulosId);
+        }
+        return $data;
     }
 
-    public function search(string $modulosName): array
+    public function search(string $modulosNombre): array
     {
-        return $this->modulosRepository->search($modulosName);
+        return $this->getModulosRepository()->search($modulosNombre);
+    }
+
+    protected function getFromDb(int $modulosId)
+    {
+        return $this->getModulosRepository()->checkAndGet($modulosId);
+    }  
+
+    public function getFromCache(int $modulosId)
+    {
+        $redisKey = sprintf(self::REDIS_KEY, $modulosId);
+        $key = $this->redisService->generateKey($redisKey);
+        if ($this->redisService->exists($key)) {
+            $modulo = $this->redisService->get($key);
+        } else {
+            $modulo = $this->getFromDb($modulosId);
+            $this->redisService->setex($key, $modulo);
+        }
+        return $modulo;
+    }
+
+    public function saveInCache($modulosId, $modulos)
+    {
+        $redisKey = sprintf(self::REDIS_KEY, $modulosId);
+        $key = $this->redisService->generateKey($redisKey);
+        $this->redisService->setex($key, $modulos);
+    }
+
+    public function deleteFromCache($modulosId)
+    {
+        $redisKey = sprintf(self::REDIS_KEY, $modulosId);
+        $key = $this->redisService->generateKey($redisKey);
+        $this->redisService->del($key);
     }
 }

@@ -21,45 +21,60 @@ class RolesRepository extends BaseRepository
         $statement->execute();
         $roles = $statement->fetchObject();
         if (empty($roles)) {
-            throw new RolesException('Roles not found.', 404);
+            throw new RolesException('No se a encontrado ningun rol con ese ID.', 404);
         }
-
+        return $roles;
+    } 
+      
+    public function getAllRoles(): array
+    {
+        $query = 'SELECT * FROM `roles` ORDER BY `id`';
+        $statement = $this->getDb()->prepare($query);
+        $statement->execute();
+        $roles = $statement->fetchAll();
+        if (empty($roles)) {
+            throw new RolesException('No existe ningun registro de roles.', 404);
+        }
         return $roles;
     }
 
     public function getAll(): array
     {
-        $query = 'SELECT * FROM `roles` ORDER BY `id`';
+        $query = 'SELECT `id`, `nombre`, `fecha_registro`, `fecha_modificacion` FROM `roles` ORDER BY `id`';
         $statement = $this->getDb()->prepare($query);
         $statement->execute();
-
-        return $statement->fetchAll();
+        return  $statement->fetchAll();
     }
+
+    public function getRol(int $rolId)
+    {
+        $query = 'SELECT `id`, `nombre`, `fecha_registro`, `fecha_modificacion` FROM `roles` WHERE `id` = :id';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('id', $rolId);
+        $statement->execute();
+        $rol = $statement->fetchObject();
+        if (empty($rol)) {
+            throw new RolesException('No se a encontrado ningun registro del rol.', 404);
+        }
+        return $rol;
+    } 
 
     public function create($roles)
     {
-        $query = 'INSERT INTO `roles` (`id`, `nombre`) VALUES (:id, :nombre)';
-        $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('id', $roles->id);
+        $query = 'INSERT INTO `roles` (`nombre`) VALUES (:nombre)';
+        $statement = $this->getDb()->prepare($query);   
 	    $statement->bindParam('nombre', $roles->nombre);
-
         $statement->execute();
-
         return $this->checkAndGet((int) $this->getDb()->lastInsertId());
     }
 
-    public function update($roles, $data)
+    public function update($roles)
     {
-        if (isset($data->nombre)) { $roles->nombre = $data->nombre; }
-
-
         $query = 'UPDATE `roles` SET `nombre` = :nombre WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $roles->id);
 	    $statement->bindParam('nombre', $roles->nombre);
-
         $statement->execute();
-
         return $this->checkAndGet((int) $roles->id);
     }
 
@@ -69,20 +84,29 @@ class RolesRepository extends BaseRepository
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $rolesId);
         $statement->execute();
+        return 'El Rol fue eliminado exitosamente.';
     }
 
-    public function search(string $rolesName): array
+    public function search($rolesNombre): array
     {
-        $query = 'SELECT * FROM `roles` WHERE `nombre` LIKE :name ORDER BY `id`';
-        $name = '%' . $rolesName . '%';        
+        $query = $this->getSearchQuery();
+        $nombre = '%' . $rolesNombre . '%';
         $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('name', $name);
+        $statement->bindParam('nombre', $nombre);        
         $statement->execute();
         $roles = $statement->fetchAll();
         if (!$roles) {
-            throw new RolesException('Not found.', 404);
+            throw new RolesException('No se a encontrado ningun registro de Rol con ese Nombre.', 404);
         }
-
         return $roles;
+    }
+
+    private function getSearchQuery()
+    {        
+        return "
+            SELECT * FROM `roles`
+            WHERE `nombre` LIKE :nombre
+            ORDER BY `id`
+        ";
     }
 }

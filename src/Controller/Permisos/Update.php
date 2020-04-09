@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller\Permisos;
 
+use Slim\Http\Request;
+use Slim\Http\Response;
+
 class Update extends Base
 {
-    public function __invoke($request, $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         $input = $request->getParsedBody();
-        $permisos = $this->getPermisosService()->update($input, (int) $args['id']);
+        $permiso = $this->getPermisosService()->update($input, (int) $args['id']);
 
-        $payload = json_encode($permisos);
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+        return $this->jsonResponse($response, 'success', $permiso, 200);
     }
 }

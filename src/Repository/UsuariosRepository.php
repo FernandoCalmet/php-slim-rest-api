@@ -21,84 +21,75 @@ class UsuariosRepository extends BaseRepository
         $statement->execute();
         $usuarios = $statement->fetchObject();
         if (empty($usuarios)) {
-            throw new UsuariosException('Usuarios not found.', 404);
+            throw new UsuariosException('No se a encontrado ningun usuario con ese ID.', 404);
         }
+        return $usuarios;
+    }
 
+    public function checkByEmail(string $email)
+    {
+        $query = 'SELECT * FROM `usuarios` WHERE `correo` = :email';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('email', $email);
+        $statement->execute();
+        $user = $statement->fetchObject();
+        if (empty(!$user)) {
+            throw new UsuariosException('El correo electronico ya existe, por favor intente con otro.', 400);
+        }
+    }    
+   
+    public function getAllUsuarios(): array
+    {
+        $query = 'SELECT `id`, `nombre`, `correo` FROM `usuarios` ORDER BY `id`';
+        $statement = $this->getDb()->prepare($query);
+        $statement->execute();
+        $usuarios = $statement->fetchAll();
+        if (empty($usuarios)) {
+            throw new UsuariosException('No existe ningun registro de usuarios.', 404);
+        }
         return $usuarios;
     }
 
     public function getAll(): array
     {
-        $query = 'SELECT * FROM `usuarios` ORDER BY `id`';
-        $statement = $this->getDb()->prepare($query);
+        $query = 'SELECT `id`, `nombre`, `correo` FROM `usuarios` ORDER BY `id`';
+        $statement = $this->getDb()->prepare($query); 
         $statement->execute();
+        return  $statement->fetchAll();       
+    }
 
-        return $statement->fetchAll();
+    public function getUsuario(int $usuarioId)
+    {
+        $query = 'SELECT `id`, `nombre`, `correo` FROM `usuarios` WHERE `id` = :id';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('id', $usuarioId);
+        $statement->execute();
+        $usuario = $statement->fetchObject();
+        if (empty($usuario)) {
+            throw new UsuariosException('No se a encontrado ningun registro del usuario.', 404);
+        }
+        return $usuario;
     }
 
     public function create($usuarios)
     {
-        $query = 'INSERT INTO `usuarios` (`id`, `id_rol`, `correo`, `clave`, `dni`, `nombres`, `apellidos`, `telefono`, `genero`, `interes`, `foto`, `fecha_nacimiento`, `fecha_registro`, `fecha_modificacion`, `estado`) VALUES (:id, :id_rol, :correo, :clave, :dni, :nombres, :apellidos, :telefono, :genero, :interes, :foto, :fecha_nacimiento, :fecha_registro, :fecha_modificacion, :estado)';
-        $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('id', $usuarios->id);
-	    $statement->bindParam('id_rol', $usuarios->id_rol);
+        $query = 'INSERT INTO `usuarios` (`correo`, `clave`, `nombre`) VALUES (:correo, :clave, :nombre)';
+        $statement = $this->getDb()->prepare($query); 
         $statement->bindParam('correo', $usuarios->correo);
-        $statement->bindParam('clave', $usuarios->clave);
-        $statement->bindParam('dni', $usuarios->dni);
-        $statement->bindParam('nombres', $usuarios->nombres);
-        $statement->bindParam('apellidos', $usuarios->apellidos);
-        $statement->bindParam('telefono', $usuarios->telefono);
-        $statement->bindParam('genero', $usuarios->genero);
-        $statement->bindParam('interes', $usuarios->interes);
-        $statement->bindParam('foto', $usuarios->foto);
-        $statement->bindParam('fecha_nacimiento', $usuarios->fecha_nacimiento);
-        $statement->bindParam('fecha_registro', $usuarios->fecha_registro);
-        $statement->bindParam('fecha_modificacion', $usuarios->fecha_modificacion);
-        $statement->bindParam('estado', $usuarios->estado);
-
+        $statement->bindParam('clave', $usuarios->clave);  
+        $statement->bindParam('nombre', $usuarios->nombre);
         $statement->execute();
-
         return $this->checkAndGet((int) $this->getDb()->lastInsertId());
     }
 
-    public function update($usuarios, $data)
-    {
-        if (isset($data->id_rol)) { $usuarios->id_rol = $data->id_rol; }
-        if (isset($data->correo)) { $usuarios->correo = $data->correo; }
-        if (isset($data->clave)) { $usuarios->clave = $data->clave; }
-        if (isset($data->dni)) { $usuarios->dni = $data->dni; }
-        if (isset($data->nombres)) { $usuarios->nombres = $data->nombres; }
-        if (isset($data->apellidos)) { $usuarios->apellidos = $data->apellidos; }
-        if (isset($data->telefono)) { $usuarios->telefono = $data->telefono; }
-        if (isset($data->genero)) { $usuarios->genero = $data->genero; }
-        if (isset($data->interes)) { $usuarios->interes = $data->interes; }
-        if (isset($data->foto)) { $usuarios->foto = $data->foto; }
-        if (isset($data->fecha_nacimiento)) { $usuarios->fecha_nacimiento = $data->fecha_nacimiento; }
-        if (isset($data->fecha_registro)) { $usuarios->fecha_registro = $data->fecha_registro; }
-        if (isset($data->fecha_modificacion)) { $usuarios->fecha_modificacion = $data->fecha_modificacion; }
-        if (isset($data->estado)) { $usuarios->estado = $data->estado; }
-
-
-        $query = 'UPDATE `usuarios` SET `id_rol` = :id_rol, `correo` = :correo, `clave` = :clave, `dni` = :dni, `nombres` = :nombres, `apellidos` = :apellidos, `telefono` = :telefono, `genero` = :genero, `interes` = :interes, `foto` = :foto, `fecha_nacimiento` = :fecha_nacimiento, `fecha_registro` = :fecha_registro, `fecha_modificacion` = :fecha_modificacion, `estado` = :estado WHERE `id` = :id';
+    public function update($usuarios)
+    {   
+        $query = 'UPDATE `usuarios` SET `correo` = :correo, `nombre` = :nombre WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('id', $usuarios->id);
-        $statement->bindParam('id_rol', $usuarios->id_rol);
-        $statement->bindParam('correo', $usuarios->correo);
-        $statement->bindParam('clave', $usuarios->clave);
-        $statement->bindParam('dni', $usuarios->dni);
-        $statement->bindParam('nombres', $usuarios->nombres);
-        $statement->bindParam('apellidos', $usuarios->apellidos);
-        $statement->bindParam('telefono', $usuarios->telefono);
-        $statement->bindParam('genero', $usuarios->genero);
-        $statement->bindParam('interes', $usuarios->interes);
-        $statement->bindParam('foto', $usuarios->foto);
-        $statement->bindParam('fecha_nacimiento', $usuarios->fecha_nacimiento);
-        $statement->bindParam('fecha_registro', $usuarios->fecha_registro);
-        $statement->bindParam('fecha_modificacion', $usuarios->fecha_modificacion);
-        $statement->bindParam('estado', $usuarios->estado);
-
+        $statement->bindParam('id', $usuarios->id);      
+        $statement->bindParam('correo', $usuarios->correo);   
+        $statement->bindParam('nombre', $usuarios->nombre);
         $statement->execute();
-
         return $this->checkAndGet((int) $usuarios->id);
     }
 
@@ -108,35 +99,63 @@ class UsuariosRepository extends BaseRepository
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $usuariosId);
         $statement->execute();
+        return 'El Usuario fue eliminado exitosamente.';
     }
 
-    public function search(string $usersName): array
+    public function search($usuariosNombre): array
     {
-        $query = 'SELECT `id`, `nombres`, `correo` FROM `usuarios` WHERE `nombres` LIKE :name ORDER BY `id`';
-        $name = '%' . $usersName . '%';
+        $query = $this->getSearchQuery();
+        $nombres = '%' . $usuariosNombre . '%';
         $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('name', $name);
+        $statement->bindParam('nombre', $nombre);
         $statement->execute();
-        $users = $statement->fetchAll();
-        if (!$users) {
-            throw new UsuariosException('User name not found.', 404);
+        $usuarios = $statement->fetchAll();
+        if (!$usuarios) {
+            throw new UsuariosException('No se a encontrado ningun registro de Usuarios con esos Nombres.', 404);
         }
-
-        return $users;
+        return $usuarios;
     }
 
-    public function loginUsuario(string $email, string $password)
+    private function getSearchQuery()
+    {        
+        return "
+            SELECT `id`, `nombre`, `correo` FROM `usuarios`
+            WHERE `nombre` LIKE :nombre
+            ORDER BY `id`
+        ";
+    }
+
+    public function login(string $email, string $password)
     {
-        $query = 'SELECT * FROM `usuarios` WHERE `correo` = :email AND `clave` = :password ORDER BY `id`';
+        $query = 'SELECT `id`, `nombre`, `correo` FROM `usuarios` WHERE `correo` = :email AND `clave` = :password ORDER BY `id`';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('email', $email);
         $statement->bindParam('password', $password);
         $statement->execute();
-        $usuarios = $statement->fetchObject();
-        if (empty($usuarios)) {
-            throw new UsuariosException('Login failed: Email or password incorrect.', 400);
+        $usuario = $statement->fetchObject();
+        if (empty($usuario)) {
+            throw new UsuariosException('Error de inicio de sesión: correo electrónico o contraseña incorrectos.', 400);
         }
+        return $usuario;
+    }
 
-        return $usuarios;
+    public function changePassword($usuarios)
+    {   
+        $query = 'UPDATE `usuarios` SET `clave` = :clave WHERE `id` = :id';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('id', $usuarios->id);
+        $statement->bindParam('clave', $usuarios->clave);
+        $statement->execute();
+        return $this->checkAndGet((int) $usuarios->id);
+    }
+
+    public function changeRole($usuarios)
+    {   
+        $query = 'UPDATE `usuarios` SET `id_rol` = :rol WHERE `id` = :id';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('id', $usuarios->id);
+        $statement->bindParam('rol', $usuarios->id_rol);
+        $statement->execute();
+        return $this->checkAndGet((int) $usuarios->id);
     }
 }

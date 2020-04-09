@@ -21,19 +21,42 @@ class ModulosRepository extends BaseRepository
         $statement->execute();
         $modulos = $statement->fetchObject();
         if (empty($modulos)) {
-            throw new ModulosException('Modulos not found.', 404);
+            throw new ModulosException('No se encontro el modulo', 404);
         }
+        return $modulos;
+    }    
 
+    public function getAllModulos(): array
+    {
+        $query = 'SELECT * FROM `modulos` ORDER BY `id`';
+        $statement = $this->getDb()->prepare($query);
+        $statement->execute();
+        $modulos = $statement->fetchAll();
+        if (empty($modulos)) {
+            throw new ModulosException('No existe ningun registro de Modulos.', 404);
+        }
         return $modulos;
     }
 
     public function getAll(): array
     {
-        $query = 'SELECT * FROM `modulos` ORDER BY `id`';
+        $query = 'SELECT `id`, `nombre`, `fecha_registro`, `fecha_modificacion` FROM `modulos` ORDER BY `id`';
         $statement = $this->getDb()->prepare($query);
         $statement->execute();
+        return  $statement->fetchAll();
+    }
 
-        return $statement->fetchAll();
+    public function getModulo(int $moduloId)
+    {
+        $query = 'SELECT `id`, `nombre`, `fecha_registro`, `fecha_modificacion` FROM `usuarios` WHERE `id` = :id';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('id', $moduloId);
+        $statement->execute();
+        $modulo = $statement->fetchObject();
+        if (empty($modulo)) {
+            throw new ModulosException('No se a encontrado ningun registro del Modulo.', 404);
+        }
+        return $modulo;
     }
 
     public function create($modulos)
@@ -42,24 +65,17 @@ class ModulosRepository extends BaseRepository
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $modulos->id);
 	    $statement->bindParam('nombre', $modulos->nombre);
-
         $statement->execute();
-
         return $this->checkAndGet((int) $this->getDb()->lastInsertId());
     }
 
-    public function update($modulos, $data)
-    {
-        if (isset($data->nombre)) { $modulos->nombre = $data->nombre; }
-
-
+    public function update($modulos)
+    {   
         $query = 'UPDATE `modulos` SET `nombre` = :nombre WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $modulos->id);
-	$statement->bindParam('nombre', $modulos->nombre);
-
+	    $statement->bindParam('nombre', $modulos->nombre);
         $statement->execute();
-
         return $this->checkAndGet((int) $modulos->id);
     }
 
@@ -69,20 +85,29 @@ class ModulosRepository extends BaseRepository
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $modulosId);
         $statement->execute();
+        return 'Se a eliminado el Modulo exitosamente.';
     }
 
-    public function search(string $modulosName): array
+    public function search($modulosNombre): array
     {
-        $query = 'SELECT * FROM `modulos` WHERE `nombre` LIKE :name ORDER BY `id`';
-        $name = '%' . $modulosName . '%';        
+        $query = $this->getSearchQuery();
+        $nombre = '%' . $modulosNombre . '%';
         $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('name', $name);
+        $statement->bindParam('nombre', $nombre);        
         $statement->execute();
         $modulos = $statement->fetchAll();
         if (!$modulos) {
-            throw new ModulosException('Not found.', 404);
+            throw new ModulosException('No se a encontrado ningun registro de Modulos con esos Nombres.', 404);
         }
-
         return $modulos;
+    }
+
+    private function getSearchQuery()
+    {        
+        return "
+            SELECT * FROM `modulos`
+            WHERE `nombre` LIKE :nombre
+            ORDER BY `id`
+        ";
     }
 }

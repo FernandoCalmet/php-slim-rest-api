@@ -9,10 +9,13 @@ class Search extends Base
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $modulos = $this->getModulosService()->search($args['query']);
+        $input = $request->getParsedBody(); 
+        $query = '';
+        if (isset($args['query'])) {
+            $query = $args['query'];
+        }    
+        $modulos = $this->getModulosService()->search($query);
 
-        $payload = json_encode($modulos);
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+        return $this->jsonResponse($response, 'success', $modulos, 200);
     }
 }

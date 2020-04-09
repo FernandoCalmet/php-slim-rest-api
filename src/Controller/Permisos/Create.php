@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller\Permisos;
 
+use Slim\Http\Request;
+use Slim\Http\Response;
+
 class Create extends Base
 {
-    public function __invoke($request, $response)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         $input = $request->getParsedBody();
-        $permisos = $this->getPermisosService()->create($input);
+        $permiso = $this->getPermisosService()->create($input);
 
-        $payload = json_encode($permisos);
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+        return $this->jsonResponse($response, 'success', $permiso, 201);
     }
 }

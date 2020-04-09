@@ -9,10 +9,13 @@ class Search extends Base
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $permisos = $this->getPermisosService()->search($args['query']);
+        $input = $request->getParsedBody();
+        $query = '';
+        if (isset($args['query'])) {
+            $query = $args['query'];
+        }   
+        $permisos = $this->getPermisosService()->search($query);
 
-        $payload = json_encode($permisos);
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+        return $this->jsonResponse($response, 'success', $permisos, 200);
     }
 }

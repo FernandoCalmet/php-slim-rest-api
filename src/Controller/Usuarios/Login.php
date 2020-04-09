@@ -11,10 +11,12 @@ class Login extends Base
     {
         $input = $request->getParsedBody();
         $jwt = $this->getUsuariosService()->login($input);
+        $usuario = $this->getUsuariosService()->getAllUsuarios();
         $message = [
             'Authorization' => 'Bearer ' . $jwt,
+            'User' => $usuario
         ];
 
-        return $this->jsonResponse($response, 'success', $message, 200);
+        return $this->jsonResponse($response, 'success', $message, 200);  
     }
 }

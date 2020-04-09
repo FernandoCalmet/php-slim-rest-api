@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Modulos;
 
 use App\Service\ModulosService;
+use App\Controller\BaseController;
+use Slim\Container;
 
-abstract class Base
+abstract class Base extends BaseController
 {
-    protected $container;
-
-    protected $modulosService;
-
-    public function __construct($container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

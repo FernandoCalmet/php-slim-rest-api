@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller\Roles;
 
+use Slim\Http\Request;
+use Slim\Http\Response;
+
 class GetAll extends Base
 {
-    public function __invoke($request, $response)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $roless = $this->getRolesService()->getAll();
+        $input = $request->getParsedBody();
+        $roles = $this->getRolesService()->getAll();
 
-        $payload = json_encode($roless);
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+        return $this->jsonResponse($response, 'success', $roles, 200);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Service;
 
 class RedisService
 {
-    const PROJECT_NAME = 'promout-api';
+    const PROJECT_NAME = 'slim4-api';
 
     protected $redis;
 

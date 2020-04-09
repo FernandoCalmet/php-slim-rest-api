@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Permisos;
 
 use App\Service\PermisosService;
+use App\Controller\BaseController;
+use Slim\Container;
 
-abstract class Base
+abstract class Base extends BaseController
 {
-    protected $container;
-
-    protected $permisosService;
-
-    public function __construct($container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

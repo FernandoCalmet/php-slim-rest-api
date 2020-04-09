@@ -11,8 +11,6 @@ class Search extends Base
     {
         $usuarios = $this->getUsuariosService()->search($args['query']);
 
-        $payload = json_encode($usuarios);
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+        return $this->jsonResponse($response, 'success', $usuarios, 200);
     }
 }

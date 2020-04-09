@@ -67,15 +67,20 @@ $ docker-compose down
 
 ### LISTA DE REQUERIMIENTOS DEPENDENCIAS:
 
-- [slim/slim](https://github.com/slimphp/Slim): Slim es un micro framework PHP que lo ayuda a escribir rápidamente aplicaciones web y API simples pero potentes.
-- [slim/psr7](https://github.com/slimphp/Slim-Psr7): Implementación de PSR-7 para usar con Slim 4.
-- [pimple/pimple](https://github.com/silexphp/Pimple): Un pequeño contenedor de inyección de dependencia de PHP.
-- [vlucas/phpdotenv](https://github.com/vlucas/phpdotenv): Carga variables de entorno de `.env` a` getenv () `,` $ _ENV` y `$ _SERVER` automáticamente.
+- [slim/slim](https://github.com/slimphp/Slim): Slim is a PHP micro framework that helps you quickly write simple yet powerful web applications and APIs.
+- [respect/validation](https://github.com/Respect/Validation): The most awesome validation engine ever created for PHP.
+- [palanik/corsslim](https://github.com/palanik/CorsSlim): Cross-origin resource sharing (CORS) middleware for PHP Slim.
+- [vlucas/phpdotenv](https://github.com/vlucas/phpdotenv): Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.
+- [predis/predis](https://github.com/phpredis/phpredis): A PHP extension for Redis.
+- [firebase/php-jwt](https://github.com/firebase/php-jwt): A simple library to encode and decode JSON Web Tokens (JWT) in PHP.
+- [pimple/pimple](https://github.com/silexphp/Pimple): A small PHP dependency injection container.
+- [slim/psr7](https://github.com/slimphp/Slim-Psr7): PSR-7 implementation for use with Slim 4.
 
 ### LISTA DE DEPENDENCIAS DE DESARROLLO:
 
-- [phpunit/phpunit](https://github.com/sebastianbergmann/phpunit): El marco de pruebas de unidad PHP.
-- [symfony/console](https://github.com/symfony/console): El componente Consola facilita la creación de interfaces de línea de comandos hermosas y comprobables.
+- [phpunit/phpunit](https://github.com/sebastianbergmann/phpunit): The PHP Unit Testing framework.
+- [phpstan/phpstan](https://github.com/phpstan/phpstan): PHPStan - PHP Static Analysis Tool.
+- [symfony/console](https://github.com/symfony/console): The Console component eases the creation of beautiful and testable command line interfaces.
 
 ## DOCUMENTACIÓN:
 
@@ -99,6 +104,10 @@ $ docker-compose down
 - Delete: `DELETE /api/v1/usuarios/{id}`
 
 - Query: `DELETE /api/v1/usuarios/search/[{query}]`
+
+- Change Password: `PUT /api/v1/usuarios/change_password/{id}`
+
+- Change Role: `PUT /api/v1/usuarios/change_role/{id}`
 
 #### ROLES:
 

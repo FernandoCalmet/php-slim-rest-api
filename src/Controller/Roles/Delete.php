@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller\Roles;
 
+use Slim\Http\Request;
+use Slim\Http\Response;
+
 class Delete extends Base
 {
-    public function __invoke($request, $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $this->getRolesService()->delete((int) $args['id']);
+        $input = $request->getParsedBody();
+        $rolId = (int) $args['id'];
+        $rol = $this->getRolesService()->delete($rolId);
 
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(204);
+        return $this->jsonResponse($response, 'success', $rol, 204);
     }
 }

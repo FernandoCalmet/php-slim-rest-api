@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller\Modulos;
 
+use Slim\Http\Request;
+use Slim\Http\Response;
+
 class Delete extends Base
 {
-    public function __invoke($request, $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $this->getModulosService()->delete((int) $args['id']);
+        $input = $request->getParsedBody();
+        $moduloId = (int) $args['id'];
+        $modulo = $this->getModulosService()->delete($moduloId);
 
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(204);
+        return $this->jsonResponse($response, 'success', $modulo, 204);
     }
 }
