@@ -1,6 +1,6 @@
 {
     "name": "fernandocalmet/slim4-api-crud-sql",
-    "description": "Aplicacion CRUD API RESTFUL con Slim y SQL",   
+    "description": "Slim4 Restful CRUD Application",   
     "authors": [
         {
             "name": "Fernando Calmet",
@@ -20,8 +20,8 @@
     },
     "require-dev": {
         "maurobonfietti/skel-api-slim-php-crud-generator": "dev-master",
-        "phpstan/phpstan": "^0.10.1",
-        "phpunit/phpunit": "^8.0",
+        "phpstan/phpstan": "^0.12",
+        "phpunit/phpunit": "^9.0",
         "symfony/console": "^3.3"
     },
     "config": {
@@ -37,13 +37,13 @@
     "minimum-stability": "dev",    
     "scripts": {
         "coverage": "phpunit --coverage-html=coverage --coverage-text",
-        "database": "extras/bin/restart-api.sh",
-        "restart": "extras/bin/restart-api.sh",
+        "test": "phpunit",
+        "database": "php extras/bin/restart-api.sh",
+        "restart": "php extras/bin/restart-api.sh",
+        "migration": "php extras/bin/migration.php",
         "crud": "php console api:generate:endpoints",
-        "crud2": "./vendor/maurobonfietti/skel-api-slim-php-crud-generator/bin/console api:generate:endpoints",
         "up": "docker-compose up -d --build",
         "down": "docker-compose down",
-        "start": "php -S 127.0.0.1:8080 -t public public/index.php",
-        "test": "phpunit"
+        "start": "php -S 127.0.0.1:8080 -t public public/index.php"
     }
 }

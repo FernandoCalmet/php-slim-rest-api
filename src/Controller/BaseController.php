@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -12,7 +14,7 @@ abstract class BaseController
      */
     protected $container;
 
-    protected function jsonResponse(Response $response, string $status, $message, int $code):  Response
+    protected function jsonResponse(Response $response, string $status, $message, int $code): Response
     {
         $result = [
             'code' => $code,

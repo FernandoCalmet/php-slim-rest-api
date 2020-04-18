@@ -1,0 +1,2052 @@
+{
+	"info": {
+		"_postman_id": "add666f2-55e0-4c77-bc5e-65a8e5f17426",
+		"name": "slim4-api-crud-sql",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16bc901b-a0df-4972-a933-1c366e114afa",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"Created\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Support\",\n  \"description\": \"Desktop Helper\"\n}"
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/roles",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2cf4523-8c9f-419e-b8aa-9f13f2f3bfb7",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/roles",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eec104fb-66df-4e67-ac93-b330cb663bf3",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/roles/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ef3dbf0-2a11-4cfa-9377-cfbc960c8e70",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Supervisor\",\n  \"description\": \"View all features.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/roles/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a11efdd5-0891-405e-8a2f-340a7949a76b",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Status code is 204\"] = responseCode.code === 204;",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/roles/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbbb48d5-82fc-4b50-9fea-45ce0f414af2",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/roles/search/Admin",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles",
+								"search",
+								"Admin"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Modules",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16bc901b-a0df-4972-a933-1c366e114afa",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"Created\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"This a sample\",\n  \"description\": \"My own example from postman.\"\n}"
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/modules",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"modules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2cf4523-8c9f-419e-b8aa-9f13f2f3bfb7",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/modules",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"modules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eec104fb-66df-4e67-ac93-b330cb663bf3",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/modules/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"modules",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ef3dbf0-2a11-4cfa-9377-cfbc960c8e70",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"This a second sample\",\n  \"description\": \"My own example from postman.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/modules/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"modules",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a11efdd5-0891-405e-8a2f-340a7949a76b",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Status code is 204\"] = responseCode.code === 204;",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/modules/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"modules",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbbb48d5-82fc-4b50-9fea-45ce0f414af2",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/modules/search/profiles",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"modules",
+								"search",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Permissions",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16bc901b-a0df-4972-a933-1c366e114afa",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"Created\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role_id\": 1,\n  \"operation_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/permissions",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2cf4523-8c9f-419e-b8aa-9f13f2f3bfb7",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/permissions",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eec104fb-66df-4e67-ac93-b330cb663bf3",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/permissions/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ef3dbf0-2a11-4cfa-9377-cfbc960c8e70",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role_id\": 2,\n  \"operation_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/permissions/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a11efdd5-0891-405e-8a2f-340a7949a76b",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Status code is 204\"] = responseCode.code === 204;",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/permissions/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbbb48d5-82fc-4b50-9fea-45ce0f414af2",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/permissions/search/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions",
+								"search",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Operations",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16bc901b-a0df-4972-a933-1c366e114afa",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"Created\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Postman Test Operation\",\n  \"description\": \"This is just a test.\"\n}"
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/operations",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"operations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2cf4523-8c9f-419e-b8aa-9f13f2f3bfb7",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/operations",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"operations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eec104fb-66df-4e67-ac93-b330cb663bf3",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/operations/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"operations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ef3dbf0-2a11-4cfa-9377-cfbc960c8e70",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Postman Testing Operation\",\n  \"description\": \"Hello World.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/operations/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"operations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a11efdd5-0891-405e-8a2f-340a7949a76b",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Status code is 204\"] = responseCode.code === 204;",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/operations/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"operations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbbb48d5-82fc-4b50-9fea-45ce0f414af2",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/operations/search/create",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"operations",
+								"search",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16bc901b-a0df-4972-a933-1c366e114afa",
+								"exec": [
+									"tests[\"Response time is less than 300ms\"] = responseTime < 300;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"Created\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"fercalmet@gmail.com\",\n  \"password\": \"MyPass123\",\n  \"first_name\": \"Fernando\",\n  \"last_name\": \"Calmet\",\n  \"gender\": \"Male\",\n  \"birthday\": \"1989-06-09\"\n}"
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/users",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2cf4523-8c9f-419e-b8aa-9f13f2f3bfb7",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/users",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eec104fb-66df-4e67-ac93-b330cb663bf3",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/users/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ef3dbf0-2a11-4cfa-9377-cfbc960c8e70",
+								"exec": [
+									"tests[\"Response time is less than 300ms\"] = responseTime < 300;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"khanakat@gmail.com\",\n  \"password\": \"MyPass456\",\n  \"first_name\": \"Fernando\",\n  \"last_name\": \"Calmet\",\n  \"gender\": \"Male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/users/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a11efdd5-0891-405e-8a2f-340a7949a76b",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Status code is 204\"] = responseCode.code === 204;",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/users/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbbb48d5-82fc-4b50-9fea-45ce0f414af2",
+								"exec": [
+									"tests[\"Response time is less than 350ms\"] = responseTime < 350;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/users/search/fernando",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"search",
+								"fernando"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Profiles",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16bc901b-a0df-4972-a933-1c366e114afa",
+								"exec": [
+									"tests[\"Response time is less than 300ms\"] = responseTime < 300;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"Created\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"biography\": \"Hello World!\"\n}"
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/profiles",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2cf4523-8c9f-419e-b8aa-9f13f2f3bfb7",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/profiles",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eec104fb-66df-4e67-ac93-b330cb663bf3",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/profiles/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ef3dbf0-2a11-4cfa-9377-cfbc960c8e70",
+								"exec": [
+									"tests[\"Response time is less than 300ms\"] = responseTime < 300;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"biography\": \"Hello World!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/profiles/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a11efdd5-0891-405e-8a2f-340a7949a76b",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Status code is 204\"] = responseCode.code === 204;",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{app_domain}}/api/v1/users/1",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbbb48d5-82fc-4b50-9fea-45ce0f414af2",
+								"exec": [
+									"tests[\"Response time is less than 350ms\"] = responseTime < 350;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{app_domain}}/api/v1/profiles/search/software",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"search",
+								"software"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Info",
+			"item": [
+				{
+					"name": "Get Help",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33fc8bd2-0fdc-4569-ab33-976599fab53d",
+								"exec": [
+									"tests[\"Response time is less than 300ms\"] = responseTime < 300;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches help\"] = responseBody.has(\"help\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_domain}}",
+							"host": [
+								"{{app_domain}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "36dfd508-10fb-4095-8a4d-d1101293cdc1",
+								"exec": [
+									"tests[\"Response time is less than 300ms\"] = responseTime < 300;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_domain}}/status",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c51ade7c-5fe7-4be7-877a-ff6c088d62fc",
+								"exec": [
+									"tests[\"Response time is less than 250ms\"] = responseTime < 250;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"OK\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"fercalmet@gmail.com\",\n    \"password\": \"MyPass123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_domain}}/login",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16bc901b-a0df-4972-a933-1c366e114afa",
+								"exec": [
+									"tests[\"Response time is less than 500ms\"] = responseTime < 500;",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"Created\");",
+									"tests[\"Body matches success\"] = responseBody.has(\"success\");",
+									"tests[\"Body matches message\"] = responseBody.has(\"message\");",
+									"tests[\"Body matches user\"] = responseBody.has(\"id\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"fercalmet@gmail.com\",\n  \"password\": \"MyPass123\",\n  \"first_name\": \"Fernando\",\n  \"last_name\": \"Calmet\",\n  \"gender\": \"Male\",\n  \"birthday\": \"1989-06-09\"\n}"
+						},
+						"url": {
+							"raw": "{{app_domain}}/signup",
+							"host": [
+								"{{app_domain}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

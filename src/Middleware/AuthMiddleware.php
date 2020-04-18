@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Middleware;
 
@@ -6,7 +8,7 @@ use App\Exception\AuthException;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use \Firebase\JWT\JWT;
+use Firebase\JWT\JWT;
 
 class AuthMiddleware
 {

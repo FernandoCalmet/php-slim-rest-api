@@ -5,8 +5,8 @@ PWD := $(dir $(MAKEPATH))
 CONTAINERS := $(shell docker ps -a -q -f "name=slim4-api-crud-sql*")
 
 db:
-	docker-compose exec mysql mysql -e 'DROP DATABASE IF EXISTS example ; CREATE DATABASE example;'
-	docker-compose exec mysql sh -c "mysql example < docker-entrypoint-initdb.d/database.sql"
+	docker-compose exec mysql mysql -e 'DROP DATABASE IF EXISTS slim4_api_crud_sql ; CREATE DATABASE slim4_api_crud_sql;'
+	docker-compose exec mysql sh -c "mysql slim4_api_crud_sql < docker-entrypoint-initdb.d/database.sql"
 
 coverage:
 	docker-compose exec php-fpm sh -c "./vendor/bin/phpunit --coverage-text --coverage-html coverage"

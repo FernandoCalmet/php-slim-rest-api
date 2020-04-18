@@ -1,13 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Service;
 
 use App\Exception\ValidatorException;
-use App\Exception\UsuariosException;
-use App\Exception\RolesException;
-use App\Exception\PermisosException;
-use App\Exception\OperacionesException;
-use App\Exception\ModulosException;
+use App\Exception\UserException;
+use App\Exception\ProfileException;
+use App\Exception\ModuleException;
 use Respect\Validation\Validator as v;
 
 abstract class BaseService
@@ -17,35 +17,43 @@ abstract class BaseService
         return filter_var(getenv('REDIS_ENABLED'), FILTER_VALIDATE_BOOLEAN);
     }
 
-    protected static function validateId(int $id): int
+    protected static function validateUserNames(string $name): string
     {
-        if (!v::length(1, 11)->validate($id)) {
-            throw new ValidatorException('ID no es valido', 400);
+        if (!v::alnum()->length(2, 100)->validate($name)) {
+            throw new UserException('Name no valid.', 400);
         }
-        return $id;
+        return $name;
     }
-
-    protected static function validateEmail(string $correo): string
+   
+    protected static function validateUserGender(string $gender): string
     {
-        $email = filter_var($correo, FILTER_SANITIZE_EMAIL);
+        if (!v::stringType()->length(4, 6)->validate($gender)) {
+            throw new UserException('Gender no valid.', 400);
+        }
+        return $gender;
+    }   
+
+    protected static function validateEmail(string $emailValue): string
+    {
+        $email = filter_var($emailValue, FILTER_SANITIZE_EMAIL);
         if (!v::email()->validate($email)) {
-            throw new ValidatorException('Correo no es valido.', 400);
+            throw new UserException('Email no valid.', 400);
         }
         return $email;
     }
 
-    protected static function validateNombre(string $nombre): string
+    protected static function validateId(int $id): int
     {
-        if (!v::stringType()->length(2, 200)->validate($nombre)) {
-            throw new ValidatorException('Nombre no es valido.', 400);
+        if (!v::length(1, 11)->validate($id)) {
+            throw new ValidatorException('ID no valid', 400);
         }
-        return $nombre;
-    }
+        return $id;
+    }    
 
     protected static function validateDate(string $date): string
     {
         if (!v::date()->validate($date)) {
-            throw new ValidatorException('Formato de Fecha no es valida', 400);
+            throw new ValidatorException('Date format not valid.', 400);
         }
         return $date;
     }
@@ -54,25 +62,41 @@ abstract class BaseService
     {
         /*
         if (!v::dateTime()->validate($datetime)) {
-            throw new ValidatorException('Formato de Fecha no es valida', 400);
+            throw new ValidatorException('Date format not valid.', 400);
         }
         return $datetime;*/
         return $datetime;
     }
 
-    protected static function validateStatus(string $estado): string
+    protected static function validateTitle(string $title): string
     {
-        if (!v::stringType()->length(6, 9)->validate($estado)) {
-            throw new ValidatorException('Estado no es valido.', 400);
+        if (!v::stringType()->length(2, 100)->validate($title)) {
+            throw new ValidatorException('Name/Title no valid.', 400);
         }
-        return $estado;
+        return $title;
     }
-    
-    protected static function validateFoto(string $foto): string
+
+    protected static function validateDescription(string $description): string
     {
-        if (!v::image()->validate($foto)) {
-            throw new ValidatorException('Foto no es valida.', 400);
+        if (!v::stringType()->length(2, 200)->validate($description)) {
+            throw new ValidatorException('Description no valid.', 400);
         }
-        return $foto;
+        return $description;
+    }
+
+    protected static function validateStatus(string $status): string
+    {
+        if (!v::stringType()->length(6, 9)->validate($status)) {
+            throw new ValidatorException('Status no valid.', 400);
+        }
+        return $status;
+    }
+
+    protected static function validateImage(string $image): string
+    {
+        if (!v::image()->validate($image)) {
+            throw new ValidatorException('Image no valid.', 400);
+        }
+        return $image;
     }
 }

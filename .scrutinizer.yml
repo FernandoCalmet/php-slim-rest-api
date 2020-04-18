@@ -6,16 +6,16 @@ build:
     environment:
         variables:
             DB_HOSTNAME: '127.0.0.1'
-            DB_DATABASE: 'example'
+            DB_DATABASE: 'slim4_api_crud_sql'
             DB_USERNAME: 'root'
-            DB_PASSWORD: 'root'
+            DB_PASSWORD: ''
             REDIS_URL: 'localhost'
         php:
             version: 7.3
     project_setup:
         before:
-            - mysql -e "CREATE DATABASE example"
-            - mysql example < database/database.sql
+            - mysql -e "CREATE DATABASE slim4_api_crud_sql"
+            - mysql slim4_api_crud_sql < database/database.sql
         override:
             - php-scrutinizer-run
             -

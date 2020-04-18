@@ -1,60 +1,65 @@
-<?php declare(strict_types=1);
+<?php
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
+declare(strict_types=1);
 
 $app->get('/', 'App\Controller\DefaultController:getHelp');
 $app->get('/status', 'App\Controller\DefaultController:getStatus');
 
+$app->post('/login', \App\Controller\User\Login::class);
+$app->post('/signup', \App\Controller\User\SignUp::class);
+
 $app->group('/api/v1', function () use ($app) {
-  
-    $app->group('/usuarios', function () use ($app) {
-        $app->post('/login', 'App\Controller\Usuarios\Login');
-        $app->get("", "App\Controller\Usuarios\GetAll")->add(new App\Middleware\AuthMiddleware($app));
-        $app->get("/[{id}]", "App\Controller\Usuarios\GetOne")->add(new App\Middleware\AuthMiddleware($app));
-        $app->get('/search/[{query}]', 'App\Controller\Usuarios\Search')->add(new App\Middleware\AuthMiddleware($app));
-        $app->post("", "App\Controller\Usuarios\Create");
-        $app->put("/[{id}]", "App\Controller\Usuarios\Update")->add(new App\Middleware\AuthMiddleware($app));
-        $app->delete("/[{id}]", "App\Controller\Usuarios\Delete")->add(new App\Middleware\AuthMiddleware($app));
-        $app->put("/change_password/[{id}]", "App\Controller\Usuarios\ChangePassword")->add(new App\Middleware\AuthMiddleware($app));
-        $app->put("/change_role/[{id}]", "App\Controller\Usuarios\ChangeRole")->add(new App\Middleware\AuthMiddleware($app));
-    });
+    $app->group('/users', function () use ($app) {
+        $app->get('', \App\Controller\User\GetAll::class);
+        $app->get('/[{id}]', \App\Controller\User\GetOne::class);
+        $app->get('/search/[{query}]', \App\Controller\User\Search::class);
+        $app->post('', \App\Controller\User\Create::class);
+        $app->put('/[{id}]', \App\Controller\User\Update::class);
+        $app->delete('/[{id}]', \App\Controller\User\Delete::class);
+    })->add(new App\Middleware\AuthMiddleware());
+
+    $app->group('/profiles', function () use ($app) {
+        $app->get('', \App\Controller\Profile\GetAll::class);
+        $app->get('/[{id}]', \App\Controller\Profile\GetOne::class);
+        $app->get('/search/[{query}]', \App\Controller\Profile\Search::class);
+        $app->post('', \App\Controller\Profile\Create::class);
+        $app->put('/[{id}]', \App\Controller\Profile\Update::class);
+        $app->delete('/[{id}]', \App\Controller\Profile\Delete::class);
+    })->add(new App\Middleware\AuthMiddleware());
+    
+    $app->group('/modules', function () use ($app) {
+        $app->get('', \App\Controller\Module\GetAll::class);
+        $app->get('/[{id}]', \App\Controller\Module\GetOne::class);
+        $app->get('/search/[{query}]', \App\Controller\Module\Search::class);
+        $app->post('', \App\Controller\Module\Create::class);
+        $app->put('/[{id}]', \App\Controller\Module\Update::class);
+        $app->delete('/[{id}]', \App\Controller\Module\Delete::class);
+    })->add(new App\Middleware\AuthMiddleware());
 
     $app->group('/roles', function () use ($app) {
-        $app->get("", "App\Controller\Roles\GetAll");
-        $app->get("/[{id}]", "App\Controller\Roles\GetOne");
-        $app->get('/search/[{query}]', 'App\Controller\Roles\Search');
-        $app->post("", "App\Controller\Roles\Create");
-        $app->put("/[{id}]", "App\Controller\Roles\Update");
-        $app->delete("/[{id}]", "App\Controller\Roles\Delete");
-    })->add(new App\Middleware\AuthMiddleware($app));   
-   
-    $app->group('/permisos', function () use ($app) {
-        $app->get("", "App\Controller\Permisos\GetAll");
-        $app->get("/[{id}]", "App\Controller\Permisos\GetOne");
-        $app->get('/search/[{query}]', 'App\Controller\Permisos\Search');
-        $app->post("", "App\Controller\Permisos\Create");
-        $app->put("/[{id}]", "App\Controller\Permisos\Update");
-        $app->delete("/[{id}]", "App\Controller\Permisos\Delete");
-    })->add(new App\Middleware\AuthMiddleware($app));
+        $app->get('', \App\Controller\Role\GetAll::class);
+        $app->get('/[{id}]', \App\Controller\Role\GetOne::class);
+        $app->get('/search/[{query}]', \App\Controller\Role\Search::class);
+        $app->post('', \App\Controller\Role\Create::class);
+        $app->put('/[{id}]', \App\Controller\Role\Update::class);
+        $app->delete('/[{id}]', \App\Controller\Role\Delete::class);
+    })->add(new App\Middleware\AuthMiddleware());
 
-    $app->group('/operaciones', function () use ($app) {
-        $app->get("", "App\Controller\Operaciones\GetAll");
-        $app->get("/[{id}]", "App\Controller\Operaciones\GetOne");
-        $app->get('/search/[{query}]', 'App\Controller\Operaciones\Search');
-        $app->post("", "App\Controller\Operaciones\Create");
-        $app->put("/[{id}]", "App\Controller\Operaciones\Update");
-        $app->delete("/[{id}]", "App\Controller\Operaciones\Delete");
-    })->add(new App\Middleware\AuthMiddleware($app));
+    $app->group('/permissions', function () use ($app) {
+        $app->get('', \App\Controller\Permission\GetAll::class);
+        $app->get('/[{id}]', \App\Controller\Permission\GetOne::class);
+        $app->get('/search/[{query}]', \App\Controller\Permission\Search::class);
+        $app->post('', \App\Controller\Permission\Create::class);
+        $app->put('/[{id}]', \App\Controller\Permission\Update::class);
+        $app->delete('/[{id}]', \App\Controller\Permission\Delete::class);
+    })->add(new App\Middleware\AuthMiddleware());
 
-    $app->group('/modulos', function () use ($app) {
-        $app->get("", "App\Controller\Modulos\GetAll");
-        $app->get("/[{id}]", "App\Controller\Modulos\GetOne");
-        $app->get('/search/[{query}]', 'App\Controller\Modulos\Search');
-        $app->post("", "App\Controller\Modulos\Create");
-        $app->put("/[{id}]", "App\Controller\Modulos\Update");
-        $app->delete("/[{id}]", "App\Controller\Modulos\Delete");
-    })->add(new App\Middleware\AuthMiddleware($app));
-
+    $app->group('/operations', function () use ($app) {
+        $app->get('', \App\Controller\Operation\GetAll::class);
+        $app->get('/[{id}]', \App\Controller\Operation\GetOne::class);
+        $app->get('/search/[{query}]', \App\Controller\Operation\Search::class);
+        $app->post('', \App\Controller\Operation\Create::class);
+        $app->put('/[{id}]', \App\Controller\Operation\Update::class);
+        $app->delete('/[{id}]', \App\Controller\Operation\Delete::class);
+    })->add(new App\Middleware\AuthMiddleware());
 });

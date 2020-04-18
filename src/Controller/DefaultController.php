@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -8,7 +10,7 @@ use Slim\Http\Response;
 
 class DefaultController extends BaseController
 {
-    const API_VERSION = '0.4.0';
+    const API_VERSION = '1.0.0';
 
     public function __construct(Container $container)
     {
@@ -19,14 +21,14 @@ class DefaultController extends BaseController
     {
         $url = getenv('APP_DOMAIN');
         $endpoints = [
-            'usuarios' => $url . '/api/v1/usuarios',
-            'roles' => $url . '/api/v1/roles',            
-            'permisos' => $url . '/api/v1/permisos',
-            'operaciones' => $url . '/api/v1/operaciones',
-            'modulos' => $url . '/api/v1/modulos',
-            'docs' => $url . '/docs/index.html',
-            'status' => $url . '/status',
-            'this help' => $url . '',
+            'help' => $url . '',            
+            'status' => $url . '/status',            
+            'profiles' => $url . '/api/v1/profiles',
+            'users' => $url . '/api/v1/users',
+            'modules' => $url . '/api/v1/modules',
+            'operations' => $url . '/api/v1/operations',
+            'permissions' => $url . '/api/v1/permissions',
+            'roles' => $url . '/api/v1/roles',
         ];
         $message = [
             'endpoints' => $endpoints,
@@ -52,18 +54,20 @@ class DefaultController extends BaseController
 
     private function getDbStats(): array
     {
-        $usuariosService = $this->container->get('usuarios_service');
-        $rolesService = $this->container->get('roles_service');      
-        $permisosService = $this->container->get('permisos_service');
-        $operacionesService = $this->container->get('operaciones_service');
-        $modulosService = $this->container->get('modulos_service');
+        $userService = $this->container->get('user_service');
+        $profileService = $this->container->get('profile_service');
+        $moduleService = $this->container->get('get_all_module_service');
+        $operationService = $this->container->get('get_all_operation_service');
+        $permissionService = $this->container->get('get_all_permission_service');
+        $roleService = $this->container->get('get_all_role_service');        
 
         return [
-            'usuarios' => count($usuariosService->getAll()),
-            'roles' => count($rolesService->getAll()),           
-            'permisos' => count($permisosService->getAll()),
-            'operaciones' => count($operacionesService->getAll()),
-            'modulos' => count($modulosService->getAll())     
+            'users' => count($userService->getAll()),
+            'profiles' => count($profileService->getAllProfiles()),
+            'modules' => count($moduleService->getAll()),
+            'operations' => count($operationService->getAll()),
+            'permissions' => count($permissionService->getAll()),
+            'roles' => count($roleService->getAll())
         ];
     }
 

@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Service;
 
 class RedisService
 {
-    const PROJECT_NAME = 'slim4-api';
+    const PROJECT_NAME = 'slim4-api-crud-sql';
 
     protected $redis;
 

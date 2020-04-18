@@ -3,7 +3,7 @@ version: '3'
 services:
   nginx:
     image: nginx:latest
-    container_name: slim4-api-crud-sql-api-nginx-container
+    container_name: slim4-api-crud-sql-nginx-container
     ports:
       - "8081:80"
     volumes:
@@ -14,23 +14,34 @@ services:
 
   php-fpm:
     build: ./docker/php7
-    container_name: slim4-api-crud-sql-api-container
+    container_name: slim4-api-crud-sql-php-container
     links:
       - mysql
+      - redis
     environment:
       - PHP_FPM_ENABLE=1
       - PHP_FPM_SERVER_ADDR=php
       - PHP_FPM_SERVER_PORT=9000
       - PHP_FPM_TIMEOUT=${HTTPD_TIMEOUT_TO_PHP_FPM:-180}
       - DB_HOSTNAME=mysql
-      - DB_DATABASE=example
+      - DB_DATABASE=rest_api_promout
       - DB_USERNAME=root
-      - DB_PASSWORD=root
+      - DB_PASSWORD=
 
     volumes:
-     - ./:/var/www/html
+      - ./:/var/www/html
     networks:
       - testingnetwork
+
+  redis:
+    image: redis:4.0.5-alpine
+    ports:
+      - 63790:6379
+    hostname: redis
+    networks:
+      - testingnetwork
+    volumes:
+      - redis-data:/data
 
   mysql:
     image: mysql:5.7
@@ -38,14 +49,15 @@ services:
       - 33060:3306
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: example
+      MYSQL_DATABASE: slim4_api_crud_sql
       MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_PASSWORD: 
       MYSQL_ROOT_PASSWORD: 
     networks:
       - testingnetwork
     volumes:
       - my-data:/var/lib/mysql
+      - ./database/database.sql:/docker-entrypoint-initdb.d/database.sql
 
 networks:
   testingnetwork:
@@ -53,4 +65,5 @@ networks:
       name: testingnetwork
 
 volumes:
+  redis-data:  
   my-data:

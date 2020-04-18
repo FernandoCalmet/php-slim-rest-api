@@ -1,0 +1,7 @@
+{
+    "name": "slim4-api-crud-sql",
+    "description": "Slim4 Restful CRUD Application",
+    "repository": "https://github.com/fernandocalmet/slim4-api-crud-sql",
+    "logo": "https://raw.githubusercontent.com/fernandocalmet/slim4-api-crud-sql/master/extras/img/php-logo.jpg",
+    "keywords": ["slim4-api-crud-sql", "api-restful"]
+}
