@@ -109,6 +109,8 @@ Run all PHPUnit tests with `composer test`.
 
 ## DOCUMENTATION:
 
+![Database diagram](extras/img/database.png)
+
 ### ENDPOINTS:
 
 #### INFO:
