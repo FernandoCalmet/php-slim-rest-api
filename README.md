@@ -113,6 +113,11 @@ Run all PHPUnit tests with `composer test`.
 
 ### ENDPOINTS:
 
+##### IMPORT WITH POSTMAN:
+All the information of the API, prepared to download and use as postman collection: [Import Collection](https://www.getpostman.com/collections/cb7f3d187ce635836339).
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/cb7f3d187ce635836339)
+
 #### INFO:
 - Help: `GET /`
 - Status: `GET /status`
