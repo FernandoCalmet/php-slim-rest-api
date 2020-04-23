@@ -21,7 +21,7 @@ abstract class Base extends BaseController
         return $this->container->get('user_service');
     }
 
-    protected function checkUserPermissions($userId, $userIdLogged)
+    protected function checkUserPermissions(int $userId, int $userIdLogged): void
     {
         if ($userId != $userIdLogged) {
             throw new UserException('User permission failed.', 400);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Role;
 
-class Delete extends BaseRoleService
+final class Delete extends BaseRoleService
 {
     public function delete(int $roleId)
     {

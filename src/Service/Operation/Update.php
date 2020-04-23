@@ -6,7 +6,7 @@ namespace App\Service\Operation;
 
 use App\Exception\OperationException;
 
-class Update extends BaseOperationService
+final class Update extends BaseOperationService
 {
     public function update($input, int $operationId)
     {

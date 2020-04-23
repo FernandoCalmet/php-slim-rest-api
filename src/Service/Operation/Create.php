@@ -6,7 +6,7 @@ namespace App\Service\Operation;
 
 use App\Exception\OperationException;
 
-class Create extends BaseOperationService
+final class Create extends BaseOperationService
 {
     public function create($input)
     {

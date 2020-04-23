@@ -1979,7 +1979,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"fercalmet@gmail.com\",\n    \"password\": \"MyPass123\"\n}",
+							"raw": "{\n    \"email\": \"fercalmet@gmail.com\",\n    \"password\": \"AnyPass1000\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2030,7 +2030,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"fercalmet@gmail.com\",\n  \"password\": \"MyPass123\",\n  \"first_name\": \"Fernando\",\n  \"last_name\": \"Calmet\",\n  \"gender\": \"Male\",\n  \"birthday\": \"1989-06-09\"\n}"
+							"raw": "{\n  \"email\": \"fercalmet@gmail.com\",\n  \"password\": \"AnyPass1000\",\n  \"first_name\": \"Fernando\",\n  \"last_name\": \"Calmet\",\n  \"gender\": \"Male\",\n  \"birthday\": \"1989-01-01\"\n}"
 						},
 						"url": {
 							"raw": "{{app_domain}}/signup",

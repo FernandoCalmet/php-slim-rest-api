@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Module;
 
-class Delete extends BaseModuleService
+final class Delete extends BaseModuleService
 {
     public function delete(int $moduleId)
     {

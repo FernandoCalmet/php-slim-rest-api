@@ -6,12 +6,15 @@ namespace Tests\integration;
 
 class ProfileTest extends BaseTestCase
 {
+    /**
+     * @var int
+     */
     private static $id;
 
     /**
      * Test Get All Profiles.
      */
-    public function testGetProfiles()
+    public function testGetProfiles(): void
     {
         $response = $this->runApp('GET', '/api/v1/profiles');
 
@@ -29,7 +32,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Get One Profile.
      */
-    public function testGetProfile()
+    public function testGetProfile(): void
     {
         $response = $this->runApp('GET', '/api/v1/profiles/1');
 
@@ -47,7 +50,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Get Profile Not Found.
      */
-    public function testGetProfileNotFound()
+    public function testGetProfileNotFound(): void
     {
         $response = $this->runApp('GET', '/api/v1/profiles/123456789');
 
@@ -63,7 +66,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Search All Profiles.
      */
-    public function testSearchAllProfiles()
+    public function testSearchAllProfiles(): void
     {
         $response = $this->runApp('GET', '/api/v1/profiles/search/');
 
@@ -81,7 +84,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Search Profiles By Name.
      */
-    public function testSearchProfilesByName()
+    public function testSearchProfilesByName(): void
     {
         $response = $this->runApp('GET', '/api/v1/profiles/search/cine');
 
@@ -99,7 +102,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Search Profiles with Status Done.
      */
-    public function testSearchProfilesWithStatusDone()
+    public function testSearchProfilesWithStatusDone(): void
     {
         $response = $this->runApp('GET', '/api/v1/profiles/search/?status=1');
 
@@ -117,7 +120,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Search Profiles with status = 0.
      */
-    public function testSearchProfilesWithStatusToDo()
+    public function testSearchProfilesWithStatusToDo(): void
     {
         $response = $this->runApp('GET', '/api/v1/profiles/search/?status=0');
 
@@ -135,7 +138,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Create Profile.
      */
-    public function testCreateProfile()
+    public function testCreateProfile(): void
     {
         $response = $this->runApp(
             'POST', '/api/v1/profiles', ['name' => 'New Profile', 'description' => 'My Desc.']
@@ -157,7 +160,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Get Profile Created.
      */
-    public function testGetProfileCreated()
+    public function testGetProfileCreated(): void
     {
         $response = $this->runApp('GET', '/api/v1/profiles/' . self::$id);
 
@@ -175,7 +178,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Create Profile Without Name.
      */
-    public function testCreateProfileWithOutProfileName()
+    public function testCreateProfileWithOutProfileName(): void
     {
         $response = $this->runApp('POST', '/api/v1/profiles');
 
@@ -191,7 +194,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Create Profile With Invalid ProfileName.
      */
-    public function testCreateProfileWithInvalidProfileName()
+    public function testCreateProfileWithInvalidProfileName(): void
     {
         $response = $this->runApp(
             'POST', '/api/v1/profiles', ['name' => 'z', 'status' => 1]
@@ -208,7 +211,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Create Profile With Invalid Status.
      */
-    public function testCreateProfileWithInvalidStatus()
+    public function testCreateProfileWithInvalidStatus(): void
     {
         $response = $this->runApp(
             'POST', '/api/v1/profiles', ['name' => 'ToDo', 'status' => 123]
@@ -225,7 +228,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Create Profile Without Authorization Bearer JWT.
      */
-    public function testCreateProfileWithoutBearerJWT()
+    public function testCreateProfileWithoutBearerJWT(): void
     {
         $auth = self::$jwt;
         self::$jwt = '';
@@ -245,7 +248,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Create Profile With Invalid JWT.
      */
-    public function testCreateProfileWithInvalidJWT()
+    public function testCreateProfileWithInvalidJWT(): void
     {
         $auth = self::$jwt;
         self::$jwt = 'invalidToken';
@@ -265,7 +268,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Create Profile With Forbidden JWT.
      */
-    public function testCreateProfileWithForbiddenJWT()
+    public function testCreateProfileWithForbiddenJWT(): void
     {
         $auth = self::$jwt;
         self::$jwt = 'Bearer eyJ0eXAiOiJK1NiJ9.eyJzdWIiOiI4Ii';
@@ -285,7 +288,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Update Profile.
      */
-    public function testUpdateProfile()
+    public function testUpdateProfile(): void
     {
         $response = $this->runApp(
             'PUT', '/api/v1/profiles/' . self::$id,
@@ -306,7 +309,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Update Profile Without Send Data.
      */
-    public function testUpdateProfileWithOutSendData()
+    public function testUpdateProfileWithOutSendData(): void
     {
         $response = $this->runApp('PUT', '/api/v1/profiles/' . self::$id);
 
@@ -322,7 +325,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Update Profile Not Found.
      */
-    public function testUpdateProfileNotFound()
+    public function testUpdateProfileNotFound(): void
     {
         $response = $this->runApp(
             'PUT', '/api/v1/profiles/123456789', ['name' => 'Profile']
@@ -340,7 +343,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Delete Profile.
      */
-    public function testDeleteProfile()
+    public function testDeleteProfile(): void
     {
         $response = $this->runApp('DELETE', '/api/v1/profiles/' . self::$id);
 
@@ -355,7 +358,7 @@ class ProfileTest extends BaseTestCase
     /**
      * Test Delete Profile Not Found.
      */
-    public function testDeleteProfileNotFound()
+    public function testDeleteProfileNotFound(): void
     {
         $response = $this->runApp('DELETE', '/api/v1/profiles/123456789');
 

@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace App\Exception;
 
-class OperationException extends BaseException
+final class OperationException extends BaseException
 {
 }

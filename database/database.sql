@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Records of `users`
 -- ----------------------------
 INSERT INTO `users` (`email`, `password`, `first_name`, `last_name`, `gender`, `birthday`) VALUES
-('fercalmet@gmail.com', '99df370c45489026545455495c95f3c13d4c877aa5663b9988651f1cddd1420ae19719b11b49a76197c18a97b7a96210718412b72f18f22c425dde8704207952', 'Fernando', 'Calmet', 'Male', '1989-06-09');
+('fercalmet@gmail.com', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e', 'Fernando', 'Calmet', 'Male', '1989-01-01');
 
 -- ----------------------------
 -- Table structure for `profiles`

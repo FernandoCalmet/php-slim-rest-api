@@ -7,7 +7,7 @@ namespace App\Controller\Role;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class GetAll extends Base
+final class GetAll extends Base
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {

@@ -10,7 +10,7 @@ use App\Repository\OperationRepository;
 
 abstract class BaseOperationService extends BaseService
 {
-    const REDIS_KEY = 'operation:%s';
+    private const REDIS_KEY = 'operation:%s';
 
     /**
      * @var OperationRepository
@@ -33,14 +33,14 @@ abstract class BaseOperationService extends BaseService
         return $this->operationRepository->checkAndGetOperation($operationId);
     }
 
-    public function saveInCache($id, $operation)
+    public function saveInCache($id, $operation): void
     {
         $redisKey = sprintf(self::REDIS_KEY, $id);
         $key = $this->redisService->generateKey($redisKey);
         $this->redisService->setex($key, $operation);
     }
 
-    public function deleteFromCache($operationId)
+    public function deleteFromCache($operationId): void
     {
         $redisKey = sprintf(self::REDIS_KEY, $operationId);
         $key = $this->redisService->generateKey($redisKey);

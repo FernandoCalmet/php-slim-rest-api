@@ -6,14 +6,14 @@ namespace App\Repository;
 
 use App\Exception\RoleException;
 
-class RoleRepository extends BaseRepository
+final class RoleRepository extends BaseRepository
 {
     public function __construct(\PDO $database)
     {
         $this->database = $database;
     }
 
-    public function checkAndGetRole(int $roleId)
+    public function checkAndGetRole(int $roleId): object
     {
         $query = 'SELECT * FROM `roles` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
@@ -64,7 +64,7 @@ class RoleRepository extends BaseRepository
         return $this->checkAndGetRole((int) $this->database->lastInsertId());
     }
 
-    public function updateRole($role)
+    public function updateRole($role): object
     {
         $query = 'UPDATE `roles` SET `name` = :name, `description` = :description WHERE `id` = :id';
         $statement = $this->database->prepare($query);
@@ -76,7 +76,7 @@ class RoleRepository extends BaseRepository
         return $this->checkAndGetRole((int) $role->id);
     }
 
-    public function deleteRole(int $roleId)
+    public function deleteRole(int $roleId): void
     {
         $query = 'DELETE FROM `roles` WHERE `id` = :id';
         $statement = $this->database->prepare($query);

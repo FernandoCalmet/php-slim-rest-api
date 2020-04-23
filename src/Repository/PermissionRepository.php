@@ -6,14 +6,14 @@ namespace App\Repository;
 
 use App\Exception\PermissionException;
 
-class PermissionRepository extends BaseRepository
+final class PermissionRepository extends BaseRepository
 {
     public function __construct(\PDO $database)
     {
         $this->database = $database;
     }
 
-    public function checkAndGetPermission(int $permissionId)
+    public function checkAndGetPermission(int $permissionId): object
     {
         $query = 'SELECT * FROM `permissions` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
@@ -64,7 +64,7 @@ class PermissionRepository extends BaseRepository
         return $this->checkAndGetPermission((int) $this->database->lastInsertId());
     }
 
-    public function updatePermission($permission)
+    public function updatePermission($permission): object
     {
         $query = 'UPDATE `permissions` SET `role_id` = :role_id, `operation_id` = :operation_id WHERE `id` = :id';
         $statement = $this->database->prepare($query);
@@ -76,7 +76,7 @@ class PermissionRepository extends BaseRepository
         return $this->checkAndGetPermission((int) $permission->id);
     }
 
-    public function deletePermission(int $permissionId)
+    public function deletePermission(int $permissionId): void
     {
         $query = 'DELETE FROM `permissions` WHERE `id` = :id';
         $statement = $this->database->prepare($query);

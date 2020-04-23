@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Role;
 
-class GetOne extends BaseRoleService
+final class GetOne extends BaseRoleService
 {
     public function getOne(int $roleId)
     {

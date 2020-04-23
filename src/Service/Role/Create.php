@@ -6,7 +6,7 @@ namespace App\Service\Role;
 
 use App\Exception\RoleException;
 
-class Create extends BaseRoleService
+final class Create extends BaseRoleService
 {
     public function create($input)
     {

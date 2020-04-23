@@ -10,7 +10,7 @@ use App\Repository\RoleRepository;
 
 abstract class BaseRoleService extends BaseService
 {
-    const REDIS_KEY = 'role:%s';
+    private const REDIS_KEY = 'role:%s';
 
     /**
      * @var RoleRepository
@@ -33,14 +33,14 @@ abstract class BaseRoleService extends BaseService
         return $this->roleRepository->checkAndGetRole($roleId);
     }
 
-    public function saveInCache($id, $role)
+    public function saveInCache($id, $role): void
     {
         $redisKey = sprintf(self::REDIS_KEY, $id);
         $key = $this->redisService->generateKey($redisKey);
         $this->redisService->setex($key, $role);
     }
 
-    public function deleteFromCache($roleId)
+    public function deleteFromCache($roleId): void
     {
         $redisKey = sprintf(self::REDIS_KEY, $roleId);
         $key = $this->redisService->generateKey($redisKey);

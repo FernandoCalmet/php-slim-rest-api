@@ -10,7 +10,7 @@ use App\Repository\PermissionRepository;
 
 abstract class BasePermissionService extends BaseService
 {
-    const REDIS_KEY = 'permission:%s';
+    private const REDIS_KEY = 'permission:%s';
 
     /**
      * @var PermissionRepository
@@ -33,14 +33,14 @@ abstract class BasePermissionService extends BaseService
         return $this->permissionRepository->checkAndGetPermission($permissionId);
     }
 
-    public function saveInCache($id, $permission)
+    public function saveInCache($id, $permission): void
     {
         $redisKey = sprintf(self::REDIS_KEY, $id);
         $key = $this->redisService->generateKey($redisKey);
         $this->redisService->setex($key, $permission);
     }
 
-    public function deleteFromCache($permissionId)
+    public function deleteFromCache($permissionId): void
     {
         $redisKey = sprintf(self::REDIS_KEY, $permissionId);
         $key = $this->redisService->generateKey($redisKey);

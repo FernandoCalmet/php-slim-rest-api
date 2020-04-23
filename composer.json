@@ -20,6 +20,7 @@
     },
     "require-dev": {
         "maurobonfietti/skel-api-slim-php-crud-generator": "dev-master",
+        "nunomaduro/phpinsights": "^1.14",
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^9.0",
         "symfony/console": "^3.3"
@@ -36,10 +37,16 @@
     },
     "minimum-stability": "dev",    
     "scripts": {
+        "post-create-project-cmd": [
+            "# Copy default environment variables:",
+            "php -r \"copy('.env.example', '.env');\""
+        ],
+        "phpstan": "./vendor/bin/phpstan analyse src tests --level=6",
         "coverage": "phpunit --coverage-html=coverage --coverage-text",
         "test": "phpunit",
-        "database": "php extras/bin/restart-api.sh",
+        "database": "extras/bin/restart-api.sh",
         "restart": "php extras/bin/restart-api.sh",
+        "restart-db": "php extras/bin/restart-db.php",
         "migration": "php extras/bin/migration.php",
         "crud": "php console api:generate:endpoints",
         "up": "docker-compose up -d --build",

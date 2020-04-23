@@ -6,14 +6,14 @@ namespace App\Repository;
 
 use App\Exception\ProfileException;
 
-class ProfileRepository extends BaseRepository
+final class ProfileRepository extends BaseRepository
 {
     public function __construct(\PDO $database)
     {
         $this->database = $database;
     }
 
-    public function checkAndGetProfile(int $profileId, int $userId)
+    public function checkAndGetProfile(int $profileId, int $userId): object
     {
         $query = 'SELECT * FROM `profiles` WHERE `id` = :id AND `user_id` = :userId';
         $statement = $this->getDb()->prepare($query);
@@ -76,7 +76,7 @@ class ProfileRepository extends BaseRepository
         ";
     }
 
-    public function create($profile)
+    public function create($profile): object
     {
         $query = '
             INSERT INTO `profiles` (`biography`, `status`, `user_id`)
@@ -91,7 +91,7 @@ class ProfileRepository extends BaseRepository
         return $this->checkAndGetProfile((int) $this->database->lastInsertId(), (int) $profile->user_id);
     }
 
-    public function update($profile)
+    public function update($profile): object
     {
         $query = '
             UPDATE `profiles`

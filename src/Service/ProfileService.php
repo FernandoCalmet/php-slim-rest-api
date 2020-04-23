@@ -7,12 +7,18 @@ namespace App\Service;
 use App\Exception\ProfileException;
 use App\Repository\ProfileRepository;
 
-class ProfileService extends BaseService
+final class ProfileService extends BaseService
 {
-    const REDIS_KEY = 'profile:%s:user:%s';
+    private const REDIS_KEY = 'profile:%s:user:%s';
 
+    /**
+     * @var ProfileRepository
+     */
     protected $profileRepository;
 
+    /**
+     * @var RedisService
+     */
     protected $redisService;
 
     public function __construct(ProfileRepository $profileRepository, RedisService $redisService)
@@ -72,14 +78,14 @@ class ProfileService extends BaseService
         return $this->getProfileRepository()->search($profilesName, $userId, $status);
     }
 
-    public function saveInCache($profileId, $userId, $profiles)
+    public function saveInCache($profileId, $userId, $profiles): void
     {
         $redisKey = sprintf(self::REDIS_KEY, $profileId, $userId);
         $key = $this->redisService->generateKey($redisKey);
         $this->redisService->setex($key, $profiles);
     }
 
-    public function deleteFromCache($profileId, $userId)
+    public function deleteFromCache($profileId, $userId): void
     {
         $redisKey = sprintf(self::REDIS_KEY, $profileId, $userId);
         $key = $this->redisService->generateKey($redisKey);

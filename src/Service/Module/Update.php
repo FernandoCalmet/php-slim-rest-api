@@ -6,7 +6,7 @@ namespace App\Service\Module;
 
 use App\Exception\ModuleException;
 
-class Update extends BaseModuleService
+final class Update extends BaseModuleService
 {
     public function update($input, int $moduleId)
     {

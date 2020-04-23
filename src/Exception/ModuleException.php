@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace App\Exception;
 
-class ModuleException extends BaseException
+final class ModuleException extends BaseException
 {
 }

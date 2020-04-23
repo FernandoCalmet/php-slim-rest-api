@@ -10,7 +10,7 @@ use App\Repository\ModuleRepository;
 
 abstract class BaseModuleService extends BaseService
 {
-    const REDIS_KEY = 'module:%s';
+    private const REDIS_KEY = 'module:%s';
 
     /**
      * @var ModuleRepository
@@ -33,14 +33,14 @@ abstract class BaseModuleService extends BaseService
         return $this->moduleRepository->checkAndGetModule($moduleId);
     }
 
-    public function saveInCache($id, $module)
+    public function saveInCache($id, $module): void
     {
         $redisKey = sprintf(self::REDIS_KEY, $id);
         $key = $this->redisService->generateKey($redisKey);
         $this->redisService->setex($key, $module);
     }
 
-    public function deleteFromCache($moduleId)
+    public function deleteFromCache($moduleId): void
     {
         $redisKey = sprintf(self::REDIS_KEY, $moduleId);
         $key = $this->redisService->generateKey($redisKey);

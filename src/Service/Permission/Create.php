@@ -6,7 +6,7 @@ namespace App\Service\Permission;
 
 use App\Exception\PermissionException;
 
-class Create extends BasePermissionService
+final class Create extends BasePermissionService
 {
     public function create($input)
     {

@@ -6,12 +6,15 @@ namespace Tests\integration;
 
 class ModuleTest extends BaseTestCase
 {
+    /**
+     * @var int
+     */
     private static $id;
 
     /**
      * Test Get All Modules.
      */
-    public function testGetModules()
+    public function testGetModules(): void
     {
         $response = $this->runApp('GET', '/api/v1/modules');
 
@@ -32,7 +35,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Get One Module.
      */
-    public function testGetModule()
+    public function testGetModule(): void
     {
         $response = $this->runApp('GET', '/api/v1/modules/1');
 
@@ -50,7 +53,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Get Module Not Found.
      */
-    public function testGetModuleNotFound()
+    public function testGetModuleNotFound(): void
     {
         $response = $this->runApp('GET', '/api/v1/modules/123456789');
 
@@ -67,7 +70,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Search Modules.
      */
-    public function testSearchModules()
+    public function testSearchModules(): void
     {
         $response = $this->runApp('GET', '/api/v1/modules/search/n');
 
@@ -84,7 +87,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Search Module Not Found.
      */
-    public function testSearchModuleNotFound()
+    public function testSearchModuleNotFound(): void
     {
         $response = $this->runApp('GET', '/api/v1/modules/search/123456789');
 
@@ -100,7 +103,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Create Module.
      */
-    public function testCreateModule()
+    public function testCreateModule(): void
     {
         $response = $this->runApp(
             'POST', '/api/v1/modules',
@@ -123,7 +126,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Get Module Created.
      */
-    public function testGetModuleCreated()
+    public function testGetModuleCreated(): void
     {
         $response = $this->runApp('GET', '/api/v1/modules/' . self::$id);
 
@@ -141,7 +144,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Create Module Without Name.
      */
-    public function testCreateModuleWithoutName()
+    public function testCreateModuleWithoutName(): void
     {
         $response = $this->runApp('POST', '/api/v1/modules');
 
@@ -157,7 +160,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Create Module With Invalid Name.
      */
-    public function testCreateModuleWithInvalidName()
+    public function testCreateModuleWithInvalidName(): void
     {
         $response = $this->runApp(
             'POST', '/api/v1/modules',
@@ -176,7 +179,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Update Module.
      */
-    public function testUpdateModule()
+    public function testUpdateModule(): void
     {
         $response = $this->runApp(
             'PUT', '/api/v1/modules/' . self::$id,
@@ -197,7 +200,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Update Module Without Send Data.
      */
-    public function testUpdateModuleWithOutSendData()
+    public function testUpdateModuleWithOutSendData(): void
     {
         $response = $this->runApp('PUT', '/api/v1/modules/' . self::$id);
 
@@ -215,7 +218,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Update Module Not Found.
      */
-    public function testUpdateModuleNotFound()
+    public function testUpdateModuleNotFound(): void
     {
         $response = $this->runApp(
             'PUT', '/api/v1/modules/123456789', ['name' => 'Module']
@@ -235,7 +238,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Delete Module.
      */
-    public function testDeleteModule()
+    public function testDeleteModule(): void
     {
         $response = $this->runApp('DELETE', '/api/v1/modules/' . self::$id);
 
@@ -250,7 +253,7 @@ class ModuleTest extends BaseTestCase
     /**
      * Test Delete Module Not Found.
      */
-    public function testDeleteModuleNotFound()
+    public function testDeleteModuleNotFound(): void
     {
         $response = $this->runApp('DELETE', '/api/v1/modules/123456789');
 

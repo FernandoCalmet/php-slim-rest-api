@@ -6,14 +6,14 @@ namespace App\Repository;
 
 use App\Exception\UserException;
 
-class UserRepository extends BaseRepository
+final class UserRepository extends BaseRepository
 {
     public function __construct(\PDO $database)
     {
         $this->database = $database;
     }
 
-    public function getUser(int $userId)
+    public function getUser(int $userId): object
     {
         $query = '
             SELECT 
@@ -38,7 +38,7 @@ class UserRepository extends BaseRepository
         return $user;
     }
 
-    public function checkUserByEmail(string $email)
+    public function checkUserByEmail(string $email): void
     {
         $query = 'SELECT * FROM `users` WHERE `email` = :email';
         $statement = $this->database->prepare($query);
@@ -82,7 +82,7 @@ class UserRepository extends BaseRepository
         return $users;
     }
 
-    public function loginUser(string $email, string $password)
+    public function loginUser(string $email, string $password): object
     {
         $query = '
             SELECT 
@@ -111,7 +111,7 @@ class UserRepository extends BaseRepository
         return $user;
     }      
 
-    public function create($user)
+    public function create($user): object
     {
         $query = '
             INSERT INTO `users` (
@@ -142,7 +142,7 @@ class UserRepository extends BaseRepository
         return $this->getUser((int) $this->database->lastInsertId());
     }
 
-    public function update($user)
+    public function update($user): object
     {
         $query = '
             UPDATE `users` 
@@ -174,7 +174,7 @@ class UserRepository extends BaseRepository
         return 'User was successfully removed.';
     }
 
-    public function deleteUserProfile(int $userId)
+    public function deleteUserProfile(int $userId): void
     {
         $query = 'DELETE FROM `profiles` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
@@ -182,7 +182,7 @@ class UserRepository extends BaseRepository
         $statement->execute();
     }    
 
-    public function signup($user)
+    public function signup($user): object
     {
         $query = '
             INSERT INTO `users` (
@@ -213,7 +213,7 @@ class UserRepository extends BaseRepository
         return $this->getUser((int) $this->database->lastInsertId());
     }
 
-    public function createUserProfile(int $userId)
+    public function createUserProfile(int $userId): void
     {
         $query = '
             INSERT INTO `profiles` (`user_id`)

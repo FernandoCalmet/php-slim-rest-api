@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace App\Exception;
 
-class ValidatorException extends BaseException
+final class ValidatorException extends BaseException
 {
 }

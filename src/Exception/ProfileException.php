@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace App\Exception;
 
-class ProfileException extends BaseException
+final class ProfileException extends BaseException
 {
 }

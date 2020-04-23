@@ -6,14 +6,14 @@ namespace App\Repository;
 
 use App\Exception\ModuleException;
 
-class ModuleRepository extends BaseRepository
+final class ModuleRepository extends BaseRepository
 {
     public function __construct(\PDO $database)
     {
         $this->database = $database;
     }
 
-    public function checkAndGetModule(int $moduleId)
+    public function checkAndGetModule(int $moduleId): object
     {
         $query = 'SELECT * FROM `modules` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
@@ -64,7 +64,7 @@ class ModuleRepository extends BaseRepository
         return $this->checkAndGetModule((int) $this->database->lastInsertId());
     }
 
-    public function updateModule($module)
+    public function updateModule($module): object
     {
         $query = '
             UPDATE `modules` SET `name` = :name, `description` = :description WHERE `id` = :id';
@@ -77,7 +77,7 @@ class ModuleRepository extends BaseRepository
         return $this->checkAndGetModule((int) $module->id);
     }
 
-    public function deleteModule(int $moduleId)
+    public function deleteModule(int $moduleId): void
     {
         $query = 'DELETE FROM `modules` WHERE `id` = :id';
         $statement = $this->database->prepare($query);

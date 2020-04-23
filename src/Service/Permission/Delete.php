@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Permission;
 
-class Delete extends BasePermissionService
+final class Delete extends BasePermissionService
 {
     public function delete(int $permissionId)
     {

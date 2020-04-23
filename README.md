@@ -30,8 +30,8 @@ You can create a new project by running the following commands:
 ```bash
 $ composer create-project fernandocalmet/slim4-api-crud-sql [my-api-name]
 $ cd [my-api-name]
-$ cp .env.example .env
-$ composer database
+$ composer restart-db
+$ composer test
 $ composer start
 ```
 
@@ -44,7 +44,8 @@ In your terminal run these commands:
 $ git clone https://github.com/fernandocalmet/slim4-api-crud-sql.git && cd slim4-api-crud-sql
 $ cp .env.example .env
 $ composer install
-$ composer database
+$ composer restart-db
+$ composer test
 $ composer start
 ```
 
@@ -101,7 +102,7 @@ $ composer migration
 - [phpunit/phpunit](https://github.com/sebastianbergmann/phpunit): The PHP Unit Testing framework.
 - [phpstan/phpstan](https://github.com/phpstan/phpstan): PHPStan - PHP Static Analysis Tool.
 - [symfony/console](https://github.com/symfony/console): The Console component eases the creation of beautiful and testable command line interfaces.
-
+- [nunomaduro/phpinsights](https://github.com/nunomaduro/phpinsights): Instant PHP quality checks from your console.
 
 ## TESTS:
 

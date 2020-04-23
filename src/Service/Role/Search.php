@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Role;
 
-class Search extends BaseRoleService
+final class Search extends BaseRoleService
 {
     public function search(string $rolesName): array
     {

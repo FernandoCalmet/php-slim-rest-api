@@ -6,7 +6,7 @@ namespace App\Service\Role;
 
 use App\Exception\RoleException;
 
-class Update extends BaseRoleService
+final class Update extends BaseRoleService
 {
     public function update($input, int $roleId)
     {

@@ -6,7 +6,7 @@ namespace App\Service\Module;
 
 use App\Exception\ModuleException;
 
-class Create extends BaseModuleService
+final class Create extends BaseModuleService
 {
     public function create($input)
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Module;
 
-class GetOne extends BaseModuleService
+final class GetOne extends BaseModuleService
 {
     public function getOne(int $moduleId)
     {

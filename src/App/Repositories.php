@@ -12,26 +12,26 @@ use Psr\Container\ContainerInterface;
 
 $container = $app->getContainer();
 
-$container['user_repository'] = function (ContainerInterface $container): UserRepository {
+$container['user_repository'] = static function (ContainerInterface $container): UserRepository {
     return new UserRepository($container->get('db'));
 };
 
-$container['profile_repository'] = function (ContainerInterface $container): ProfileRepository {
+$container['profile_repository'] = static function (ContainerInterface $container): ProfileRepository {
     return new ProfileRepository($container->get('db'));
 };
 
-$container['module_repository'] = function (ContainerInterface $container): ModuleRepository {
+$container['module_repository'] = static function (ContainerInterface $container): ModuleRepository {
     return new ModuleRepository($container->get('db'));
 };
 
-$container['role_repository'] = function (ContainerInterface $container): RoleRepository {
+$container['role_repository'] = static function (ContainerInterface $container): RoleRepository {
     return new RoleRepository($container->get('db'));
 };
 
-$container['permission_repository'] = function (ContainerInterface $container): PermissionRepository {
+$container['permission_repository'] = static function (ContainerInterface $container): PermissionRepository {
     return new PermissionRepository($container->get('db'));
 };
 
-$container['operation_repository'] = function (ContainerInterface $container): OperationRepository {
+$container['operation_repository'] = static function (ContainerInterface $container): OperationRepository {
     return new OperationRepository($container->get('db'));
 };

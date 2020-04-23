@@ -8,20 +8,21 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class DefaultController extends BaseController
+final class DefaultController extends BaseController
 {
-    const API_VERSION = '1.0.0';
+    const API_VERSION = '1.1.0';
 
     public function __construct(Container $container)
     {
         $this->container = $container;
     }
 
-    public function getHelp(Request $request, Response $response, array $args): Response
+    public function getHelp(Request $request, Response $response): Response
     {
         $url = getenv('APP_DOMAIN');
         $endpoints = [
-            'help' => $url . '',            
+            'this help' => $url . '',     
+            'docs' => $url . '/docs/index.html',       
             'status' => $url . '/status',            
             'profiles' => $url . '/api/v1/profiles',
             'users' => $url . '/api/v1/users',
@@ -39,7 +40,7 @@ class DefaultController extends BaseController
         return $this->jsonResponse($response, 'success', $message, 200);
     }
 
-    public function getStatus(Request $request, Response $response, array $args): Response
+    public function getStatus(Request $request, Response $response): Response
     {
         $status = [
             'stats' => $this->getDbStats(),

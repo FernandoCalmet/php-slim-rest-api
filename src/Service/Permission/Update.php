@@ -6,7 +6,7 @@ namespace App\Service\Permission;
 
 use App\Exception\PermissionException;
 
-class Update extends BasePermissionService
+final class Update extends BasePermissionService
 {
     public function update($input, int $permissionId)
     {

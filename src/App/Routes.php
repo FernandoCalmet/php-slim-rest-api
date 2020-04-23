@@ -8,8 +8,8 @@ $app->get('/status', 'App\Controller\DefaultController:getStatus');
 $app->post('/login', \App\Controller\User\Login::class);
 $app->post('/signup', \App\Controller\User\SignUp::class);
 
-$app->group('/api/v1', function () use ($app) {
-    $app->group('/users', function () use ($app) {
+$app->group('/api/v1', function () use ($app): void {
+    $app->group('/users', function () use ($app): void{
         $app->get('', \App\Controller\User\GetAll::class);
         $app->get('/[{id}]', \App\Controller\User\GetOne::class);
         $app->get('/search/[{query}]', \App\Controller\User\Search::class);
@@ -18,7 +18,7 @@ $app->group('/api/v1', function () use ($app) {
         $app->delete('/[{id}]', \App\Controller\User\Delete::class);
     })->add(new App\Middleware\AuthMiddleware());
 
-    $app->group('/profiles', function () use ($app) {
+    $app->group('/profiles', function () use ($app): void {
         $app->get('', \App\Controller\Profile\GetAll::class);
         $app->get('/[{id}]', \App\Controller\Profile\GetOne::class);
         $app->get('/search/[{query}]', \App\Controller\Profile\Search::class);
@@ -27,7 +27,7 @@ $app->group('/api/v1', function () use ($app) {
         $app->delete('/[{id}]', \App\Controller\Profile\Delete::class);
     })->add(new App\Middleware\AuthMiddleware());
     
-    $app->group('/modules', function () use ($app) {
+    $app->group('/modules', function () use ($app): void {
         $app->get('', \App\Controller\Module\GetAll::class);
         $app->get('/[{id}]', \App\Controller\Module\GetOne::class);
         $app->get('/search/[{query}]', \App\Controller\Module\Search::class);
@@ -36,7 +36,7 @@ $app->group('/api/v1', function () use ($app) {
         $app->delete('/[{id}]', \App\Controller\Module\Delete::class);
     })->add(new App\Middleware\AuthMiddleware());
 
-    $app->group('/roles', function () use ($app) {
+    $app->group('/roles', function () use ($app): void {
         $app->get('', \App\Controller\Role\GetAll::class);
         $app->get('/[{id}]', \App\Controller\Role\GetOne::class);
         $app->get('/search/[{query}]', \App\Controller\Role\Search::class);
@@ -45,7 +45,7 @@ $app->group('/api/v1', function () use ($app) {
         $app->delete('/[{id}]', \App\Controller\Role\Delete::class);
     })->add(new App\Middleware\AuthMiddleware());
 
-    $app->group('/permissions', function () use ($app) {
+    $app->group('/permissions', function () use ($app): void {
         $app->get('', \App\Controller\Permission\GetAll::class);
         $app->get('/[{id}]', \App\Controller\Permission\GetOne::class);
         $app->get('/search/[{query}]', \App\Controller\Permission\Search::class);
@@ -54,7 +54,7 @@ $app->group('/api/v1', function () use ($app) {
         $app->delete('/[{id}]', \App\Controller\Permission\Delete::class);
     })->add(new App\Middleware\AuthMiddleware());
 
-    $app->group('/operations', function () use ($app) {
+    $app->group('/operations', function () use ($app): void {
         $app->get('', \App\Controller\Operation\GetAll::class);
         $app->get('/[{id}]', \App\Controller\Operation\GetOne::class);
         $app->get('/search/[{query}]', \App\Controller\Operation\Search::class);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Operation;
 
-class Delete extends BaseOperationService
+final class Delete extends BaseOperationService
 {
     public function delete(int $operationId)
     {

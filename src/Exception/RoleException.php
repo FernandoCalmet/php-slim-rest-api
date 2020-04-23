@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace App\Exception;
 
-class RoleException extends BaseException
+final class RoleException extends BaseException
 {
 }

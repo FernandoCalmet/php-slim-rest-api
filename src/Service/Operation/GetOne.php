@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Operation;
 
-class GetOne extends BaseOperationService
+final class GetOne extends BaseOperationService
 {
     public function getOne(int $operationId)
     {

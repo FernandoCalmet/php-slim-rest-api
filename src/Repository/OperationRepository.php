@@ -6,14 +6,14 @@ namespace App\Repository;
 
 use App\Exception\OperationException;
 
-class OperationRepository extends BaseRepository
+final class OperationRepository extends BaseRepository
 {
     public function __construct(\PDO $database)
     {
         $this->database = $database;
     }
 
-    public function checkAndGetOperation(int $operationId)
+    public function checkAndGetOperation(int $operationId): object
     {
         $query = 'SELECT * FROM `operations` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
@@ -64,7 +64,7 @@ class OperationRepository extends BaseRepository
         return $this->checkAndGetOperation((int) $this->database->lastInsertId());
     }
 
-    public function updateOperation($operation)
+    public function updateOperation($operation): object
     {
         $query = '
             UPDATE `operations` 
@@ -83,7 +83,7 @@ class OperationRepository extends BaseRepository
         return $this->checkAndGetOperation((int) $operation->id);
     }
 
-    public function deleteOperation(int $operationId)
+    public function deleteOperation(int $operationId): void
     {
         $query = 'DELETE FROM `operations` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
