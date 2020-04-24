@@ -47,7 +47,7 @@
         "database": "extras/bin/restart-api.sh",
         "restart": "php extras/bin/restart-api.sh",
         "restart-db": "php extras/bin/restart-db.php",
-        "migration": "php extras/bin/migration.php",
+        "migration": "php extras/bin/migration.php", 
         "crud": "php console api:generate:endpoints",
         "up": "docker-compose up -d --build",
         "down": "docker-compose down",

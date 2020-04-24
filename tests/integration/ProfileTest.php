@@ -24,7 +24,7 @@ class ProfileTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('user_id', $result);
         $this->assertStringContainsString('status', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -42,7 +42,7 @@ class ProfileTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('user_id', $result);
         $this->assertStringContainsString('status', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -68,7 +68,7 @@ class ProfileTest extends BaseTestCase
      */
     public function testSearchAllProfiles(): void
     {
-        $response = $this->runApp('GET', '/api/v1/profiles/search/');
+        $response = $this->runApp('GET', '/api/v1/profiles/search/f');
 
         $result = (string) $response->getBody();
 
@@ -76,7 +76,8 @@ class ProfileTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('user_id', $result);
+        $this->assertStringContainsString('username', $result);
         $this->assertStringContainsString('status', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -86,7 +87,7 @@ class ProfileTest extends BaseTestCase
      */
     public function testSearchProfilesByName(): void
     {
-        $response = $this->runApp('GET', '/api/v1/profiles/search/cine');
+        $response = $this->runApp('GET', '/api/v1/profiles/search/fernando');
 
         $result = (string) $response->getBody();
 
@@ -94,7 +95,7 @@ class ProfileTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('username', $result);
         $this->assertStringContainsString('status', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -104,7 +105,7 @@ class ProfileTest extends BaseTestCase
      */
     public function testSearchProfilesWithStatusDone(): void
     {
-        $response = $this->runApp('GET', '/api/v1/profiles/search/?status=1');
+        $response = $this->runApp('GET', '/api/v1/profiles/search/?status="actived"');
 
         $result = (string) $response->getBody();
 
@@ -112,17 +113,17 @@ class ProfileTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('username', $result);
         $this->assertStringContainsString('status', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
     /**
-     * Test Search Profiles with status = 0.
+     * Test Search Profiles with status = blocked.
      */
-    public function testSearchProfilesWithStatusToDo(): void
+    public function testSearchProfilesWithStatus(): void
     {
-        $response = $this->runApp('GET', '/api/v1/profiles/search/?status=0');
+        $response = $this->runApp('GET', '/api/v1/profiles/search/?status="blocked"');
 
         $result = (string) $response->getBody();
 
@@ -130,7 +131,6 @@ class ProfileTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
         $this->assertStringContainsString('status', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -141,7 +141,7 @@ class ProfileTest extends BaseTestCase
     public function testCreateProfile(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/profiles', ['name' => 'New Profile', 'description' => 'My Desc.']
+            'POST', '/api/v1/profiles', ['user_id' => 1, 'biography' => 'My bio.']
         );
 
         $result = (string) $response->getBody();
@@ -152,7 +152,7 @@ class ProfileTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('user_id', $result);
         $this->assertStringContainsString('status', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -170,7 +170,7 @@ class ProfileTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('user_id', $result);
         $this->assertStringContainsString('status', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -197,7 +197,7 @@ class ProfileTest extends BaseTestCase
     public function testCreateProfileWithInvalidProfileName(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/profiles', ['name' => 'z', 'status' => 1]
+            'POST', '/api/v1/profiles', ['user_id' => 'z', 'status' => 1]
         );
 
         $result = (string) $response->getBody();
@@ -214,7 +214,7 @@ class ProfileTest extends BaseTestCase
     public function testCreateProfileWithInvalidStatus(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/profiles', ['name' => 'ToDo', 'status' => 123]
+            'POST', '/api/v1/profiles', ['user_id' => 'ToDo', 'status' => 123]
         );
 
         $result = (string) $response->getBody();
@@ -233,7 +233,7 @@ class ProfileTest extends BaseTestCase
         $auth = self::$jwt;
         self::$jwt = '';
         $response = $this->runApp(
-            'POST', '/api/v1/profiles', ['name' => 'my profile', 'status' => 0]
+            'POST', '/api/v1/profiles', ['user_id' => 'my profile', 'status' => 'actived']
         );
         self::$jwt = $auth;
 
@@ -253,7 +253,7 @@ class ProfileTest extends BaseTestCase
         $auth = self::$jwt;
         self::$jwt = 'invalidToken';
         $response = $this->runApp(
-            'POST', '/api/v1/profiles', ['name' => 'my profile', 'status' => 0]
+            'POST', '/api/v1/profiles', ['user_id' => 'my profile', 'status' => 'blocked']
         );
         self::$jwt = $auth;
 
@@ -273,7 +273,7 @@ class ProfileTest extends BaseTestCase
         $auth = self::$jwt;
         self::$jwt = 'Bearer eyJ0eXAiOiJK1NiJ9.eyJzdWIiOiI4Ii';
         $response = $this->runApp(
-            'POST', '/api/v1/profiles', ['name' => 'my profile', 'status' => 0]
+            'POST', '/api/v1/profiles', ['user_id' => 'my profile', 'status' => 'blocked']
         );
         self::$jwt = $auth;
 
@@ -292,7 +292,7 @@ class ProfileTest extends BaseTestCase
     {
         $response = $this->runApp(
             'PUT', '/api/v1/profiles/' . self::$id,
-            ['name' => 'Update Profile', 'description' => 'Update Desc', 'status' => 1]
+            ['user_id' => 'Update Profile', 'biography' => 'Update Desc', 'status' => 'actived']
         );
 
         $result = (string) $response->getBody();
@@ -301,7 +301,7 @@ class ProfileTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('user_id', $result);
         $this->assertStringContainsString('status', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -328,7 +328,7 @@ class ProfileTest extends BaseTestCase
     public function testUpdateProfileNotFound(): void
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/profiles/123456789', ['name' => 'Profile']
+            'PUT', '/api/v1/profiles/123456789', ['user_id' => 'Profile']
         );
 
         $result = (string) $response->getBody();

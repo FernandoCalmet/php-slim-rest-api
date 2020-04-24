@@ -25,10 +25,10 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('description', $result);
+        $this->assertStringContainsString('role_id', $result);
+        $this->assertStringContainsString('operation_id', $result);
         $this->assertMatchesRegularExpression('{"code":200,"status":"success"}', $value);
-        $this->assertMatchesRegularExpression('{"name":"[A-Za-z0-9_. ]+","description":"[A-Za-z0-9_. ]+"}', $value);
+        $this->assertMatchesRegularExpression('{"role_id":"[0-9]","operation_id":"[0-9]"}', $value);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -45,8 +45,8 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('description', $result);
+        $this->assertStringContainsString('role_id', $result);
+        $this->assertStringContainsString('operation_id', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -63,7 +63,7 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('description', $result);
+        $this->assertStringNotContainsString('operation_id', $result);
         $this->assertStringContainsString('error', $result);
     }
 
@@ -72,7 +72,7 @@ class PermissionTest extends BaseTestCase
      */
     public function testSearchPermissions(): void
     {
-        $response = $this->runApp('GET', '/api/v1/permissions/search/n');
+        $response = $this->runApp('GET', '/api/v1/permissions/search/1');
 
         $result = (string) $response->getBody();
 
@@ -80,7 +80,7 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('description', $result);
+        $this->assertStringContainsString('operation_id', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -107,7 +107,7 @@ class PermissionTest extends BaseTestCase
     {
         $response = $this->runApp(
             'POST', '/api/v1/permissions',
-            ['name' => 'My Test Permission', 'description' => 'New Permission...']
+            ['role_id' => 1, 'operation_id' => 1]
         );
 
         $result = (string) $response->getBody();
@@ -118,8 +118,8 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('description', $result);
+        $this->assertStringContainsString('role_id', $result);
+        $this->assertStringContainsString('operation_id', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -136,8 +136,8 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('description', $result);
+        $this->assertStringContainsString('role_id', $result);
+        $this->assertStringContainsString('operation_id', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -153,7 +153,7 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
         $this->assertStringNotContainsString('success', $result);
-        $this->assertStringNotContainsString('description', $result);
+        $this->assertStringNotContainsString('operation_id', $result);
         $this->assertStringContainsString('error', $result);
     }
 
@@ -164,7 +164,7 @@ class PermissionTest extends BaseTestCase
     {
         $response = $this->runApp(
             'POST', '/api/v1/permissions',
-            ['name' => 'z']
+            ['role_id' => 'z']
         );
 
         $result = (string) $response->getBody();
@@ -172,7 +172,7 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
         $this->assertStringNotContainsString('success', $result);
-        $this->assertStringNotContainsString('description', $result);
+        $this->assertStringNotContainsString('operation_id', $result);
         $this->assertStringContainsString('error', $result);
     }
 
@@ -183,7 +183,7 @@ class PermissionTest extends BaseTestCase
     {
         $response = $this->runApp(
             'PUT', '/api/v1/permissions/' . self::$id,
-            ['name' => 'Victor Permissions', 'description' => 'Pep.']
+            ['role_id' => 2, 'operation_id' => 2]
         );
 
         $result = (string) $response->getBody();
@@ -192,8 +192,8 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('description', $result);
+        $this->assertStringContainsString('role_id', $result);
+        $this->assertStringContainsString('operation_id', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -210,8 +210,8 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('name', $result);
-        $this->assertStringNotContainsString('description', $result);
+        $this->assertStringNotContainsString('role_id', $result);
+        $this->assertStringNotContainsString('operation_id', $result);
         $this->assertStringContainsString('error', $result);
     }
 
@@ -221,7 +221,7 @@ class PermissionTest extends BaseTestCase
     public function testUpdatePermissionNotFound(): void
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/permissions/123456789', ['name' => 'Permission']
+            'PUT', '/api/v1/permissions/123456789', ['role_id' => 'Permission']
         );
 
         $result = (string) $response->getBody();
@@ -230,8 +230,8 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('name', $result);
-        $this->assertStringNotContainsString('description', $result);
+        $this->assertStringNotContainsString('role_id', $result);
+        $this->assertStringNotContainsString('operation_id', $result);
         $this->assertStringContainsString('error', $result);
     }
 
@@ -263,8 +263,8 @@ class PermissionTest extends BaseTestCase
         $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('name', $result);
-        $this->assertStringNotContainsString('description', $result);
+        $this->assertStringNotContainsString('role_id', $result);
+        $this->assertStringNotContainsString('operation_id', $result);
         $this->assertStringContainsString('error', $result);
     }
 }

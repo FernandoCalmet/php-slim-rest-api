@@ -93,10 +93,11 @@ final class UserRepository extends BaseRepository
                 users.gender, 
                 users.birthday, 
                 users.role_id, 
-                roles.name `role_name` 
-            FROM users 
-            INNER JOIN roles 
-            ON users.role_id = roles.id 
+                roles.name `role_name` ,
+                profiles.id `profile_id`
+            FROM ((users 
+            INNER JOIN roles ON users.role_id = roles.id)
+            INNER JOIN profiles ON profiles.user_id = users.id)
             WHERE users.email = :email AND users.password = :password
             ORDER BY users.id
         ';
@@ -213,14 +214,15 @@ final class UserRepository extends BaseRepository
         return $this->getUser((int) $this->database->lastInsertId());
     }
 
-    public function createUserProfile(int $userId): void
+    public function createUserProfile(int $userId, $username): void
     {
         $query = '
-            INSERT INTO `profiles` (`user_id`)
-            VALUES (:userId)
+            INSERT INTO `profiles` (`user_id`, `username`)
+            VALUES (:userId, :username)
         ';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('userId', $userId);
+        $statement->bindParam('username', $username);
         $statement->execute();
     }
 }

@@ -183,7 +183,7 @@ class ModuleTest extends BaseTestCase
     {
         $response = $this->runApp(
             'PUT', '/api/v1/modules/' . self::$id,
-            ['name' => 'Victor Modules', 'description' => 'Pep.']
+            ['name' => 'Sales Modules', 'description' => 'Plop.']
         );
 
         $result = (string) $response->getBody();

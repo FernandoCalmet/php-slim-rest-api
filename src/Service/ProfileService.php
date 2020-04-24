@@ -70,12 +70,12 @@ final class ProfileService extends BaseService
         return $profile;
     }
 
-    public function search($profilesName, int $userId, $status): array
+    public function search($profilesUsername, int $userId, $status): array
     {
         if ($status !== null) {
-            $status = (int) $status;
+            $status = (string) $status;
         }
-        return $this->getProfileRepository()->search($profilesName, $userId, $status);
+        return $this->getProfileRepository()->search($profilesUsername, $userId, $status);
     }
 
     public function saveInCache($profileId, $userId, $profiles): void
@@ -96,14 +96,14 @@ final class ProfileService extends BaseService
     {
         $profile = new \stdClass();
         $data = json_decode(json_encode($input), false);
+        if (empty($data->username)) {
+            throw new ProfileException('The "Username" field is required.', 400);
+        }
+        $profile->username = self::validateProfileUsername($data->username);   
         if (empty($data->biography)) {
             throw new ProfileException('The "Biography" field is required.', 400);
         }
-        $profile->biography = self::validateDescription($data->biography);       
-        $profile->status = 0;
-        if (isset($data->status)) {
-            $profile->status = self::validateProfileStatus($data->status);
-        }
+        $profile->biography = self::validateDescription($data->biography);   
         $profile->userId = $data->decoded->sub;
         $profiles = $this->getProfileRepository()->create($profile);
         if (self::isRedisEnabled() === true) {
@@ -116,9 +116,12 @@ final class ProfileService extends BaseService
     {
         $profile = $this->getProfileFromDb($profileId, (int) $input['decoded']->sub);
         $data = json_decode(json_encode($input), false);
-        if (!isset($data->biography) && !isset($data->status)) {
+        if (!isset($data->username) && !isset($data->biography) && !isset($data->status)) {
             throw new ProfileException('Enter the data to update the profile.', 400);
         }
+        if (isset($data->username)) {
+            $profile->username = self::validateProfileUsername($data->username);
+        }   
         if (isset($data->biography)) {
             $profile->biography = self::validateDescription($data->biography);
         }      

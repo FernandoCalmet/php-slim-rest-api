@@ -26,7 +26,7 @@ class UserServiceTest extends BaseTestCase
         $redisService = new \App\Service\RedisService(new \Predis\Client());
         $userService = new \App\Service\UserService($userRepository, $redisService);
         $user = $userService->getOne(1);
-        $this->assertStringContainsString('Andres', $user->first_name);
+        $this->assertStringContainsString('Fernando', $user->first_name);
     }
 
     public function testCreateUser(): void
@@ -74,6 +74,6 @@ class UserServiceTest extends BaseTestCase
         $userService = new \App\Service\UserService($userRepository, $redisService);
         $userId = self::$id;
         $user = $userService->delete((int) $userId);
-        $this->assertStringContainsString('The user was deleted.', $user);
+        $this->assertStringContainsString('User was successfully removed.', $user);
     }
 }

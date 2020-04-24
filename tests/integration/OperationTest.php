@@ -183,7 +183,7 @@ class OperationTest extends BaseTestCase
     {
         $response = $this->runApp(
             'PUT', '/api/v1/operations/' . self::$id,
-            ['name' => 'Victor Operations', 'description' => 'Pep.']
+            ['name' => 'Create User Operation', 'description' => 'Register new user.']
         );
 
         $result = (string) $response->getBody();

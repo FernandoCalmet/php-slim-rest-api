@@ -17,10 +17,18 @@ abstract class BaseService
         return filter_var(getenv('REDIS_ENABLED'), FILTER_VALIDATE_BOOLEAN);
     }
 
-    protected static function validateUserNames(string $name): string
+    protected static function validateFirstName(string $name): string
+    {
+        if (!v::alnum()->length(2, 50)->validate($name)) {
+            throw new UserException('First Name no valid.', 400);
+        }
+        return $name;
+    } 
+
+    protected static function validateLastName(string $name): string
     {
         if (!v::alnum()->length(2, 100)->validate($name)) {
-            throw new UserException('Name no valid.', 400);
+            throw new UserException('Last Name no valid.', 400);
         }
         return $name;
     }
@@ -98,5 +106,13 @@ abstract class BaseService
             throw new ValidatorException('Image no valid.', 400);
         }
         return $image;
+    }
+
+    protected static function validateProfileUsername(string $username): string
+    {
+        if (!v::alnum()->length(2, 50)->validate($username)) {
+            throw new ProfileException('Username no valid.', 400);
+        }
+        return $username;
     }
 }

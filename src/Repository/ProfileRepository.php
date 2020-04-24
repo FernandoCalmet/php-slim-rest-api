@@ -50,11 +50,11 @@ final class ProfileRepository extends BaseRepository
     public function search($profilesString, int $userId, $status): array
     {
         $query = $this->getSearchProfilesQuery($status);
-        $biography = '%' . $profilesString . '%';
+        $username = '%' . $profilesString . '%';
         $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('biography', $biography);
+        $statement->bindParam('username', $username);
         $statement->bindParam('userId', $userId);
-        if ($status === 0 || $status === 1) {
+        if ($status === 'blocked' || $status === 'actived') {
             $statement->bindParam('status', $status);
         }
         $statement->execute();
@@ -65,13 +65,13 @@ final class ProfileRepository extends BaseRepository
     private function getSearchProfilesQuery($status)
     {
         $statusQuery = '';
-        if ($status === 0 || $status === 1) {
+        if ($status === 'blocked' || $status === 'actived') {
             $statusQuery = 'AND `status` = :status';
         }
 
         return "
-            SELECT * FROM `profiles`
-            WHERE `biography` LIKE :biography AND `user_id` = :userId $statusQuery
+            SELECT `id`, `username`, `biography`, `status` FROM `profiles`
+            WHERE `username` LIKE :username AND `user_id` = :userId $statusQuery
             ORDER BY `id`
         ";
     }
@@ -79,13 +79,13 @@ final class ProfileRepository extends BaseRepository
     public function create($profile): object
     {
         $query = '
-            INSERT INTO `profiles` (`biography`, `status`, `user_id`)
-            VALUES (:biography, :status, :userId)
+            INSERT INTO `profiles` (`username`, `biography`, `user_id`)
+            VALUES (:username, :biography, :userId)
         ';
         $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('biography', $profile->biography);
-        $statement->bindParam('status', $profile->status);
         $statement->bindParam('userId', $profile->user_id);
+        $statement->bindParam('username', $profile->username);
+        $statement->bindParam('biography', $profile->biography);          
         $statement->execute();
 
         return $this->checkAndGetProfile((int) $this->database->lastInsertId(), (int) $profile->user_id);
@@ -95,11 +95,12 @@ final class ProfileRepository extends BaseRepository
     {
         $query = '
             UPDATE `profiles`
-            SET `biography` = :biography, `status` = :status
+            SET  `username` = :username, `biography` = :biography, `status` = :status
             WHERE `id` = :id AND `user_id` = :userId
         ';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $profile->id);
+        $statement->bindParam('username', $profile->username);
         $statement->bindParam('biography', $profile->biography);
         $statement->bindParam('status', $profile->status);
         $statement->bindParam('userId', $profile->user_id);
@@ -115,7 +116,6 @@ final class ProfileRepository extends BaseRepository
         $statement->bindParam('id', $profileId);
         $statement->bindParam('userId', $userId);
         $statement->execute();
-
         return 'The profile was deleted.';
     }
 }

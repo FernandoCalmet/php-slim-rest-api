@@ -24,7 +24,7 @@ class UserTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('first_name', $result);
         $this->assertStringContainsString('email', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -34,7 +34,7 @@ class UserTest extends BaseTestCase
      */
     public function testGetUser(): void
     {
-        $response = $this->runApp('GET', '/api/v1/users/8');
+        $response = $this->runApp('GET', '/api/v1/users/1');
 
         $result = (string) $response->getBody();
 
@@ -42,7 +42,7 @@ class UserTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('first_name', $result);
         $this->assertStringContainsString('email', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -60,7 +60,7 @@ class UserTest extends BaseTestCase
         $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('name', $result);
+        $this->assertStringNotContainsString('first_name', $result);
         $this->assertStringNotContainsString('email', $result);
         $this->assertStringContainsString('error', $result);
     }
@@ -78,7 +78,7 @@ class UserTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('first_name', $result);
         $this->assertStringContainsString('email', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -107,7 +107,7 @@ class UserTest extends BaseTestCase
     {
         $response = $this->runApp(
             'POST', '/api/v1/users',
-            ['name' => 'Esteban', 'email' => 'estu@gmail.com', 'password' => 'AnyPass1000']
+            ['first_name' => 'Fernando', 'email' => 'tester@gmail.com', 'password' => 'AnyPass1000']
         );
 
         $result = (string) $response->getBody();
@@ -118,7 +118,7 @@ class UserTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('first_name', $result);
         $this->assertStringContainsString('email', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -135,9 +135,10 @@ class UserTest extends BaseTestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
-        $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('email', $result);
+        $this->assertStringContainsString('id', $result);        
+        $this->assertStringContainsString('first_name', $result);
+        $this->assertStringContainsString('last_name', $result);
+        $this->assertStringContainsString('email', $result);  
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -163,7 +164,7 @@ class UserTest extends BaseTestCase
      */
     public function testCreateUserWithoutEmail(): void
     {
-        $response = $this->runApp('POST', '/api/v1/users', ['name' => 'z']);
+        $response = $this->runApp('POST', '/api/v1/users', ['first_name' => 'z']);
 
         $result = (string) $response->getBody();
 
@@ -181,7 +182,7 @@ class UserTest extends BaseTestCase
     {
         $response = $this->runApp(
             'POST', '/api/v1/users',
-            ['name' => 'z', 'email' => 'email@example.com']
+            ['first_name' => 'z', 'email' => 'email@example.com']
         );
 
         $result = (string) $response->getBody();
@@ -200,7 +201,7 @@ class UserTest extends BaseTestCase
     {
         $response = $this->runApp(
             'POST', '/api/v1/users',
-            ['name' => 'Esteban', 'email' => 'email.incorrecto', 'password' => 'AnyPass1000']
+            ['first_name' => 'Fernando', 'email' => 'email.incorrecto', 'password' => 'AnyPass1000']
         );
 
         $result = (string) $response->getBody();
@@ -218,7 +219,7 @@ class UserTest extends BaseTestCase
     {
         $response = $this->runApp(
             'POST', '/api/v1/users',
-            ['name' => 'Esteban', 'email' => 'estu@gmail.com', 'password' => 'AnyPass1000']
+            ['first_name' => 'Fernando', 'email' => 'tester@gmail.com', 'password' => 'AnyPass1000']
         );
 
         $result = (string) $response->getBody();
@@ -234,11 +235,11 @@ class UserTest extends BaseTestCase
      */
     public function testUpdateUser(): void
     {
-        $response0 = $this->runApp('POST', '/login', ['email' => 'estu@gmail.com', 'password' => 'AnyPass1000']);
+        $response0 = $this->runApp('POST', '/login', ['email' => 'tester@gmail.com', 'password' => 'AnyPass1000']);
         $result0 = (string) $response0->getBody();
         self::$jwt = json_decode($result0)->message->Authorization;
 
-        $response = $this->runApp('PUT', '/api/v1/users/' . self::$id, ['name' => 'Stu', 'email' => 'estu@gmail.com']);
+        $response = $this->runApp('PUT', '/api/v1/users/' . self::$id, ['first_name' => 'Stu', 'email' => 'tester@gmail.com']);
 
         $result = (string) $response->getBody();
 
@@ -246,7 +247,7 @@ class UserTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('first_name', $result);
         $this->assertStringContainsString('email', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -274,7 +275,7 @@ class UserTest extends BaseTestCase
     public function testUpdateUserPermissionsFailed(): void
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/users/1', ['name' => 'Victor']
+            'PUT', '/api/v1/users/1', ['first_name' => 'Fernando']
         );
 
         $result = (string) $response->getBody();
@@ -282,7 +283,7 @@ class UserTest extends BaseTestCase
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
         $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('name', $result);
+        $this->assertStringNotContainsString('first_name', $result);
         $this->assertStringContainsString('error', $result);
     }
 
@@ -293,7 +294,7 @@ class UserTest extends BaseTestCase
     {
         $response = $this->runApp(
             'PUT', '/api/v1/users/' . self::$id,
-            ['name' => 'z', 'email' => 'email-incorrecto...']
+            ['first_name' => 'z', 'email' => 'email-incorrecto...']
         );
 
         $result = (string) $response->getBody();
@@ -325,7 +326,7 @@ class UserTest extends BaseTestCase
      */
     public function testDeleteUserPermissionsFailed(): void
     {
-        $response = $this->runApp('DELETE', '/api/v1/users/123456789');
+        $response = $this->runApp('DELETE', '/api/v1/users/1');
 
         $result = (string) $response->getBody();
 
@@ -341,7 +342,7 @@ class UserTest extends BaseTestCase
      */
     public function testLoginUser(): void
     {
-        $response = $this->runApp('POST', '/login', ['email' => 'test@user.com', 'password' => 'AnyPass1000']);
+        $response = $this->runApp('POST', '/login', ['email' => 'fercalmet@gmail.com', 'password' => 'AnyPass1000']);
 
         $result = (string) $response->getBody();
 

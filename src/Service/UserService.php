@@ -136,10 +136,10 @@ final class UserService extends BaseService
             $user->password = hash('sha512', $data->password);
         }     
         if (isset($data->first_name)) {
-            $user->first_name = self::validateUserNames($data->first_name);
+            $user->first_name = self::validateFirstName($data->first_name);
         }
         if (isset($data->last_name)) {
-            $user->last_name = self::validateUserNames($data->last_name);
+            $user->last_name = self::validateLastName($data->last_name);
         }     
         if (isset($data->gender)) {
             $user->gender = self::validateUserGender($data->gender);
@@ -182,6 +182,7 @@ final class UserService extends BaseService
             'birthday' => $user->birthday,
             'role_id' => $user->role_id,
             'role_name' => $user->role_name,
+            'profile_id' => $user->profile_id,
             'iat' => time(),
             'exp' => time() + (7 * 24 * 60 * 60),
         ];
@@ -218,7 +219,7 @@ final class UserService extends BaseService
         $user->birthday = self::validateDate($data->birthday);
         $this->getUserRepository()->checkUserByEmail($user->email);
         $users = $this->getUserRepository()->signup($user);
-        $this->getUserRepository()->createUserProfile($users->id);
+        $this->getUserRepository()->createUserProfile($users->id, $users->first_name);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($users->id, $users);
         }
