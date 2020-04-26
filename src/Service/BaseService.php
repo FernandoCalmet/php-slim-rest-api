@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Exception\ValidatorException;
-use App\Exception\UserException;
-use App\Exception\ProfileException;
-use App\Exception\ModuleException;
 use Respect\Validation\Validator as v;
 
 abstract class BaseService
@@ -15,40 +12,7 @@ abstract class BaseService
     protected static function isRedisEnabled(): bool
     {
         return filter_var(getenv('REDIS_ENABLED'), FILTER_VALIDATE_BOOLEAN);
-    }
-
-    protected static function validateFirstName(string $name): string
-    {
-        if (!v::alnum()->length(2, 50)->validate($name)) {
-            throw new UserException('First Name no valid.', 400);
-        }
-        return $name;
-    } 
-
-    protected static function validateLastName(string $name): string
-    {
-        if (!v::alnum()->length(2, 100)->validate($name)) {
-            throw new UserException('Last Name no valid.', 400);
-        }
-        return $name;
-    }
-   
-    protected static function validateUserGender(string $gender): string
-    {
-        if (!v::stringType()->length(4, 6)->validate($gender)) {
-            throw new UserException('Gender no valid.', 400);
-        }
-        return $gender;
-    }   
-
-    protected static function validateEmail(string $emailValue): string
-    {
-        $email = filter_var($emailValue, FILTER_SANITIZE_EMAIL);
-        if (!v::email()->validate($email)) {
-            throw new UserException('Email no valid.', 400);
-        }
-        return $email;
-    }
+    }          
 
     protected static function validateId(int $id): int
     {
@@ -57,6 +21,14 @@ abstract class BaseService
         }
         return $id;
     }    
+
+    protected static function validateImage(string $image): string
+    {
+        if (!v::image()->validate($image)) {
+            throw new ValidatorException('Image no valid.', 400);
+        }
+        return $image;
+    }  
 
     protected static function validateDate(string $date): string
     {
@@ -74,45 +46,5 @@ abstract class BaseService
         }
         return $datetime;*/
         return $datetime;
-    }
-
-    protected static function validateTitle(string $title): string
-    {
-        if (!v::stringType()->length(2, 100)->validate($title)) {
-            throw new ValidatorException('Name/Title no valid.', 400);
-        }
-        return $title;
-    }
-
-    protected static function validateDescription(string $description): string
-    {
-        if (!v::stringType()->length(2, 200)->validate($description)) {
-            throw new ValidatorException('Description no valid.', 400);
-        }
-        return $description;
-    }
-
-    protected static function validateStatus(string $status): string
-    {
-        if (!v::stringType()->length(6, 9)->validate($status)) {
-            throw new ValidatorException('Status no valid.', 400);
-        }
-        return $status;
-    }
-
-    protected static function validateImage(string $image): string
-    {
-        if (!v::image()->validate($image)) {
-            throw new ValidatorException('Image no valid.', 400);
-        }
-        return $image;
-    }
-
-    protected static function validateProfileUsername(string $username): string
-    {
-        if (!v::alnum()->length(2, 50)->validate($username)) {
-            throw new ProfileException('Username no valid.', 400);
-        }
-        return $username;
-    }
+    }     
 }

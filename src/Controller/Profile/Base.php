@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Profile;
 
 use App\Controller\BaseController;
-use App\Service\ProfileService;
+use App\Service\Profile\ProfileService;
 use Slim\Container;
 
 abstract class Base extends BaseController

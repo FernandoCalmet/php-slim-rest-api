@@ -9,10 +9,10 @@ use Slim\Http\Response;
 
 final class Create extends Base
 {
-    public function __invoke(Request $request, Response $response, array $args): Response
+    public function __invoke(Request $request, Response $response): Response
     {
         $input = $request->getParsedBody();
-        $role = $this->createRoleService()->create($input);
+        $role = $this->getRoleService()->create($input);
 
         return $this->jsonResponse($response, 'success', $role, 201);
     }

@@ -11,7 +11,7 @@ final class Delete extends Base
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $this->deletePermissionService()->delete((int) $args['id']);
+        $this->getPermissionService()->delete((int) $args['id']);
 
         return $this->jsonResponse($response, 'success', null, 204);
     }

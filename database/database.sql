@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS `modules`;
 CREATE TABLE IF NOT EXISTS `modules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `module_id` int(11) NOT NULL DEFAULT '1',
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(200) COLLATE utf8_unicode_ci NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS `operations`;
 CREATE TABLE IF NOT EXISTS `operations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `module_id` int(11) NOT NULL DEFAULT '2',
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(200) COLLATE utf8_unicode_ci NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -46,12 +46,12 @@ INSERT INTO `operations` (`name`, `description`) VALUES
 ('Create Module', 'Operation for Modules'),
 ('Update Module', 'Operation for Modules'),
 ('Delete Module', 'Operation for Modules'),
-('Get All Operations', 'Operation for Operations'),
-('Get One Operation', 'Operation for Operations'),
-('Search Operation', 'Operation for Operations'),
-('Create Operation', 'Operation for Operations'),
-('Update Operation', 'Operation for Operations'),
-('Delete Operation', 'Operation for Operations'),
+('Get All Operations', 'Operation for Users'),
+('Get One Operation', 'Operation for Users'),
+('Search Operation', 'Operation for Users'),
+('Create Operation', 'Operation for Users'),
+('Update Operation', 'Operation for Users'),
+('Delete Operation', 'Operation for Users'),
 ('Get All Permissions', 'Operation for Permissions'),
 ('Get One Permission', 'Operation for Permissions'),
 ('Search Permission', 'Operation for Permissions'),
@@ -83,7 +83,7 @@ INSERT INTO `operations` (`name`, `description`) VALUES
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(200) COLLATE utf8_unicode_ci NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -168,8 +168,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role_id` int(11) NOT NULL DEFAULT '2',
   `email` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(100) NOT NULL,
+  `first_name` varchar(25) NOT NULL,
+  `last_name` varchar(25) NOT NULL,
   `gender` enum('female','male','other') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `birthday` date NOT NULL,
   `status` enum('actived','blocked') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'actived',
@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   `module_id` int(11) NOT NULL DEFAULT '3',
   `user_id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `biography` varchar(250) COLLATE utf8_unicode_ci NULL,
+  `biography` varchar(200) COLLATE utf8_unicode_ci NULL,
   `status` enum('actived','blocked') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'actived',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -206,5 +206,5 @@ CREATE TABLE IF NOT EXISTS `profiles` (
 -- ----------------------------
 -- Records of `profiles`
 -- ----------------------------
-INSERT INTO `profiles` (`user_id`, `biography`) VALUES
-(1, 'Self-learning software engineering through research & development.');
+INSERT INTO `profiles` (`user_id`, `username`, `biography`) VALUES
+(1, 'Fernando Calmet', 'Self-learning software engineering through research & development.');

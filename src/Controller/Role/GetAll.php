@@ -9,10 +9,10 @@ use Slim\Http\Response;
 
 final class GetAll extends Base
 {
-    public function __invoke(Request $request, Response $response, array $args): Response
+    public function __invoke(Request $request, Response $response): Response
     {
-        $rolees = $this->getAllRoleService()->getAll();
+        $roles = $this->getRoleService()->getAll();
 
-        return $this->jsonResponse($response, 'success', $rolees, 200);
+        return $this->jsonResponse($response, 'success', $roles, 200);
     }
 }

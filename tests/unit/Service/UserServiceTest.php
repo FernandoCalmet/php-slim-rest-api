@@ -74,6 +74,6 @@ class UserServiceTest extends BaseTestCase
         $userService = new \App\Service\UserService($userRepository, $redisService);
         $userId = self::$id;
         $user = $userService->delete((int) $userId);
-        $this->assertStringContainsString('User was successfully removed.', $user);
+        $this->assertStringContainsString('The user was deleted.', $user);
     }
 }

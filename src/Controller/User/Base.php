@@ -6,7 +6,7 @@ namespace App\Controller\User;
 
 use App\Controller\BaseController;
 use App\Exception\UserException;
-use App\Service\UserService;
+use App\Service\User\UserService;
 use Slim\Container;
 
 abstract class Base extends BaseController

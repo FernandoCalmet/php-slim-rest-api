@@ -9,10 +9,10 @@ use Slim\Http\Response;
 
 final class Create extends Base
 {
-    public function __invoke(Request $request, Response $response, array $args): Response
+    public function __invoke(Request $request, Response $response): Response
     {
         $input = $request->getParsedBody();
-        $module = $this->createModuleService()->create($input);
+        $module = $this->getModuleService()->create($input);
 
         return $this->jsonResponse($response, 'success', $module, 201);
     }

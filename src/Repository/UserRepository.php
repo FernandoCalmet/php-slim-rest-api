@@ -54,7 +54,8 @@ final class UserRepository extends BaseRepository
     {
         $query = '
             SELECT `id`, `first_name`, `last_name`, `email` 
-            FROM `users` ORDER BY `id`
+            FROM `users` 
+            ORDER BY `id`
         ';
         $statement = $this->database->prepare($query);
         $statement->execute();
@@ -172,7 +173,7 @@ final class UserRepository extends BaseRepository
         $statement = $this->database->prepare($query);
         $statement->bindParam('id', $userId);
         $statement->execute();
-        return 'User was successfully removed.';
+        return 'The user was deleted.';
     }
 
     public function deleteUserProfile(int $userId): void
@@ -214,7 +215,7 @@ final class UserRepository extends BaseRepository
         return $this->getUser((int) $this->database->lastInsertId());
     }
 
-    public function createUserProfile(int $userId, $username): void
+    public function createUserProfile(int $userId, $firstName, $lastName): void
     {
         $query = '
             INSERT INTO `profiles` (`user_id`, `username`)
@@ -222,7 +223,7 @@ final class UserRepository extends BaseRepository
         ';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('userId', $userId);
-        $statement->bindParam('username', $username);
+        $statement->bindParam('username', $firstName . " " . $lastName);
         $statement->execute();
     }
 }

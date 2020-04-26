@@ -38,19 +38,16 @@
     "minimum-stability": "dev",    
     "scripts": {
         "post-create-project-cmd": [
-            "# Copy default environment variables:",
-            "php -r \"copy('.env.example', '.env');\""
+            "php -r \"copy('.env.example', '.env');\"",
+            "\\App\\Controller\\DefaultController::postCreateProjectCommand"
         ],
         "phpstan": "./vendor/bin/phpstan analyse src tests --level=6",
-        "coverage": "phpunit --coverage-html=coverage --coverage-text",
-        "test": "phpunit",
-        "database": "extras/bin/restart-api.sh",
-        "restart": "php extras/bin/restart-api.sh",
-        "restart-db": "php extras/bin/restart-db.php",
-        "migration": "php extras/bin/migration.php", 
+        "coverage": "phpunit --coverage-html=coverage --coverage-text",           
+        "restart-db": "php extras/bin/restart-db.php",        
         "crud": "php console api:generate:endpoints",
         "up": "docker-compose up -d --build",
         "down": "docker-compose down",
-        "start": "php -S 127.0.0.1:8080 -t public public/index.php"
+        "start": "php -S 127.0.0.1:8080 -t public public/index.php",
+        "test": "phpunit"
     }
 }

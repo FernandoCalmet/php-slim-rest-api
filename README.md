@@ -51,10 +51,10 @@ $ composer start
 
 ### With Docker:
 
-You can use this project using ** docker ** and ** docker-compose **.
+You can use this project using **docker** and **docker-compose**.
 
 
-### Minimal Docker Version:
+**Minimal Docker Version:**
 
 * Engine: 18.03+
 * Compose: 1.21+
@@ -81,7 +81,7 @@ $ make down
 **Commands:**
 
 ```bash
-$ composer migration
+$ composer restart-db
 ```
 
 ## DEPENDENCIES:

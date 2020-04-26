@@ -5,38 +5,9 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Exception\ProfileException;
-use App\Repository\ProfileRepository;
 
-final class ProfileService extends BaseService
-{
-    private const REDIS_KEY = 'profile:%s:user:%s';
-
-    /**
-     * @var ProfileRepository
-     */
-    protected $profileRepository;
-
-    /**
-     * @var RedisService
-     */
-    protected $redisService;
-
-    public function __construct(ProfileRepository $profileRepository, RedisService $redisService)
-    {
-        $this->profileRepository = $profileRepository;
-        $this->redisService = $redisService;
-    }
-
-    protected function getProfileRepository(): ProfileRepository
-    {
-        return $this->profileRepository;
-    }
-
-    protected function getProfileFromDb(int $profileId, int $userId)
-    {
-        return $this->getProfileRepository()->checkAndGetProfile($profileId, $userId);
-    }
-
+final class ProfileService extends Base
+{ 
     public function getAllProfiles(): array
     {
         return $this->getProfileRepository()->getAllProfiles();
@@ -57,39 +28,12 @@ final class ProfileService extends BaseService
         return $profile;
     }
 
-    public function getProfileFromCache(int $profileId, int $userId)
-    {
-        $redisKey = sprintf(self::REDIS_KEY, $profileId, $userId);
-        $key = $this->redisService->generateKey($redisKey);
-        if ($this->redisService->exists($key)) {
-            $profile = $this->redisService->get($key);
-        } else {
-            $profile = $this->getProfileFromDb($profileId, $userId);
-            $this->redisService->setex($key, $profile);
-        }
-        return $profile;
-    }
-
     public function search($profilesUsername, int $userId, $status): array
     {
         if ($status !== null) {
             $status = (string) $status;
         }
         return $this->getProfileRepository()->search($profilesUsername, $userId, $status);
-    }
-
-    public function saveInCache($profileId, $userId, $profiles): void
-    {
-        $redisKey = sprintf(self::REDIS_KEY, $profileId, $userId);
-        $key = $this->redisService->generateKey($redisKey);
-        $this->redisService->setex($key, $profiles);
-    }
-
-    public function deleteFromCache($profileId, $userId): void
-    {
-        $redisKey = sprintf(self::REDIS_KEY, $profileId, $userId);
-        $key = $this->redisService->generateKey($redisKey);
-        $this->redisService->del($key);
     }
 
     public function create(array $input)
@@ -99,11 +43,11 @@ final class ProfileService extends BaseService
         if (empty($data->username)) {
             throw new ProfileException('The "Username" field is required.', 400);
         }
-        $profile->username = self::validateProfileUsername($data->username);   
-        if (empty($data->biography)) {
-            throw new ProfileException('The "Biography" field is required.', 400);
-        }
-        $profile->biography = self::validateDescription($data->biography);   
+        $profile->username = self::validateUsername($data->username);   
+        $profile->biography = null;
+        if (isset($data->biography)) {
+            $profile->biography = self::validateBiography($data->biography);
+        }   
         $profile->userId = $data->decoded->sub;
         $profiles = $this->getProfileRepository()->create($profile);
         if (self::isRedisEnabled() === true) {
@@ -116,17 +60,17 @@ final class ProfileService extends BaseService
     {
         $profile = $this->getProfileFromDb($profileId, (int) $input['decoded']->sub);
         $data = json_decode(json_encode($input), false);
-        if (!isset($data->username) && !isset($data->biography) && !isset($data->status)) {
+        if (!isset($data->username) && !isset($data->status)) {
             throw new ProfileException('Enter the data to update the profile.', 400);
         }
         if (isset($data->username)) {
-            $profile->username = self::validateProfileUsername($data->username);
+            $profile->username = self::validateUsername($data->username);
         }   
         if (isset($data->biography)) {
             $profile->biography = self::validateDescription($data->biography);
         }      
         if (isset($data->status)) {
-            $profile->status = self::validateProfileStatus($data->status);
+            $profile->status = self::validateStatus($data->status);
         }
         $profile->userId = $data->decoded->sub;
         $profiles = $this->getProfileRepository()->update($profile);

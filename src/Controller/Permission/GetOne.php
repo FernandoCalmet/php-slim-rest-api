@@ -11,7 +11,7 @@ final class GetOne extends Base
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $permission = $this->getOnePermissionService()->getOne((int) $args['id']);
+        $permission = $this->getPermissionService()->getOne((int) $args['id']);
 
         return $this->jsonResponse($response, 'success', $permission, 200);
     }

@@ -11,7 +11,7 @@ final class Search extends Base
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $operations = $this->searchOperationService()->search($args['query']);
+        $operations = $this->getOperationService()->search($args['query']);
 
         return $this->jsonResponse($response, 'success', $operations, 200);
     }

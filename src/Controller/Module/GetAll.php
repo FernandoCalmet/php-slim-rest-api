@@ -9,9 +9,9 @@ use Slim\Http\Response;
 
 final class GetAll extends Base
 {
-    public function __invoke(Request $request, Response $response, array $args): Response
+    public function __invoke(Request $request, Response $response): Response
     {
-        $modules = $this->getAllModuleService()->getAll();
+        $modules = $this->getModuleService()->getAll();
 
         return $this->jsonResponse($response, 'success', $modules, 200);
     }

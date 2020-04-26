@@ -1605,7 +1605,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"biography\": \"Hello World!\"\n}"
+							"raw": "{\n  \"username\": \"Fernando Calmet\",\n  \"biography\": \"Hello World!\"\n}"
 						},
 						"url": {
 							"raw": "{{app_domain}}/api/v1/profiles",
@@ -1757,7 +1757,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"biography\": \"Hello World!\"\n}",
+							"raw": "{\n  \"username\": \"Fernando Calmet\",\n  \"biography\": \"Hello World!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

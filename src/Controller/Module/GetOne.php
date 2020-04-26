@@ -11,7 +11,7 @@ final class GetOne extends Base
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $module = $this->getOneModuleService()->getOne((int) $args['id']);
+        $module = $this->getModuleService()->getOne((int) $args['id']);
 
         return $this->jsonResponse($response, 'success', $module, 200);
     }

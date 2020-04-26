@@ -12,7 +12,7 @@ final class Update extends Base
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $input = $request->getParsedBody();
-        $role = $this->updateRoleService()->update($input, (int) $args['id']);
+        $role = $this->getRoleService()->update($input, (int) $args['id']);
 
         return $this->jsonResponse($response, 'success', $role, 200);
     }

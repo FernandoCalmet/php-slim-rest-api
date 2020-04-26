@@ -2,45 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\User;
 
 use App\Exception\UserException;
-use App\Repository\UserRepository;
 use Firebase\JWT\JWT;
 
-final class UserService extends BaseService
-{
-    private const REDIS_KEY = 'user:%s';
-
-    /**
-     * @var UserRepository
-     */
-    protected $userRepository;
-
-    /**
-     * @var RedisService
-     */
-    protected $redisService;
-
-    public function __construct(UserRepository $userRepository, RedisService $redisService)
-    {
-        $this->userRepository = $userRepository;
-        $this->redisService = $redisService;
-    }
-
-    protected function getUserRepository(): UserRepository
-    {
-        return $this->userRepository;
-    }
-
-    protected function getUserFromDb(int $userId)
-    {
-        return $this->getUserRepository()->getUser($userId);
-    }
-
+final class UserService extends Base
+{  
     public function getAll(): array
     {
-        return $this->getUserRepository()->getAll();
+        return $this->userRepository->getAll();
     }
 
     public function getOne(int $userId)
@@ -53,37 +24,9 @@ final class UserService extends BaseService
         return $user;
     }
 
-    public function getUserFromCache(int $userId)
-    {
-        $redisKey = sprintf(self::REDIS_KEY, $userId);
-        $key = $this->redisService->generateKey($redisKey);
-        if ($this->redisService->exists($key)) {
-            $data = $this->redisService->get($key);
-            $user = json_decode(json_encode($data), false);
-        } else {
-            $user = $this->getUserFromDb($userId);
-            $this->redisService->setex($key, $user);
-        }
-        return $user;
-    }
-
     public function search(string $usersName): array
     {
-        return $this->getUserRepository()->search($usersName);
-    }
-
-    public function saveInCache($id, $user): void
-    {
-        $redisKey = sprintf(self::REDIS_KEY, $id);
-        $key = $this->redisService->generateKey($redisKey);
-        $this->redisService->setex($key, $user);
-    }
-
-    public function deleteFromCache($userId): void
-    {
-        $redisKey = sprintf(self::REDIS_KEY, $userId);
-        $key = $this->redisService->generateKey($redisKey);
-        $this->redisService->del($key);
+        return $this->userRepository->search($usersName);
     }
 
     public function create(array $input)
@@ -110,12 +53,12 @@ final class UserService extends BaseService
         }
         $user->email = self::validateEmail($data->email);
         $user->password = hash('sha512', $data->password);
-        $user->first_name = self::validateUserNames($data->first_name);
-        $user->last_name = self::validateUserNames($data->last_name);
-        $user->gender = self::validateUserGender($data->gender);
-        $user->birthday = self::validateDate($data->birthday);
-        $this->getUserRepository()->checkUserByEmail($user->email);
-        $users = $this->getUserRepository()->create($user);
+        $user->first_name = self::validateFirstName($data->first_name);
+        $user->last_name = self::validateLastName($data->last_name);
+        $user->gender = self::validateGender($data->gender);
+        $user->birthday = self::validateBirthday($data->birthday);
+        $this->userRepository->checkUserByEmail($user->email);
+        $users = $this->userRepository->create($user);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($users->id, $users);
         }
@@ -142,9 +85,9 @@ final class UserService extends BaseService
             $user->last_name = self::validateLastName($data->last_name);
         }     
         if (isset($data->gender)) {
-            $user->gender = self::validateUserGender($data->gender);
+            $user->gender = self::validateGender($data->gender);
         }      
-        $users = $this->getUserRepository()->update($user);
+        $users = $this->userRepository->update($user);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($users->id, $users);
         }
@@ -154,8 +97,8 @@ final class UserService extends BaseService
     public function delete(int $userId): string
     {
         $this->getUserFromDb($userId);
-        $this->getUserRepository()->deleteUserProfile($userId);
-        $data = $this->getUserRepository()->delete($userId);
+        $this->userRepository->deleteUserProfile($userId);
+        $data = $this->userRepository->delete($userId);
         if (self::isRedisEnabled() === true) {
             $this->deleteFromCache($userId);
         }
@@ -172,7 +115,7 @@ final class UserService extends BaseService
             throw new UserException('The "Password" field is required.', 400);
         }
         $password = hash('sha512', $data->password);
-        $user = $this->getUserRepository()->loginUser($data->email, $password);
+        $user = $this->userRepository->loginUser($data->email, $password);
         $token = [
             'sub' => $user->id,
             'email' => $user->email,
@@ -213,13 +156,13 @@ final class UserService extends BaseService
         }
         $user->email = self::validateEmail($data->email);
         $user->password = hash('sha512', $data->password);
-        $user->first_name = self::validateUserNames($data->first_name);
-        $user->last_name = self::validateUserNames($data->last_name); 
-        $user->gender = self::validateUserGender($data->gender);
-        $user->birthday = self::validateDate($data->birthday);
-        $this->getUserRepository()->checkUserByEmail($user->email);
-        $users = $this->getUserRepository()->signup($user);
-        $this->getUserRepository()->createUserProfile($users->id, $users->first_name);
+        $user->first_name = self::validateFirstName($data->first_name);
+        $user->last_name = self::validateLastName($data->last_name); 
+        $user->gender = self::validateGender($data->gender);
+        $user->birthday = self::validateBirthday($data->birthday);
+        $this->userRepository->checkUserByEmail($user->email);
+        $users = $this->userRepository->signup($user);
+        $this->userRepository->createUserProfile($users->id, $users->first_name, $users->last_name);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($users->id, $users);
         }
