@@ -17,11 +17,11 @@ abstract class BaseMiddleware
             if (is_object($decoded) && isset($decoded->sub)) {
                 return $decoded;
             }
-            throw new \App\Exception\AuthMiddleware(self::FORBIDDEN_MESSAGE_EXCEPTION, 403);
+            throw new \App\Exception\AuthException(self::FORBIDDEN_MESSAGE_EXCEPTION, 403);
         } catch (\UnexpectedValueException $e) {
-            throw new \App\Exception\AuthMiddleware(self::FORBIDDEN_MESSAGE_EXCEPTION, 403);
+            throw new \App\Exception\AuthException(self::FORBIDDEN_MESSAGE_EXCEPTION, 403);
         } catch (\DomainException $e) {
-            throw new \App\Exception\AuthMiddleware(self::FORBIDDEN_MESSAGE_EXCEPTION, 403);
+            throw new \App\Exception\AuthException(self::FORBIDDEN_MESSAGE_EXCEPTION, 403);
         }
     }
 }

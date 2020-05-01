@@ -14,11 +14,11 @@ final class AuthMiddleware extends BaseMiddleware
     {
         $jwtHeader = $request->getHeaderLine('Authorization');
         if (!$jwtHeader) {
-            throw new \App\Exception\AuthMiddleware('JWT Token required.', 400);
+            throw new \App\Exception\AuthException('JWT Token required.', 400);
         }
         $jwt = explode('Bearer ', $jwtHeader);
         if (!isset($jwt[1])) {
-            throw new \App\Exception\AuthMiddleware('JWT Token invalid.', 400);
+            throw new \App\Exception\AuthException('JWT Token invalid.', 400);
         }
         $decoded = $this->checkToken($jwt[1]);
         $object = $request->getParsedBody();

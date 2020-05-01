@@ -166,7 +166,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) NOT NULL DEFAULT '2',
-  `email` varchar(150) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `first_name` varchar(25) NOT NULL,
   `last_name` varchar(25) NOT NULL,
