@@ -11,7 +11,7 @@ env:
   global:
     - CC_TEST_REPORTER_ID=
     - DB_HOSTNAME=127.0.0.1
-    - DB_DATABASE=slim4_api_crud_sql
+    - DB_DATABASE=rest_api_slim_php_sql
     - DB_USERNAME=root
     - DB_PASSWORD=
     - SECRET_KEY=YourSuperSecret-KeY
@@ -19,10 +19,10 @@ env:
     - REDIS_URL=localhost
 
 before_install:
-  - mysql -e 'CREATE DATABASE slim4_api_crud_sql;'
+  - mysql -e 'CREATE DATABASE rest_api_slim_php_sql;'
 
 before_script:
-  - mysql slim4_api_crud_sql < database/database.sql
+  - mysql rest_api_slim_php_sql < database/database.sql
   - composer install
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter 
   - chmod +x ./cc-test-reporter 

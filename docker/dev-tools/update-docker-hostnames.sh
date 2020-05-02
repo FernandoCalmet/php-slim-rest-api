@@ -3,11 +3,11 @@
 ETC_HOSTS=/etc/hosts
 
 declare -a IPS=(
-"`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' slim4-api-crud-sql-nginx-container`"
+"`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' rest-api-slim-php-sql-nginx-container`"
 )
 
 declare -a HOSTNAMES=(
-"slim4-api-crud-sql.docker.local"
+"rest-api-slim-php-sql.docker.local"
 )
 
 removehosts() {

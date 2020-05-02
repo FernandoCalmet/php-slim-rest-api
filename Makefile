@@ -2,11 +2,11 @@
 
 MAKEPATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 PWD := $(dir $(MAKEPATH))
-CONTAINERS := $(shell docker ps -a -q -f "name=slim4-api-crud-sql*")
+CONTAINERS := $(shell docker ps -a -q -f "name=rest-api-slim-php-sql*")
 
 db:
-	docker-compose exec mysql mysql -e 'DROP DATABASE IF EXISTS slim4_api_crud_sql ; CREATE DATABASE slim4_api_crud_sql;'
-	docker-compose exec mysql sh -c "mysql slim4_api_crud_sql < docker-entrypoint-initdb.d/database.sql"
+	docker-compose exec mysql mysql -e 'DROP DATABASE IF EXISTS rest_api_slim_php_sql ; CREATE DATABASE rest_api_slim_php_sql;'
+	docker-compose exec mysql sh -c "mysql rest_api_slim_php_sql < docker-entrypoint-initdb.d/database.sql"
 
 coverage:
 	docker-compose exec php-fpm sh -c "./vendor/bin/phpunit --coverage-text --coverage-html coverage"
@@ -21,13 +21,13 @@ down:
 	docker-compose down
 
 nginx:
-	docker exec -it slim4-api-crud-sql-nginx-container bash
+	docker exec -it rest-api-slim-php-sql-nginx-container bash
 
 php: 
-	docker exec -it slim4-api-crud-sql-php-container bash
+	docker exec -it rest-api-slim-php-sql-php-container bash
 
 phplog: 
-	docker logs slim4-api-crud-sql-php-container
+	docker logs rest-api-slim-php-sql-php-container
 
 nginxlog:
-	docker logs slim4-api-crud-sql-nginx-container
+	docker logs rest-api-slim-php-sql-nginx-container

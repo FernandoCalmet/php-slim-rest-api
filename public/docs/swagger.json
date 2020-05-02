@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "title": "slim4-api-crud-sql",
+      "title": "rest-api-slim-php-sql",
       "contact": {},
       "version": "1.0"
     },

@@ -23,7 +23,7 @@ Basic Commands
 Start Service: redis-cli
 View All cache: keys *
 Clean cache: FLUSHALL
-Query (example of a cached data): get "slim4-api-crud-sql:test:status"
+Query (example of a cached data): get "rest-api-slim-php-sql:test:status"
 ```
 
 ### With Composer:
@@ -31,7 +31,7 @@ Query (example of a cached data): get "slim4-api-crud-sql:test:status"
 You can create a new project by running the following commands:
 
 ```bash
-$ composer create-project fernandocalmet/slim4-api-crud-sql [my-api-name]
+$ composer create-project fernandocalmet/rest-api-slim-php-sql [my-api-name]
 $ cd [my-api-name]
 $ composer restart-db
 $ composer test
@@ -44,7 +44,7 @@ $ composer start
 In your terminal run these commands:
 
 ```bash
-$ git clone https://github.com/fernandocalmet/slim4-api-crud-sql.git && cd slim4-api-crud-sql
+$ git clone https://github.com/fernandocalmet/rest-api-slim-php-sql.git && cd rest-api-slim-php-sql
 $ cp .env.example .env
 $ composer install
 $ composer restart-db

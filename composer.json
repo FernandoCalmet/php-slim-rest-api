@@ -1,6 +1,6 @@
 {
-    "name": "fernandocalmet/slim4-api-crud-sql",
-    "description": "Slim4 Restful CRUD Application",   
+    "name": "fernandocalmet/rest-api-slim-php-sql",
+    "description": "Rest API Slim PHP SQL",   
     "authors": [
         {
             "name": "Fernando Calmet",
