@@ -1,4 +1,4 @@
-# Rest API Slim PHP SQL
+# :sparkles: Rest API Slim PHP SQL
 > github.com/fernandocalmet  
 
 - Example of REST API with [Slim PHP micro framework](https://www.slimframework.com).
