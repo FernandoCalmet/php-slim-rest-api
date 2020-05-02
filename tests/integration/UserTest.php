@@ -27,7 +27,8 @@ class UserTest extends BaseTestCase
         $this->assertStringContainsString('email', $result);
         $this->assertStringContainsString('first_name', $result);
         $this->assertStringContainsString('last_name', $result);
-        
+        $this->assertStringContainsString('gender', $result);
+        $this->assertStringContainsString('birthday', $result);        
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -44,8 +45,12 @@ class UserTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('first_name', $result);
+        $this->assertStringContainsString('role_id', $result);
         $this->assertStringContainsString('email', $result);
+        $this->assertStringContainsString('first_name', $result);
+        $this->assertStringContainsString('last_name', $result);   
+        $this->assertStringContainsString('gender', $result);
+        $this->assertStringContainsString('birthday', $result);     
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -62,8 +67,11 @@ class UserTest extends BaseTestCase
         $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('first_name', $result);
         $this->assertStringNotContainsString('email', $result);
+        $this->assertStringNotContainsString('first_name', $result);
+        $this->assertStringNotContainsString('last_name', $result);   
+        $this->assertStringContainsString('gender', $result);
+        $this->assertStringContainsString('birthday', $result);     
         $this->assertStringContainsString('error', $result);
     }
 
@@ -72,7 +80,7 @@ class UserTest extends BaseTestCase
      */
     public function testSearchUsers(): void
     {
-        $response = $this->runApp('GET', '/api/v1/users/search/j');
+        $response = $this->runApp('GET', '/api/v1/users/search/f');
 
         $result = (string) $response->getBody();
 
@@ -80,8 +88,11 @@ class UserTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('first_name', $result);
         $this->assertStringContainsString('email', $result);
+        $this->assertStringContainsString('first_name', $result);
+        $this->assertStringContainsString('last_name', $result);      
+        $this->assertStringContainsString('gender', $result);
+        $this->assertStringContainsString('birthday', $result);  
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -137,10 +148,10 @@ class UserTest extends BaseTestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
-        $this->assertStringContainsString('id', $result);        
+        $this->assertStringContainsString('id', $result);      
+        $this->assertStringContainsString('email', $result);   
         $this->assertStringContainsString('first_name', $result);
-        $this->assertStringContainsString('last_name', $result);
-        $this->assertStringContainsString('email', $result);  
+        $this->assertStringContainsString('last_name', $result);         
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -203,7 +214,7 @@ class UserTest extends BaseTestCase
     {
         $response = $this->runApp(
             'POST', '/api/v1/users',
-            ['first_name' => 'Fernando', 'email' => 'email.incorrecto', 'password' => 'AnyPass1000']
+            ['first_name' => 'Fernando', 'email' => 'email.incorrect', 'password' => 'AnyPass1000']
         );
 
         $result = (string) $response->getBody();
@@ -221,7 +232,12 @@ class UserTest extends BaseTestCase
     {
         $response = $this->runApp(
             'POST', '/api/v1/users',
-            ['first_name' => 'Fernando', 'email' => 'tester@gmail.com', 'password' => 'AnyPass1000']
+            [
+                'email' => 'tester@mail.com', 
+                'password' => 'AnyPass1000',
+                'first_name' => 'Fernando', 
+                'last_name' => 'Calmet'
+            ]
         );
 
         $result = (string) $response->getBody();
@@ -344,7 +360,7 @@ class UserTest extends BaseTestCase
      */
     public function testLoginUser(): void
     {
-        $response = $this->runApp('POST', '/login', ['email' => 'fercalmet@gmail.com', 'password' => 'AnyPass1000']);
+        $response = $this->runApp('POST', '/login', ['email' => 'tester@mail.com', 'password' => 'AnyPass1000']);
 
         $result = (string) $response->getBody();
 
