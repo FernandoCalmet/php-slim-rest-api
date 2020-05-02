@@ -1,8 +1,11 @@
-# Slim4 Restful CRUD Application
-> author: github.com/fernandocalmet  
-  
+# Rest API Slim PHP SQL
+> github.com/fernandocalmet  
 
-## QUICK INSTALL:
+- Example of REST API with [Slim PHP micro framework](https://www.slimframework.com).
+
+- Main technologies used: `PHP, Slim 3, MySQL, Redis, PHPUnit and JSON Web Tokens.`
+
+## :gear: QUICK INSTALL:
 
 ### Pre Requirements:
 
@@ -84,7 +87,7 @@ $ make down
 $ composer restart-db
 ```
 
-## DEPENDENCIES:
+## :inbox_tray: DEPENDENCIES:
 
 ### LIST OF REQUIREMENTS DEPENDENCIES:
 
@@ -104,20 +107,20 @@ $ composer restart-db
 - [symfony/console](https://github.com/symfony/console): The Console component eases the creation of beautiful and testable command line interfaces.
 - [nunomaduro/phpinsights](https://github.com/nunomaduro/phpinsights): Instant PHP quality checks from your console.
 
-## TESTS:
+## :traffic_light: TESTS:
 
 Run all PHPUnit tests with `composer test`.
 
-## DOCUMENTATION:
+## :books: DOCUMENTATION:
 
 ![Database diagram](extras/img/database.png)
-
-### ENDPOINTS:
 
 ##### IMPORT WITH POSTMAN:
 All the information of the API, prepared to download and use as postman collection: [Import Collection](https://www.getpostman.com/collections/cb7f3d187ce635836339).
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/cb7f3d187ce635836339)
+
+### ENDPOINTS:
 
 #### INFO:
 - Help: `GET /`
@@ -175,8 +178,7 @@ All the information of the API, prepared to download and use as postman collecti
 - Query: `DELETE /api/v1/profiles/search/[{query}]`
 
   
-## SUPPORT ME WITH A COFFEE:-)
-
+## :heart: SUPPORT ME
 <a href='https://ko-fi.com/fernandocalmet' target='_blank'>
   <img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' />
 </a>
