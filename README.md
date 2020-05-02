@@ -1,6 +1,8 @@
 # :sparkles: Rest API Slim PHP SQL
 > github.com/fernandocalmet  
 
+![alt text](extras/img/slim-logo.png "Slim PHP micro framework")
+
 - Example of REST API with [Slim PHP micro framework](https://www.slimframework.com).
 
 - Main technologies used: `PHP, Slim 3, MySQL, Redis, PHPUnit and JSON Web Tokens.`

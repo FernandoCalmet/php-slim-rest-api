@@ -24,8 +24,10 @@ class UserTest extends BaseTestCase
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('first_name', $result);
         $this->assertStringContainsString('email', $result);
+        $this->assertStringContainsString('first_name', $result);
+        $this->assertStringContainsString('last_name', $result);
+        
         $this->assertStringNotContainsString('error', $result);
     }
 

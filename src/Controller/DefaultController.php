@@ -57,10 +57,10 @@ final class DefaultController extends BaseController
     {
         $userService = $this->container->get('user_service');
         $profileService = $this->container->get('profile_service');
-        $moduleService = $this->container->get('get_all_module_service');
-        $operationService = $this->container->get('get_all_operation_service');
-        $permissionService = $this->container->get('get_all_permission_service');
-        $roleService = $this->container->get('get_all_role_service');        
+        $moduleService = $this->container->get('module_service');
+        $operationService = $this->container->get('operation_service');
+        $permissionService = $this->container->get('permission_service');
+        $roleService = $this->container->get('role_service');        
 
         return [
             'users' => count($userService->getAll()),
