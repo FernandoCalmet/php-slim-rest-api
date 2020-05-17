@@ -39,7 +39,7 @@
     "scripts": {
         "post-create-project-cmd": [
             "php -r \"copy('.env.example', '.env');\"",
-            "\\App\\Controller\\DefaultController::postCreateProjectCommand"
+            "php extras/bin/post-create-project-command.php"
         ],
         "phpstan": "./vendor/bin/phpstan analyse src tests --level=6",
         "coverage": "phpunit --coverage-html=coverage --coverage-text",           
