@@ -4,6 +4,8 @@ info:
   contact: {}
   version: '1.0'
 servers:
+- url: https://rest-api-slim-php-sql.herokuapp.com/
+  description: My Heroku server using PHP built-in web server.
 - url: http://localhost:8080
   description: My localhost server using PHP built-in web server.
 - url: http://localhost:8081
