@@ -4,37 +4,21 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Exception\UserException;
+use App\Exception\User;
 
 final class UserRepository extends BaseRepository
 {
-    public function __construct(\PDO $database)
-    {
-        $this->database = $database;
-    }
-
     public function getUser(int $userId): object
     {
-        $query = '
-            SELECT 
-                users.id, 
-                users.first_name, 
-                users.last_name, 
-                users.email, 
-                users.role_id, 
-                roles.name `role_name` 
-            FROM users 
-            INNER JOIN roles 
-            ON users.role_id = roles.id 
-            WHERE users.id = :id
-        ';
+        $query = 'SELECT `id`, `name`, `email` FROM `users` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
         $statement->bindParam('id', $userId);
         $statement->execute();
         $user = $statement->fetchObject();
-        if (empty($user)) {
-            throw new UserException('User not found.', 404);
+        if (! $user) {
+            throw new User('User not found.', 404);
         }
+
         return $user;
     }
 
@@ -45,185 +29,104 @@ final class UserRepository extends BaseRepository
         $statement->bindParam('email', $email);
         $statement->execute();
         $user = $statement->fetchObject();
-        if (empty(!$user)) {
-            throw new UserException('Email already exists.', 400);
+        if ($user) {
+            throw new User('Email already exists.', 400);
         }
     }
 
     public function getAll(): array
     {
-        $query = '
-            SELECT `id`, `first_name`, `last_name`, `email` 
-            FROM `users` 
-            ORDER BY `id`
-        ';
+        $query = 'SELECT `id`, `name`, `email` FROM `users` ORDER BY `id`';
         $statement = $this->database->prepare($query);
         $statement->execute();
 
         return $statement->fetchAll();
     }
 
-    public function search(string $usersNombres): array
+    public function search(string $usersName): array
     {
         $query = '
-            SELECT `id`, `first_name`, `last_name`, `email` 
-            FROM `users` 
-            WHERE `first_name` LIKE :first_name OR `last_name` LIKE :last_name
+            SELECT `id`, `name`, `email`
+            FROM `users`
+            WHERE `name` LIKE :name
             ORDER BY `id`
         ';
-        $first_name = '%' . $usersNombres . '%';
+        $name = '%' . $usersName . '%';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('first_name', $first_name);
-        $statement->bindParam('last_name', $first_name);
+        $statement->bindParam('name', $name);
         $statement->execute();
         $users = $statement->fetchAll();
-        if (!$users) {
-            throw new UserException('User names not found.', 404);
+        if (! $users) {
+            throw new User('User name not found.', 404);
         }
+
         return $users;
     }
 
     public function loginUser(string $email, string $password): object
     {
         $query = '
-            SELECT 
-                users.id, 
-                users.first_name, 
-                users.last_name, 
-                users.email, 
-                users.gender, 
-                users.birthday, 
-                users.role_id, 
-                roles.name `role_name` ,
-                profiles.id `profile_id`
-            FROM ((users 
-            INNER JOIN roles ON users.role_id = roles.id)
-            INNER JOIN profiles ON profiles.user_id = users.id)
-            WHERE users.email = :email AND users.password = :password
-            ORDER BY users.id
+            SELECT *
+            FROM `users`
+            WHERE `email` = :email AND `password` = :password
+            ORDER BY `id`
         ';
         $statement = $this->database->prepare($query);
         $statement->bindParam('email', $email);
         $statement->bindParam('password', $password);
         $statement->execute();
         $user = $statement->fetchObject();
-        if (empty($user)) {
-            throw new UserException('Login failed: Email or password incorrect.', 400);
+        if (! $user) {
+            throw new User('Login failed: Email or password incorrect.', 400);
         }
-        return $user;
-    }      
 
-    public function create($user): object
+        return $user;
+    }
+
+    public function create(object $user): object
     {
         $query = '
-            INSERT INTO `users` (
-                `email`, 
-                `password`, 
-                `first_name`, 
-                `last_name`, 
-                `gender`, 
-                `birthday`
-            ) 
-            VALUES (
-                :email, 
-                :password, 
-                :first_name, 
-                :last_name, 
-                :gender, 
-                :birthday
-            )
+            INSERT INTO `users`
+                (`name`, `email`, `password`)
+            VALUES
+                (:name, :email, :password)
         ';
         $statement = $this->database->prepare($query);
+        $statement->bindParam('name', $user->name);
         $statement->bindParam('email', $user->email);
         $statement->bindParam('password', $user->password);
-        $statement->bindParam('first_name', $user->first_name);
-        $statement->bindParam('last_name', $user->last_name);
-        $statement->bindParam('gender', $user->gender); 
-        $statement->bindParam('birthday', $user->birthday); 
         $statement->execute();
+
         return $this->getUser((int) $this->database->lastInsertId());
     }
 
-    public function update($user): object
+    public function update(object $user): object
     {
         $query = '
-            UPDATE `users` 
-            SET 
-                `email` = :email,  
-                `password` = :password,  
-                `first_name` = :first_name, 
-                `last_name` = :last_name, 
-                `gender` = :gender
-            WHERE `id` = :id
+            UPDATE `users` SET `name` = :name, `email` = :email WHERE `id` = :id
         ';
         $statement = $this->database->prepare($query);
         $statement->bindParam('id', $user->id);
+        $statement->bindParam('name', $user->name);
         $statement->bindParam('email', $user->email);
-        $statement->bindParam('password', $user->password);
-        $statement->bindParam('first_name', $user->first_name);
-        $statement->bindParam('last_name', $user->last_name);
-        $statement->bindParam('gender', $user->gender);
         $statement->execute();
+
         return $this->getUser((int) $user->id);
     }
 
-    public function delete(int $userId): string
+    public function delete(int $userId): void
     {
         $query = 'DELETE FROM `users` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
         $statement->bindParam('id', $userId);
         $statement->execute();
-        return 'The user was deleted.';
     }
 
-    public function deleteUserProfile(int $userId): void
+    public function deleteUserTasks(int $userId): void
     {
-        $query = 'DELETE FROM `profiles` WHERE `id` = :id';
+        $query = 'DELETE FROM `tasks` WHERE `userId` = :userId';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('id', $userId);
-        $statement->execute();
-    }    
-
-    public function signup($user): object
-    {
-        $query = '
-            INSERT INTO `users` (
-                `email`, 
-                `password`, 
-                `first_name`, 
-                `last_name`, 
-                `gender`, 
-                `birthday`
-            ) 
-            VALUES (
-                :email, 
-                :password, 
-                :first_name, 
-                :last_name, 
-                :gender, 
-                :birthday
-            )
-        ';
-        $statement = $this->database->prepare($query);
-        $statement->bindParam('email', $user->email);
-        $statement->bindParam('password', $user->password);
-        $statement->bindParam('first_name', $user->first_name);
-        $statement->bindParam('last_name', $user->last_name);
-        $statement->bindParam('gender', $user->gender);
-        $statement->bindParam('birthday', $user->birthday); 
-        $statement->execute();
-        return $this->getUser((int) $this->database->lastInsertId());
-    }
-
-    public function createUserProfile(int $userId, $firstName, $lastName): void
-    {
-        $query = '
-            INSERT INTO `profiles` (`user_id`, `username`)
-            VALUES (:userId, :username)
-        ';
-        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('userId', $userId);
-        $statement->bindParam('username', $firstName . " " . $lastName);
         $statement->execute();
     }
 }

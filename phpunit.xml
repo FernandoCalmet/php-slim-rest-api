@@ -1,6 +1,6 @@
 <phpunit colors="true" bootstrap="vendor/autoload.php">
     <testsuites>
-        <testsuite name="rest-api-slim-php-sql">
+        <testsuite name="rest-api-slim-php">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

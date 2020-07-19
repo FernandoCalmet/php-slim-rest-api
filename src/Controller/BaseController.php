@@ -9,10 +9,14 @@ use Slim\Http\Response;
 
 abstract class BaseController
 {
-    /**
-     * @var Container
-     */
     protected $container;
+
+    protected const DEFAULT_PER_PAGE_PAGINATION = 5;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
 
     protected function jsonResponse(
         Response $response,

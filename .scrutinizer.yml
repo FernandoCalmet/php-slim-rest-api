@@ -6,16 +6,18 @@ build:
     environment:
         variables:
             DB_HOSTNAME: '127.0.0.1'
-            DB_DATABASE: 'rest_api_slim_php_sql'
+            DB_DATABASE: 'rest_api_slim_php'
             DB_USERNAME: 'root'
             DB_PASSWORD: ''
+            SECRET_KEY: 'jwt-secret-key'
+            REDIS_ENABLED: true
             REDIS_URL: 'localhost'
         php:
             version: 7.3
     project_setup:
         before:
-            - mysql -e "CREATE DATABASE rest_api_slim_php_sql"
-            - mysql rest_api_slim_php_sql < database/database.sql
+            - mysql -e "CREATE DATABASE rest_api_slim_php"
+            - mysql rest_api_slim_php < database/database.sql
         override:
             - php-scrutinizer-run
             -

@@ -1,7 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "rest-api-slim-php-sql",
+    "title": "rest-api-slim-php",
+    "description": "Example of REST API with [Slim PHP micro framework](http://www.slimframework.com).\n\nThis simple RESTful API made in Slim version 3, allows CRUD operations to manage entities like: Users, Tasks and Notes :-)\n",
     "contact": {},
     "version": "1.0"
   },
@@ -18,12 +19,96 @@
           "Info"
         ],
         "summary": "Get Help",
+        "description": "Get help about this api.",
         "operationId": "GetHelp",
         "parameters": [],
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+              "Host": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "localhost:8080"
+                  }
+                }
+              },
+              "Date": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "Tue, 18 Jun 2019 22:39:02 +0000"
+                  }
+                }
+              },
+              "Connection": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "close"
+                  }
+                }
+              },
+              "X-Powered-By": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "PHP/7.3.4"
+                  }
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "*"
+                  }
+                }
+              },
+              "Content-Length": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "463"
+                  }
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetHelp"
+                },
+                "example": {
+                  "code": 200,
+                  "status": "success",
+                  "message": {
+                    "endpoints": {
+                      "tasks": "http://localhost:8080/api/v1/tasks",
+                      "users": "http://localhost:8080/api/v1/users",
+                      "notes": "http://localhost:8080/api/v1/notes",
+                      "status": "http://localhost:8080/status",
+                      "this help": "http://localhost:8080"
+                    },
+                    "version": "0.22.2",
+                    "timestamp": 1560897542
+                  }
+                }
+              }
+            }
           }
         },
         "deprecated": false
@@ -35,12 +120,94 @@
           "Info"
         ],
         "summary": "Get Status",
+        "description": "Get status of this api.",
         "operationId": "GetStatus",
         "parameters": [],
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+              "Host": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "localhost:8080"
+                  }
+                }
+              },
+              "Date": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "Tue, 18 Jun 2019 22:39:39 +0000"
+                  }
+                }
+              },
+              "Connection": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "close"
+                  }
+                }
+              },
+              "X-Powered-By": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "PHP/7.3.4"
+                  }
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "*"
+                  }
+                }
+              },
+              "Content-Length": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "228"
+                  }
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStatus"
+                },
+                "example": {
+                  "code": 200,
+                  "status": "success",
+                  "message": {
+                    "db": {
+                      "users": 9,
+                      "tasks": 10,
+                      "notes": 5
+                    },
+                    "version": "0.22.2",
+                    "timestamp": 1560897579
+                  }
+                }
+              }
+            }
           }
         },
         "deprecated": false
@@ -49,9 +216,10 @@
     "/login": {
       "post": {
         "tags": [
-          "Info"
+          "Login"
         ],
         "summary": "Login",
+        "description": "Login and get a JWT Token Authorization Bearer to use this api.",
         "operationId": "Login",
         "parameters": [],
         "requestBody": {
@@ -62,8 +230,8 @@
                 "$ref": "#/components/schemas/LoginRequest"
               },
               "example": {
-                "email": "fercalmet@gmail.com",
-                "password": "AnyPass1000"
+                "email": "super.email@host.com",
+                "password": "OnePass1"
               }
             }
           },
@@ -72,34 +240,151 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+              "Host": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "localhost:8080"
+                  }
+                }
+              },
+              "Date": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "Wed, 22 May 2019 19:24:12 +0000"
+                  }
+                }
+              },
+              "Connection": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "close"
+                  }
+                }
+              },
+              "X-Powered-By": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "PHP/7.3.4"
+                  }
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "*"
+                  }
+                }
+              },
+              "Content-Length": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "example": "291"
+                  }
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginOK"
+                },
+                "example": {
+                  "code": 200,
+                  "status": "success",
+                  "message": {
+                    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMSIsImVtYWlsIjoibUBiLmNvbS5hciIsIm5hbWUiOiJNTkIiLCJpYXQiOjE1NTg1NTMwNTIsImV4cCI6MTU1OTE1Nzg1Mn0.OQyICWlGW0oSUB-ANrYL2OJTdC2v0OQQO3RQQ3W_KLo"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginFailed"
+                },
+                "example": {
+                  "message": "Login failed: Email or password incorrect.",
+                  "class": "UserException",
+                  "status": "error",
+                  "code": 400
+                }
+              }
+            }
           }
         },
         "deprecated": false
       }
     },
-    "/signup": {
+    "/api/v1/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get All Users",
+        "operationId": "GetAllUsers",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "example": "{{jwt}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": []
+      },
       "post": {
         "tags": [
-          "Info"
+          "Users"
         ],
-        "summary": "SignUp",
-        "operationId": "SignUp",
+        "summary": "Create User",
+        "description": "Register a new user.",
+        "operationId": "CreateUser",
         "parameters": [],
         "requestBody": {
           "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SignUpRequest"
+                "$ref": "#/components/schemas/CreateUserRequest"
               },
               "example": {
-                "email": "fercalmet@gmail.com",
-                "password": "AnyPass1000",
-                "first_name": "Fernando",
-                "last_name": "Calmet",
-                "gender": "Male",
-                "birthday": "1989-01-01"
+                "name": "John User",
+                "email": "super.email@host.com",
+                "password": "OnePass1"
               }
             }
           },
@@ -114,68 +399,14 @@
         "deprecated": false
       }
     },
-    "/api/v1/profiles": {
-      "post": {
-        "tags": [
-          "Profiles"
-        ],
-        "summary": "Create",
-        "operationId": "Create",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequest"
-              },
-              "example": {
-                "username": "Fernando Calmet",
-                "biography": "Hello World!"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      },
+    "/api/v1/users/8": {
       "get": {
         "tags": [
-          "Profiles"
+          "Users"
         ],
-        "summary": "GetAll",
-        "operationId": "GetAll",
+        "summary": "Get One User",
+        "operationId": "GetOneUser",
         "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
           {
             "name": "Authorization",
             "in": "header",
@@ -198,25 +429,14 @@
         "security": []
       }
     },
-    "/api/v1/profiles/1": {
+    "/api/v1/users/search/d": {
       "get": {
         "tags": [
-          "Profiles"
+          "Users"
         ],
-        "summary": "GetOne",
-        "operationId": "GetOne",
+        "summary": "Search Users",
+        "operationId": "SearchUsers",
         "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
           {
             "name": "Authorization",
             "in": "header",
@@ -237,13 +457,16 @@
         },
         "deprecated": false,
         "security": []
-      },
+      }
+    },
+    "/api/v1/users/4": {
       "put": {
         "tags": [
-          "Profiles"
+          "Users"
         ],
-        "summary": "Update",
-        "operationId": "Update",
+        "summary": "Update User",
+        "description": "Update a user.",
+        "operationId": "UpdateUser",
         "parameters": [
           {
             "name": "Authorization",
@@ -262,11 +485,11 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateRequest"
+                "$ref": "#/components/schemas/UpdateUserRequest"
               },
               "example": {
-                "username": "Fernando Calmet",
-                "biography": "Hello World!"
+                "name": "Jhon R",
+                "email": "ram@hotmail.com"
               }
             }
           },
@@ -282,139 +505,14 @@
         "security": []
       }
     },
-    "/api/v1/users/1": {
+    "/api/v1/users/112": {
       "delete": {
         "tags": [
-          "Profiles"
-        ],
-        "summary": "Delete",
-        "operationId": "Delete",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      },
-      "get": {
-        "tags": [
           "Users"
         ],
-        "summary": "GetOne",
-        "operationId": "GetOne12345",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      },
-      "put": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Update",
-        "operationId": "PutUpdate1234",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRequest5"
-              },
-              "example": {
-                "email": "khanakat@gmail.com",
-                "password": "AnyPass1000",
-                "first_name": "Fernando",
-                "last_name": "Calmet",
-                "gender": "Male"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      }
-    },
-    "/api/v1/profiles/search/software": {
-      "get": {
-        "tags": [
-          "Profiles"
-        ],
-        "summary": "Search",
-        "operationId": "Search",
+        "summary": "Delete User",
+        "description": "Delete a user.",
+        "operationId": "DeleteUser",
         "parameters": [
           {
             "name": "Authorization",
@@ -438,13 +536,43 @@
         "security": []
       }
     },
-    "/api/v1/roles": {
+    "/api/v1/tasks": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Get All Tasks",
+        "description": "Get all tasks of a user.",
+        "operationId": "GetAllTasks",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "example": "{{jwt}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": []
+      },
       "post": {
         "tags": [
-          "Roles"
+          "Tasks"
         ],
-        "summary": "Create",
-        "operationId": "PostCreate",
+        "summary": "Create Task",
+        "description": "Create a task.",
+        "operationId": "CreateTask",
         "parameters": [
           {
             "name": "Authorization",
@@ -463,11 +591,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateRequest1"
+                "$ref": "#/components/schemas/CreateTaskRequest"
               },
               "example": {
-                "name": "Support",
-                "description": "Desktop Helper"
+                "name": "Go To Sleep",
+                "description": "It's too late, go to sleep man ;-)",
+                "status": 0
               }
             }
           },
@@ -481,23 +610,59 @@
         },
         "deprecated": false,
         "security": []
-      },
+      }
+    },
+    "/api/v1/tasks/7": {
       "get": {
         "tags": [
-          "Roles"
+          "Tasks"
         ],
-        "summary": "GetAll",
-        "operationId": "GetAll1",
+        "summary": "Get One Task",
+        "description": "Get one task of a user.",
+        "operationId": "GetOneTask",
         "parameters": [
           {
-            "name": "Content-Type",
+            "name": "Authorization",
             "in": "header",
             "description": "",
             "required": true,
             "style": "simple",
             "schema": {
               "type": "string",
-              "example": "application/json"
+              "example": "{{jwt}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": []
+      }
+    },
+    "/api/v1/tasks/search": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Search Tasks",
+        "description": "Search tasks of a user.",
+        "operationId": "SearchTasks",
+        "parameters": [
+          {
+            "name": "statuss",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 0
             }
           },
           {
@@ -522,52 +687,14 @@
         "security": []
       }
     },
-    "/api/v1/roles/1": {
-      "get": {
-        "tags": [
-          "Roles"
-        ],
-        "summary": "GetOne",
-        "operationId": "GetOne1",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      },
+    "/api/v1/tasks/29": {
       "put": {
         "tags": [
-          "Roles"
+          "Tasks"
         ],
-        "summary": "Update",
-        "operationId": "PutUpdate",
+        "summary": "Update Task",
+        "description": "Update a task of a user.",
+        "operationId": "UpdateTask",
         "parameters": [
           {
             "name": "Authorization",
@@ -586,11 +713,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateRequest1"
+                "$ref": "#/components/schemas/UpdateTaskRequest"
               },
               "example": {
-                "name": "Supervisor",
-                "description": "View all features."
+                "name": "Go To Sleep NOW!!",
+                "description": "It's too late, go to sleep man haha...",
+                "status": 1
               }
             }
           },
@@ -607,22 +735,12 @@
       },
       "delete": {
         "tags": [
-          "Roles"
+          "Tasks"
         ],
-        "summary": "Delete",
-        "operationId": "Delete1",
+        "summary": "Delete Task",
+        "description": "Delete a task of a user.",
+        "operationId": "DeleteTask",
         "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
           {
             "name": "Authorization",
             "in": "header",
@@ -645,66 +763,39 @@
         "security": []
       }
     },
-    "/api/v1/roles/search/Admin": {
+    "/api/v1/notes": {
       "get": {
         "tags": [
-          "Roles"
+          "Notes"
         ],
-        "summary": "Search",
-        "operationId": "GetSearch",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
+        "summary": "Get All Notes",
+        "operationId": "GetAllNotes",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
             "headers": {}
           }
         },
-        "deprecated": false,
-        "security": []
-      }
-    },
-    "/api/v1/modules": {
+        "deprecated": false
+      },
       "post": {
         "tags": [
-          "Modules"
+          "Notes"
         ],
-        "summary": "Create",
-        "operationId": "PostCreate1",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
+        "summary": "Create Note",
+        "operationId": "CreateNote",
+        "parameters": [],
         "requestBody": {
           "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateRequest1"
+                "$ref": "#/components/schemas/CreateNoteRequest"
               },
               "example": {
-                "name": "This a sample",
-                "description": "My own example from postman."
+                "name": "New Soccer Note",
+                "description": "Magic Goal..."
               }
             }
           },
@@ -716,118 +807,61 @@
             "headers": {}
           }
         },
-        "deprecated": false,
-        "security": []
-      },
-      "get": {
-        "tags": [
-          "Modules"
-        ],
-        "summary": "GetAll",
-        "operationId": "GetAll12",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
+        "deprecated": false
       }
     },
-    "/api/v1/modules/1": {
+    "/api/v1/notes/3": {
       "get": {
         "tags": [
-          "Modules"
+          "Notes"
         ],
-        "summary": "GetOne",
-        "operationId": "GetOne12",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
+        "summary": "Get One Note",
+        "operationId": "GetOneNote",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
             "headers": {}
           }
         },
-        "deprecated": false,
-        "security": []
-      },
+        "deprecated": false
+      }
+    },
+    "/api/v1/notes/search/note": {
+      "get": {
+        "tags": [
+          "Notes"
+        ],
+        "summary": "Search Notes",
+        "operationId": "SearchNotes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/notes/4": {
       "put": {
         "tags": [
-          "Modules"
+          "Notes"
         ],
-        "summary": "Update",
-        "operationId": "PutUpdate1",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
+        "summary": "Update Note",
+        "operationId": "UpdateNote",
+        "parameters": [],
         "requestBody": {
           "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateRequest1"
+                "$ref": "#/components/schemas/UpdateNoteRequest"
               },
               "example": {
-                "name": "This a second sample",
-                "description": "My own example from postman."
+                "name": "My Note Number 433333",
+                "description": "Free Note?!?!?!"
               }
             }
           },
@@ -839,674 +873,224 @@
             "headers": {}
           }
         },
-        "deprecated": false,
-        "security": []
-      },
+        "deprecated": false
+      }
+    },
+    "/api/v1/notes/38": {
       "delete": {
         "tags": [
-          "Modules"
+          "Notes"
         ],
-        "summary": "Delete",
-        "operationId": "Delete12",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
+        "summary": "Delete Note",
+        "operationId": "DeleteNote",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
             "headers": {}
           }
         },
-        "deprecated": false,
-        "security": []
-      }
-    },
-    "/api/v1/modules/search/profiles": {
-      "get": {
-        "tags": [
-          "Modules"
-        ],
-        "summary": "Search",
-        "operationId": "GetSearch1",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      }
-    },
-    "/api/v1/permissions": {
-      "post": {
-        "tags": [
-          "Permissions"
-        ],
-        "summary": "Create",
-        "operationId": "PostCreate12",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequest3"
-              },
-              "example": {
-                "role_id": 1,
-                "operation_id": 1
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      },
-      "get": {
-        "tags": [
-          "Permissions"
-        ],
-        "summary": "GetAll",
-        "operationId": "GetAll123",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      }
-    },
-    "/api/v1/permissions/1": {
-      "get": {
-        "tags": [
-          "Permissions"
-        ],
-        "summary": "GetOne",
-        "operationId": "GetOne123",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      },
-      "put": {
-        "tags": [
-          "Permissions"
-        ],
-        "summary": "Update",
-        "operationId": "PutUpdate12",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRequest3"
-              },
-              "example": {
-                "role_id": 2,
-                "operation_id": 2
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      },
-      "delete": {
-        "tags": [
-          "Permissions"
-        ],
-        "summary": "Delete",
-        "operationId": "Delete123",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      }
-    },
-    "/api/v1/permissions/search/1": {
-      "get": {
-        "tags": [
-          "Permissions"
-        ],
-        "summary": "Search",
-        "operationId": "GetSearch12",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      }
-    },
-    "/api/v1/operations": {
-      "post": {
-        "tags": [
-          "Operations"
-        ],
-        "summary": "Create",
-        "operationId": "PostCreate123",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequest1"
-              },
-              "example": {
-                "name": "Postman Test Operation",
-                "description": "This is just a test."
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      },
-      "get": {
-        "tags": [
-          "Operations"
-        ],
-        "summary": "GetAll",
-        "operationId": "GetAll1234",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      }
-    },
-    "/api/v1/operations/1": {
-      "get": {
-        "tags": [
-          "Operations"
-        ],
-        "summary": "GetOne",
-        "operationId": "GetOne1234",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      },
-      "put": {
-        "tags": [
-          "Operations"
-        ],
-        "summary": "Update",
-        "operationId": "PutUpdate123",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRequest1"
-              },
-              "example": {
-                "name": "Postman Testing Operation",
-                "description": "Hello World."
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      },
-      "delete": {
-        "tags": [
-          "Operations"
-        ],
-        "summary": "Delete",
-        "operationId": "Delete1234",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      }
-    },
-    "/api/v1/operations/search/create": {
-      "get": {
-        "tags": [
-          "Operations"
-        ],
-        "summary": "Search",
-        "operationId": "GetSearch123",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      }
-    },
-    "/api/v1/users": {
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Create",
-        "operationId": "PostCreate1234",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequest5"
-              },
-              "example": {
-                "email": "fercalmet@gmail.com",
-                "password": "AnyPass1000",
-                "first_name": "Fernando",
-                "last_name": "Calmet",
-                "gender": "Male",
-                "birthday": "1989-06-09"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      },
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "GetAll",
-        "operationId": "GetAll12345",
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "application/json"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      }
-    },
-    "/api/v1/users/search/fernando": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Search",
-        "operationId": "GetSearch1234",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "{{jwt}}"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
+        "deprecated": false
       }
     }
   },
   "components": {
     "schemas": {
+      "GetHelp": {
+        "title": "GetHelp",
+        "required": [
+          "code",
+          "status",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "$ref": "#/components/schemas/Message"
+          }
+        },
+        "example": {
+          "code": 200,
+          "status": "success",
+          "message": {
+            "endpoints": {
+              "tasks": "http://localhost:8080/api/v1/tasks",
+              "users": "http://localhost:8080/api/v1/users",
+              "notes": "http://localhost:8080/api/v1/notes",
+              "status": "http://localhost:8080/status",
+              "this help": "http://localhost:8080"
+            },
+            "version": "0.22.2",
+            "timestamp": 1560897542
+          }
+        }
+      },
+      "Message": {
+        "title": "Message",
+        "required": [
+          "endpoints",
+          "version",
+          "timestamp"
+        ],
+        "type": "object",
+        "properties": {
+          "endpoints": {
+            "$ref": "#/components/schemas/Endpoints"
+          },
+          "version": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "example": {
+          "endpoints": {
+            "tasks": "http://localhost:8080/api/v1/tasks",
+            "users": "http://localhost:8080/api/v1/users",
+            "notes": "http://localhost:8080/api/v1/notes",
+            "status": "http://localhost:8080/status",
+            "this help": "http://localhost:8080"
+          },
+          "version": "0.22.2",
+          "timestamp": 1560897542
+        }
+      },
+      "Endpoints": {
+        "title": "Endpoints",
+        "required": [
+          "tasks",
+          "users",
+          "notes",
+          "status",
+          "this help"
+        ],
+        "type": "object",
+        "properties": {
+          "tasks": {
+            "type": "string"
+          },
+          "users": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "this help": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "tasks": "http://localhost:8080/api/v1/tasks",
+          "users": "http://localhost:8080/api/v1/users",
+          "notes": "http://localhost:8080/api/v1/notes",
+          "status": "http://localhost:8080/status",
+          "this help": "http://localhost:8080"
+        }
+      },
+      "GetStatus": {
+        "title": "GetStatus",
+        "required": [
+          "code",
+          "status",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "$ref": "#/components/schemas/Message1"
+          }
+        },
+        "example": {
+          "code": 200,
+          "status": "success",
+          "message": {
+            "db": {
+              "users": 9,
+              "tasks": 10,
+              "notes": 5
+            },
+            "version": "0.22.2",
+            "timestamp": 1560897579
+          }
+        }
+      },
+      "Message1": {
+        "title": "Message1",
+        "required": [
+          "db",
+          "version",
+          "timestamp"
+        ],
+        "type": "object",
+        "properties": {
+          "db": {
+            "$ref": "#/components/schemas/Db"
+          },
+          "version": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "example": {
+          "db": {
+            "users": 9,
+            "tasks": 10,
+            "notes": 5
+          },
+          "version": "0.22.2",
+          "timestamp": 1560897579
+        }
+      },
+      "Db": {
+        "title": "Db",
+        "required": [
+          "users",
+          "tasks",
+          "notes"
+        ],
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tasks": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "notes": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "example": {
+          "users": 9,
+          "tasks": 10,
+          "notes": 5
+        }
+      },
       "LoginRequest": {
         "title": "LoginRequest",
         "required": [
@@ -1523,92 +1107,183 @@
           }
         },
         "example": {
-          "email": "fercalmet@gmail.com",
-          "password": "AnyPass1000"
+          "email": "super.email@host.com",
+          "password": "OnePass1"
         }
       },
-      "SignUpRequest": {
-        "title": "SignUpRequest",
+      "LoginOK": {
+        "title": "LoginOK",
         "required": [
-          "email",
-          "password",
-          "first_name",
-          "last_name",
-          "gender",
-          "birthday"
+          "code",
+          "status",
+          "message"
         ],
         "type": "object",
         "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "$ref": "#/components/schemas/Message2"
+          }
+        },
+        "example": {
+          "code": 200,
+          "status": "success",
+          "message": {
+            "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMSIsImVtYWlsIjoibUBiLmNvbS5hciIsIm5hbWUiOiJNTkIiLCJpYXQiOjE1NTg1NTMwNTIsImV4cCI6MTU1OTE1Nzg1Mn0.OQyICWlGW0oSUB-ANrYL2OJTdC2v0OQQO3RQQ3W_KLo"
+          }
+        }
+      },
+      "Message2": {
+        "title": "Message2",
+        "required": [
+          "Authorization"
+        ],
+        "type": "object",
+        "properties": {
+          "Authorization": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMSIsImVtYWlsIjoibUBiLmNvbS5hciIsIm5hbWUiOiJNTkIiLCJpYXQiOjE1NTg1NTMwNTIsImV4cCI6MTU1OTE1Nzg1Mn0.OQyICWlGW0oSUB-ANrYL2OJTdC2v0OQQO3RQQ3W_KLo"
+        }
+      },
+      "LoginFailed": {
+        "title": "LoginFailed",
+        "required": [
+          "message",
+          "class",
+          "status",
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "class": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "example": {
+          "message": "Login failed: Email or password incorrect.",
+          "class": "UserException",
+          "status": "error",
+          "code": 400
+        }
+      },
+      "CreateUserRequest": {
+        "title": "CreateUserRequest",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
           "email": {
             "type": "string"
           },
           "password": {
             "type": "string"
-          },
-          "first_name": {
-            "type": "string"
-          },
-          "last_name": {
-            "type": "string"
-          },
-          "gender": {
-            "type": "string"
-          },
-          "birthday": {
-            "type": "string"
           }
         },
         "example": {
-          "email": "fercalmet@gmail.com",
-          "password": "AnyPass1000",
-          "first_name": "Fernando",
-          "last_name": "Calmet",
-          "gender": "Male",
-          "birthday": "1989-01-01"
+          "name": "John User",
+          "email": "super.email@host.com",
+          "password": "OnePass1"
         }
       },
-      "CreateRequest": {
-        "title": "CreateRequest",
+      "UpdateUserRequest": {
+        "title": "UpdateUserRequest",
         "required": [
-          "username",
-          "biography"
+          "name",
+          "email"
         ],
         "type": "object",
         "properties": {
-          "username": {
+          "name": {
             "type": "string"
           },
-          "biography": {
+          "email": {
             "type": "string"
           }
         },
         "example": {
-          "username": "Fernando Calmet",
-          "biography": "Hello World!"
+          "name": "Jhon R",
+          "email": "ram@hotmail.com"
         }
       },
-      "UpdateRequest": {
-        "title": "UpdateRequest",
+      "CreateTaskRequest": {
+        "title": "CreateTaskRequest",
         "required": [
-          "username",
-          "biography"
+          "name",
+          "description",
+          "status"
         ],
         "type": "object",
         "properties": {
-          "username": {
+          "name": {
             "type": "string"
           },
-          "biography": {
+          "description": {
             "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "example": {
-          "username": "Fernando Calmet",
-          "biography": "Hello World!"
+          "name": "Go To Sleep",
+          "description": "It's too late, go to sleep man ;-)",
+          "status": 0
         }
       },
-      "CreateRequest1": {
-        "title": "CreateRequest1",
+      "UpdateTaskRequest": {
+        "title": "UpdateTaskRequest",
+        "required": [
+          "name",
+          "description",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "example": {
+          "name": "Go To Sleep NOW!!",
+          "description": "It's too late, go to sleep man haha...",
+          "status": 1
+        }
+      },
+      "CreateNoteRequest": {
+        "title": "CreateNoteRequest",
         "required": [
           "name",
           "description"
@@ -1623,12 +1298,12 @@
           }
         },
         "example": {
-          "name": "Support",
-          "description": "Desktop Helper"
+          "name": "New Soccer Note",
+          "description": "Magic Goal..."
         }
       },
-      "UpdateRequest1": {
-        "title": "UpdateRequest1",
+      "UpdateNoteRequest": {
+        "title": "UpdateNoteRequest",
         "required": [
           "name",
           "description"
@@ -1643,152 +1318,31 @@
           }
         },
         "example": {
-          "name": "Supervisor",
-          "description": "View all features."
-        }
-      },
-      "CreateRequest3": {
-        "title": "CreateRequest3",
-        "required": [
-          "role_id",
-          "operation_id"
-        ],
-        "type": "object",
-        "properties": {
-          "role_id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operation_id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "example": {
-          "role_id": 1,
-          "operation_id": 1
-        }
-      },
-      "UpdateRequest3": {
-        "title": "UpdateRequest3",
-        "required": [
-          "role_id",
-          "operation_id"
-        ],
-        "type": "object",
-        "properties": {
-          "role_id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operation_id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "example": {
-          "role_id": 2,
-          "operation_id": 2
-        }
-      },
-      "CreateRequest5": {
-        "title": "CreateRequest5",
-        "required": [
-          "email",
-          "password",
-          "first_name",
-          "last_name",
-          "gender",
-          "birthday"
-        ],
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "first_name": {
-            "type": "string"
-          },
-          "last_name": {
-            "type": "string"
-          },
-          "gender": {
-            "type": "string"
-          },
-          "birthday": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "email": "fercalmet@gmail.com",
-          "password": "AnyPass1000",
-          "first_name": "Fernando",
-          "last_name": "Calmet",
-          "gender": "Male",
-          "birthday": "1989-06-09"
-        }
-      },
-      "UpdateRequest5": {
-        "title": "UpdateRequest5",
-        "required": [
-          "email",
-          "password",
-          "first_name",
-          "last_name",
-          "gender"
-        ],
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "first_name": {
-            "type": "string"
-          },
-          "last_name": {
-            "type": "string"
-          },
-          "gender": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "email": "khanakat@gmail.com",
-          "password": "AnyPass1000",
-          "first_name": "Fernando",
-          "last_name": "Calmet",
-          "gender": "Male"
+          "name": "My Note Number 433333",
+          "description": "Free Note?!?!?!"
         }
       }
     }
   },
   "tags": [
     {
-      "name": "Info"
+      "name": "Info",
+      "description": "Get information about API."
     },
     {
-      "name": "Profiles"
+      "name": "Login"
     },
     {
-      "name": "Roles"
+      "name": "Users",
+      "description": "Manage Users."
     },
     {
-      "name": "Modules"
+      "name": "Tasks",
+      "description": "Manage Tasks."
     },
     {
-      "name": "Permissions"
-    },
-    {
-      "name": "Operations"
-    },
-    {
-      "name": "Users"
+      "name": "Notes",
+      "description": "Manage Notes."
     }
   ]
 }

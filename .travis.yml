@@ -1,6 +1,7 @@
 language: php
 
 php:
+  - '7.3'
   - '7.4'
 
 services:
@@ -11,7 +12,7 @@ env:
   global:
     - CC_TEST_REPORTER_ID=
     - DB_HOSTNAME=127.0.0.1
-    - DB_DATABASE=rest_api_slim_php_sql
+    - DB_DATABASE=rest_api_slim_php
     - DB_USERNAME=root
     - DB_PASSWORD=
     - SECRET_KEY=YourSuperSecret-KeY
@@ -19,10 +20,10 @@ env:
     - REDIS_URL=localhost
 
 before_install:
-  - mysql -e 'CREATE DATABASE rest_api_slim_php_sql;'
+  - mysql -e 'CREATE DATABASE rest_api_slim_php;'
 
 before_script:
-  - mysql rest_api_slim_php_sql < database/database.sql
+  - mysql rest_api_slim_php < database/database.sql
   - composer install
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter 
   - chmod +x ./cc-test-reporter 

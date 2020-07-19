@@ -1,11 +1,14 @@
-# :sparkles: Rest API Slim PHP SQL
-> github.com/fernandocalmet  
+# REST API SLIM PHP 🐘
+
+Main technologies used: `PHP 7, Slim 3, MySQL, Redis, dotenv, PHPUnit and JSON Web Tokens.`
+
+Also, I use other aditional tools like: `Docker & Docker Compose, Travis CI, Swagger, Code Climate, Scrutinizer, Sonar Cloud, PHPStan, PHP Insights, Heroku and CORS.`
+
+[![Software License][ico-license]](LICENSE.md)
 
 ![alt text](extras/img/slim-logo.png "Slim PHP micro framework")
 
-- Example of REST API with [Slim PHP micro framework](https://www.slimframework.com).
-
-- Main technologies used: `PHP, Slim 3, MySQL, Redis, PHPUnit and JSON Web Tokens.`
+This simple RESTful API, allows CRUD operations to manage resources like: Users, Tasks and Notes.
 
 ## :gear: QUICK INSTALL:
 
@@ -13,9 +16,10 @@
 
 - Git.
 - Composer.
-- PHP.
+- PHP 7.3+.
 - MySQL/MariaDB.
 - Redis (Optional).
+- or Docker.
 
 ### REDIS:
 
@@ -25,7 +29,7 @@ Basic Commands
 Start Service: redis-cli
 View All cache: keys *
 Clean cache: FLUSHALL
-Query (example of a cached data): get "rest-api-slim-php-sql:test:status"
+Query (example of a cached data): get "rest-api-slim-php:test:status"
 ```
 
 ### With Composer:
@@ -33,20 +37,19 @@ Query (example of a cached data): get "rest-api-slim-php-sql:test:status"
 You can create a new project by running the following commands:
 
 ```bash
-$ composer create-project fernandocalmet/rest-api-slim-php-sql [my-api-name]
+$ composer create-project fernandocalmet/rest-api-slim-php [my-api-name]
 $ cd [my-api-name]
 $ composer restart-db
 $ composer test
 $ composer start
 ```
 
-
 ### With Git:
 
 In your terminal run these commands:
 
 ```bash
-$ git clone https://github.com/fernandocalmet/rest-api-slim-php-sql.git && cd rest-api-slim-php-sql
+$ git clone https://github.com/fernandocalmet/rest-api-slim-php.git && cd rest-api-slim-php
 $ cp .env.example .env
 $ composer install
 $ composer restart-db
@@ -57,7 +60,6 @@ $ composer start
 ### With Docker:
 
 You can use this project using **docker** and **docker-compose**.
-
 
 **Minimal Docker Version:**
 
@@ -97,90 +99,90 @@ $ composer restart-db
 - [respect/validation](https://github.com/Respect/Validation): The most awesome validation engine ever created for PHP.
 - [palanik/corsslim](https://github.com/palanik/CorsSlim): Cross-origin resource sharing (CORS) middleware for PHP Slim.
 - [vlucas/phpdotenv](https://github.com/vlucas/phpdotenv): Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.
-- [predis/predis](https://github.com/phpredis/phpredis): A PHP extension for Redis.
+- [predis/predis](https://github.com/nrk/predis/): Flexible and feature-complete Redis client for PHP and HHVM.
 - [firebase/php-jwt](https://github.com/firebase/php-jwt): A simple library to encode and decode JSON Web Tokens (JWT) in PHP.
-- [pimple/pimple](https://github.com/silexphp/Pimple): A small PHP dependency injection container.
-- [slim/psr7](https://github.com/slimphp/Slim-Psr7): PSR-7 implementation for use with Slim 4.
 
 ### LIST OF DEVELOPMENT DEPENDENCIES:
 
 - [phpunit/phpunit](https://github.com/sebastianbergmann/phpunit): The PHP Unit Testing framework.
 - [phpstan/phpstan](https://github.com/phpstan/phpstan): PHPStan - PHP Static Analysis Tool.
-- [symfony/console](https://github.com/symfony/console): The Console component eases the creation of beautiful and testable command line interfaces.
+- [pestphp/pest](https://github.com/pestphp/pest): Pest is an elegant PHP Testing Framework with a focus on simplicity.
 - [nunomaduro/phpinsights](https://github.com/nunomaduro/phpinsights): Instant PHP quality checks from your console.
+- [rector/rector](https://github.com/rectorphp/rector): Instant Upgrades and Instant Refactoring of any PHP 5.3+ code.
 
-## :traffic_light: TESTS:
+## :traffic_light: TESTING:
 
 Run all PHPUnit tests with `composer test`.
+
+```bash
+$ composer test
+> phpunit
+PHPUnit 9.2.3 by Sebastian Bergmann and contributors.
+
+...............................................................   63 / 63 (100%)
+
+Time: 00:00.165, Memory: 18.00 MB
+
+OK (63 tests, 388 assertions)
+```
 
 ## :books: DOCUMENTATION:
 
 ![Database diagram](extras/img/database.png)
 
-##### IMPORT WITH POSTMAN:
-All the information of the API, prepared to download and use as postman collection: [Import Collection](https://www.getpostman.com/collections/cb7f3d187ce635836339).
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/cb7f3d187ce635836339)
-
 ### ENDPOINTS:
 
 #### INFO:
+
 - Help: `GET /`
 - Status: `GET /status`
-- Login: `POST /login`
-- SignUp: `POST /signup`
-
 
 #### USERS:
-- Get All: `GET /api/v1/users`
-- Get One: `GET /api/v1/users/{id}`
-- Create: `POST /api/v1/users`
-- Update: `PUT /api/v1/users/{id}`
-- Delete: `DELETE /api/v1/users/{id}`
-- Query: `DELETE /api/v1/users/search/[{query}]`
 
-#### ROLES:
-- Get All: `GET /api/v1/roles`
-- Get One: `GET /api/v1/roles/{id}`
-- Create: `POST /api/v1/roles`
-- Update: `PUT /api/v1/roles/{id}`
-- Delete: `DELETE /api/v1/roles/{id}`
-- Query: `DELETE /api/v1/roles/search/[{query}]`
+- Login User: `POST /login`
+- Create User: `POST /api/v1/users`
+- Update User: `PUT /api/v1/users/{id}`
+- Delete User: `DELETE /api/v1/users/{id}`
 
-#### PERMISSIONS:
-- Get All: `GET /api/v1/permissions`
-- Get One: `GET /api/v1/permissions/{id}`
-- Create: `POST /api/v1/permissions`
-- Update: `PUT /api/v1/permissions/{id}`
-- Delete: `DELETE /api/v1/permissions/{id}`
-- Query: `DELETE /api/v1/permissions/search/[{query}]`
+#### TASKS:
 
-#### OPERATIONS:
-- Get All: `GET /api/v1/operations`
-- Get One: `GET /api/v1/operations/{id}`
-- Create: `POST /api/v1/operations`
-- Update: `PUT /api/v1/operations/{id}`
-- Delete: `DELETE /api/v1/operations/{id}`
-- Query: `DELETE /api/v1/operations/search/[{query}]`
+- Get All Tasks: `GET /api/v1/tasks`
+- Get One Task: `GET /api/v1/tasks/{id}`
+- Create Task: `POST /api/v1/tasks`
+- Update Task: `PUT /api/v1/tasks/{id}`
+- Delete Task: `DELETE /api/v1/tasks/{id}`
 
-#### MODULES:
-- Get All: `GET /api/v1/modules`
-- Get One: `GET /api/v1/modules/{id}`
-- Create: `POST /api/v1/modules`
-- Update: `PUT /api/v1/modules/{id}`
-- Delete: `DELETE /api/v1/modules/{id}`
-- Query: `DELETE /api/v1/modules/search/[{query}]`
+#### NOTES:
 
-#### PROFILES:
-- Get All: `GET /api/v1/profiles`
-- Get One: `GET /api/v1/profiles/{id}`
-- Create: `POST /api/v1/profiles`
-- Update: `PUT /api/v1/profiles/{id}`
-- Delete: `DELETE /api/v1/profiles/{id}`
-- Query: `DELETE /api/v1/profiles/search/[{query}]`
+- Get All Notes: `GET /api/v1/notes`
+- Get One Note: `GET /api/v1/notes/{id}`
+- Create Note: `POST /api/v1/notes`
+- Update Note: `PUT /api/v1/notes/{id}`
+- Delete Note: `DELETE /api/v1/notes/{id}`
 
+Also, you can see the API documentation with the [full list of endpoints](extras/docs/endpoints.md).
+
+### HELP AND DOCS:
+
+### IMPORT WITH POSTMAN:
+All the information of the API, prepared to download and use as postman collection: [Import Collection](https://www.getpostman.com/collections/b2198065165c871332cc).
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/b2198065165c871332cc)
+
+### OPEN API SPEC:
+
+Also, you can view the OpenAPI Specification, using [Swagger UI](https://rest-api-slim-php-sql.herokuapp.com/docs/index.html).
   
-## :heart: SUPPORT ME
+:octocat: [Check this project in my repository.](https://github.com/FernandoCalmet/rest-api-slim-php)
+
+## DO YOU LIKE THE PROJECT? ☕💖
+
+You can support this project inviting me a coffee :coffee: :yum: or giving a **star** to this repo :star: :sunglasses:.
+
 <a href='https://ko-fi.com/fernandocalmet' target='_blank'>
   <img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' />
 </a>
+
+## :page_facing_up: LICENSE
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

@@ -3,7 +3,7 @@ version: '3'
 services:
   nginx:
     image: nginx:latest
-    container_name: rest-api-slim-php-sql-nginx-container
+    container_name: rest-api-slim-php-nginx-container
     ports:
       - "8081:80"
     volumes:
@@ -14,7 +14,7 @@ services:
 
   php-fpm:
     build: ./docker/php7
-    container_name: rest-api-slim-php-sql-php-container
+    container_name: rest-api-slim-php-php-container
     links:
       - mysql
       - redis
@@ -49,7 +49,7 @@ services:
       - 33060:3306
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: rest_api_slim_php_sql
+      MYSQL_DATABASE: rest_api_slim_php
       MYSQL_USER: root
       MYSQL_PASSWORD: 
       MYSQL_ROOT_PASSWORD: 

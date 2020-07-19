@@ -4,32 +4,23 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 final class DefaultController extends BaseController
 {
-    const API_VERSION = '1.4.0';
-
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
+    public const API_VERSION = '1.4.3';
 
     public function getHelp(Request $request, Response $response): Response
     {
         $url = getenv('APP_DOMAIN');
         $endpoints = [
-            'this help' => $url . '',     
-            'docs' => $url . '/docs/index.html',       
-            'status' => $url . '/status',            
-            'profiles' => $url . '/api/v1/profiles',
+            'tasks' => $url . '/api/v1/tasks',
             'users' => $url . '/api/v1/users',
-            'modules' => $url . '/api/v1/modules',
-            'operations' => $url . '/api/v1/operations',
-            'permissions' => $url . '/api/v1/permissions',
-            'roles' => $url . '/api/v1/roles',
+            'notes' => $url . '/api/v1/notes',
+            'docs' => $url . '/docs/index.html',
+            'status' => $url . '/status',
+            'this help' => $url . '',
         ];
         $message = [
             'endpoints' => $endpoints,
@@ -56,19 +47,13 @@ final class DefaultController extends BaseController
     private function getDbStats(): array
     {
         $userService = $this->container->get('user_service');
-        $profileService = $this->container->get('profile_service');
-        $moduleService = $this->container->get('module_service');
-        $operationService = $this->container->get('operation_service');
-        $permissionService = $this->container->get('permission_service');
-        $roleService = $this->container->get('role_service');        
+        $taskService = $this->container->get('task_service');
+        $noteService = $this->container->get('find_note_service');
 
         return [
             'users' => count($userService->getAll()),
-            'profiles' => count($profileService->getAllProfiles()),
-            'modules' => count($moduleService->getAll()),
-            'operations' => count($operationService->getAll()),
-            'permissions' => count($permissionService->getAll()),
-            'roles' => count($roleService->getAll())
+            'tasks' => count($taskService->getAllTasks()),
+            'notes' => count($noteService->getAll()),
         ];
     }
 
@@ -77,12 +62,11 @@ final class DefaultController extends BaseController
         $redis = 'Disabled';
         if (self::isRedisEnabled() === true) {
             $redisService = $this->container->get('redis_service');
-            $redisKey = 'test:status';
-            $key = $redisService->generateKey($redisKey);
-            $redisService->set($key, []);
+            $key = $redisService->generateKey('test:status');
+            $redisService->set($key, new \stdClass());
             $redis = 'OK';
         }
 
         return $redis;
-    }    
+    }
 }

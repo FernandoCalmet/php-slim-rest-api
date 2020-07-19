@@ -11,7 +11,7 @@ class AuthLoginTest extends BaseTestCase
      */
     public function testLogin(): void
     {
-        $response = $this->runApp('POST', '/login', ['email' => 'fercalmet@gmail.com', 'password' => 'AnyPass1000']);
+        $response = $this->runApp('POST', '/login', ['email' => 'test@user.com', 'password' => 'AnyPass1000']);
 
         $result = (string) $response->getBody();
 
