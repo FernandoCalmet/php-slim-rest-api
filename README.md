@@ -171,8 +171,6 @@ All the information of the API, prepared to download and use as postman collecti
 
 Also, you can view the OpenAPI Specification, using [Swagger UI](https://rest-api-slim-php-sql.herokuapp.com/docs/index.html).
   
-:octocat: [Check this project in my repository.](https://github.com/FernandoCalmet/rest-api-slim-php)
-
 ## DO YOU LIKE THE PROJECT? ☕💖
 
 You can support this project inviting me a coffee :coffee: :yum: or giving a **star** to this repo :star: :sunglasses:.
@@ -184,3 +182,5 @@ You can support this project inviting me a coffee :coffee: :yum: or giving a **s
 ## :page_facing_up: LICENSE
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+:octocat: [Check this project in my repository.](https://github.com/FernandoCalmet/rest-api-slim-php)
