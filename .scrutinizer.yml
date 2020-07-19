@@ -9,11 +9,11 @@ build:
             DB_DATABASE: 'rest_api_slim_php'
             DB_USERNAME: 'root'
             DB_PASSWORD: ''
-            SECRET_KEY: 'jwt-secret-key'
+            SECRET_KEY: 'YourSuperSecret-KeY'
             REDIS_ENABLED: true
             REDIS_URL: 'localhost'
         php:
-            version: 7.3
+            version: 7.4
     project_setup:
         before:
             - mysql -e "CREATE DATABASE rest_api_slim_php"
