@@ -4,8 +4,6 @@ Main technologies used: `PHP 7, Slim 3, MySQL, Redis, dotenv, PHPUnit and JSON W
 
 Also, I use other aditional tools like: `Docker & Docker Compose, Travis CI, Swagger, Code Climate, Scrutinizer, Sonar Cloud, PHPStan, PHP Insights, Heroku and CORS.`
 
-[![Software License][ico-license]](LICENSE.md)
-
 ![alt text](extras/img/slim-logo.png "Slim PHP micro framework")
 
 This simple RESTful API, allows CRUD operations to manage resources like: Users, Tasks and Notes.
