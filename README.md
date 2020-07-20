@@ -1,5 +1,7 @@
 # REST API SLIM PHP 🐘
 
+[![Build Status](https://travis-ci.com/FernandoCalmet/rest-api-slim-php.svg?branch=master)](https://travis-ci.com/FernandoCalmet/rest-api-slim-php)
+
 Main technologies used: `PHP 7, Slim 3, MySQL, Redis, dotenv, PHPUnit and JSON Web Tokens.`
 
 Also, I use other aditional tools like: `Docker & Docker Compose, Travis CI, Swagger, Code Climate, Scrutinizer, Sonar Cloud, PHPStan, PHP Insights, Heroku and CORS.`
