@@ -26,7 +26,7 @@ final class Update extends Base
         }
         $user->updateUpdatedAt(date('Y-m-d H:i:s'));
         /** @var \App\Entity\User $users */
-        $users = $this->userRepository->update($user);
+        $users = $this->userRepository->updateUser($user);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($users->getId(), $users->getData());
         }

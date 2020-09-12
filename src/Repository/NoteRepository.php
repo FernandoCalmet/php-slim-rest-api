@@ -115,7 +115,10 @@ final class NoteRepository extends BaseRepository
     {
         $query = '
             UPDATE `notes`
-            SET `name` = :name, `description` = :description, `updatedAt` = :updatedAt
+            SET 
+                `name` = :name, 
+                `description` = :description, 
+                `updatedAt` = :updatedAt
             WHERE `id` = :id
         ';
         $statement = $this->getDb()->prepare($query);

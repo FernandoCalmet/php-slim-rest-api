@@ -27,7 +27,7 @@ final class Update extends Base
         $task->updateUserId((int) $data->decoded->sub);
         $task->updateUpdatedAt(date('Y-m-d H:i:s'));
         /** @var \App\Entity\Task $tasks */
-        $tasks = $this->taskRepository->update($task);
+        $tasks = $this->taskRepository->updateTask($task);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($tasks->getId(), $tasks->getUserId(), $tasks->getData());
         }

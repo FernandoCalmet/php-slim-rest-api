@@ -11,7 +11,8 @@ final class TaskRepository extends BaseRepository
     public function checkAndGetTask(int $taskId, int $userId): \App\Entity\Task
     {
         $query = '
-            SELECT * FROM `tasks` WHERE `id` = :id AND `userId` = :userId
+            SELECT * FROM `tasks` 
+            WHERE `id` = :id AND `userId` = :userId
         ';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $taskId);
@@ -32,6 +33,16 @@ final class TaskRepository extends BaseRepository
         $statement->execute();
 
         return $statement->fetchAll();
+    }
+
+    public function getTasksByUserId(int $userId): array
+    {
+        $query = 'SELECT * FROM `tasks` WHERE `userId` = :userId ORDER BY `id`';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('userId', $userId);
+        $statement->execute();
+
+        return (array) $statement->fetchAll();
     }
 
     public function getQueryTasksByPage(): string
@@ -79,7 +90,21 @@ final class TaskRepository extends BaseRepository
         );
     }
 
-    public function search(string $tasksName, int $userId, ?int $status): array
+    private function getSearchTasksQuery(?int $status): string
+    {
+        $statusQuery = '';
+        if ($status === 0 || $status === 1) {
+            $statusQuery = 'AND `status` = :status';
+        }
+
+        return "
+            SELECT * FROM `tasks`
+            WHERE `name` LIKE :name AND `userId` = :userId ${statusQuery}
+            ORDER BY `id`
+        ";
+    }
+
+    public function searchTasks(string $tasksName, int $userId, ?int $status): array
     {
         $query = $this->getSearchTasksQuery($status);
         $name = '%' . $tasksName . '%';
@@ -90,21 +115,16 @@ final class TaskRepository extends BaseRepository
             $statement->bindParam('status', $status);
         }
         $statement->execute();
+        $tasks = (array) $statement->fetchAll();
+        if (!$tasks) {
+            $message = 'No Tasks were found with that name.';
+            throw new Task($message, 404);
+        }
 
-        return (array) $statement->fetchAll();
+        return $tasks;
     }
 
-    public function getAll(int $userId): array
-    {
-        $query = 'SELECT * FROM `tasks` WHERE `userId` = :userId ORDER BY `id`';
-        $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('userId', $userId);
-        $statement->execute();
-
-        return (array) $statement->fetchAll();
-    }
-
-    public function create(\App\Entity\Task $task): \App\Entity\Task
+    public function createTask(\App\Entity\Task $task): \App\Entity\Task
     {
         $query = '
             INSERT INTO `tasks`
@@ -130,11 +150,15 @@ final class TaskRepository extends BaseRepository
         return $this->checkAndGetTask((int) $taskId, (int) $userId);
     }
 
-    public function update(\App\Entity\Task $task): \App\Entity\Task
+    public function updateTask(\App\Entity\Task $task): \App\Entity\Task
     {
         $query = '
             UPDATE `tasks`
-            SET `name` = :name, `description` = :description, `status` = :status, `updatedAt` = :updatedAt
+            SET 
+                `name` = :name, 
+                `description` = :description, 
+                `status` = :status, 
+                `updatedAt` = :updatedAt
             WHERE `id` = :id AND `userId` = :userId
         ';
         $statement = $this->getDb()->prepare($query);
@@ -155,26 +179,12 @@ final class TaskRepository extends BaseRepository
         return $this->checkAndGetTask((int) $id, (int) $userId);
     }
 
-    public function delete(int $taskId, int $userId): void
+    public function deleteTask(int $taskId, int $userId): void
     {
         $query = 'DELETE FROM `tasks` WHERE `id` = :id AND `userId` = :userId';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $taskId);
         $statement->bindParam('userId', $userId);
         $statement->execute();
-    }
-
-    private function getSearchTasksQuery(?int $status): string
-    {
-        $statusQuery = '';
-        if ($status === 0 || $status === 1) {
-            $statusQuery = 'AND `status` = :status';
-        }
-
-        return "
-            SELECT * FROM `tasks`
-            WHERE `name` LIKE :name AND `userId` = :userId ${statusQuery}
-            ORDER BY `id`
-        ";
     }
 }

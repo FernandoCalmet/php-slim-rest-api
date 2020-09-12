@@ -26,7 +26,7 @@ final class Create extends Base
         $mytask->updateUserId((int) $data->decoded->sub);
         $mytask->updateCreatedAt(date('Y-m-d H:i:s'));
         /** @var \App\Entity\Task $task */
-        $task = $this->taskRepository->create($mytask);
+        $task = $this->taskRepository->createTask($mytask);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($task->getId(), $task->getUserId(), $task->getData());
         }

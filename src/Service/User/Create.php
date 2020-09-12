@@ -27,7 +27,7 @@ final class Create extends Base
         $myuser->updateCreatedAt(date('Y-m-d H:i:s'));
         $this->userRepository->checkUserByEmail($data->email);
         /** @var \App\Entity\User $user */
-        $user = $this->userRepository->create($myuser);
+        $user = $this->userRepository->createUser($myuser);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($user->getId(), $user->getData());
         }

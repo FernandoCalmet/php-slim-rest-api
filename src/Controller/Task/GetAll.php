@@ -12,9 +12,9 @@ final class GetAll extends Base
     public function __invoke(Request $request, Response $response): Response
     {
         $input = (array) $request->getParsedBody();
-        $userId = $this->getAndValidateUserId($input);        
+        $userId = $this->getAndValidateUserId($input);
 
-        $tasks = $this->getServiceFindTask()->getAll($userId);
+        $tasks = $this->getServiceFindTask()->getAllByUser($userId);
 
         return $this->jsonResponse($response, 'success', $tasks, 200);
     }

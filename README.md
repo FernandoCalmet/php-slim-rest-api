@@ -1,7 +1,9 @@
 # REST API IN SLIM PHP 🐘
 
-[![Build Status](https://travis-ci.com/FernandoCalmet/rest-api-slim-php.svg?branch=master)](https://travis-ci.com/FernandoCalmet/rest-api-slim-php)
 [![License](https://img.shields.io/github/license/fernandocalmet/rest-api-slim-php)](https://github.com/FernandoCalmet/rest-api-slim-php/blob/master/LICENSE.md)
+[![Build Status](https://travis-ci.com/FernandoCalmet/rest-api-slim-php.svg?branch=master)](https://travis-ci.com/FernandoCalmet/rest-api-slim-php)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fernandocalmet_rest-api-slim-php&metric=alert_status)](https://sonarcloud.io/dashboard?id=fernandocalmet_rest-api-slim-php)
+[![Code Quality](https://scrutinizer-ci.com/g/fernandocalmet/api-rest-slim-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/fernandocalmet/api-rest-slim-php/?branch=master)
 
 Main technologies used: `PHP 7, Slim 3, MySQL, Redis, dotenv, PHPUnit and JSON Web Tokens.`
 
@@ -118,13 +120,13 @@ Run all PHPUnit tests with `composer test`.
 ```bash
 $ composer test
 > phpunit
-PHPUnit 9.2.3 by Sebastian Bergmann and contributors.
+PHPUnit 9.4 by Sebastian Bergmann and contributors.
 
-...............................................................   63 / 63 (100%)
+...............................................................   62 / 62 (100%)
 
-Time: 00:00.165, Memory: 18.00 MB
+Time: 00:04.683, Memory: 16.00 MB
 
-OK (63 tests, 388 assertions)
+OK (62 tests, 386 assertions)
 ```
 
 ## :books: DOCUMENTATION
@@ -176,8 +178,6 @@ Also, you can view the OpenAPI Specification, using [Swagger UI](https://rest-ap
 ## :page_facing_up: LICENSE
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-:octocat: [Check this project in my repository.](https://github.com/FernandoCalmet/rest-api-slim-php)
   
 ---
 

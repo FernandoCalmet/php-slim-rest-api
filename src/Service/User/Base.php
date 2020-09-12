@@ -55,7 +55,7 @@ abstract class Base extends BaseService
             $data = $this->redisService->get($key);
             $user = json_decode((string) json_encode($data), false);
         } else {
-            $user = $this->getUserFromDb($userId);
+            $user = $this->getUserFromDb($userId)->getData();
             $this->redisService->setex($key, $user);
         }
 
@@ -64,7 +64,7 @@ abstract class Base extends BaseService
 
     protected function getUserFromDb(int $userId): \App\Entity\User
     {
-        return $this->userRepository->getUser($userId);
+        return $this->userRepository->checkAndGetUser($userId);
     }
 
     protected function saveInCache(int $id, object $user): void

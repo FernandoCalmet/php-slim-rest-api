@@ -8,7 +8,7 @@ use App\Exception\User;
 
 final class UserRepository extends BaseRepository
 {
-    public function getUser(int $userId): \App\Entity\User
+    public function checkAndGetUser(int $userId): \App\Entity\User
     {
         $query = 'SELECT `id`, `name`, `email` FROM `users` WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
@@ -32,6 +32,26 @@ final class UserRepository extends BaseRepository
         if ($user) {
             throw new User('Email already exists.', 400);
         }
+    }
+
+    public function getUsers(): array
+    {
+        $query = 'SELECT `id`, `name`, `email` FROM `users` ORDER BY `id`';
+        $statement = $this->getDb()->prepare($query);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
+    public function getQueryUsersByPage(): string
+    {
+        return "
+            SELECT `id`, `name`, `email`
+            FROM `users`
+            WHERE `name` LIKE CONCAT('%', :name, '%')
+            AND `email` LIKE CONCAT('%', :email, '%')
+            ORDER BY `id`
+        ";
     }
 
     public function getUsersByPage(
@@ -60,27 +80,7 @@ final class UserRepository extends BaseRepository
         );
     }
 
-    public function getQueryUsersByPage(): string
-    {
-        return "
-            SELECT `id`, `name`, `email`
-            FROM `users`
-            WHERE `name` LIKE CONCAT('%', :name, '%')
-            AND `email` LIKE CONCAT('%', :email, '%')
-            ORDER BY `id`
-        ";
-    }
-
-    public function getAll(): array
-    {
-        $query = 'SELECT `id`, `name`, `email` FROM `users` ORDER BY `id`';
-        $statement = $this->getDb()->prepare($query);
-        $statement->execute();
-
-        return $statement->fetchAll();
-    }
-
-    public function search(string $usersName): array
+    public function searchUsers(string $usersName): array
     {
         $query = '
             SELECT `id`, `name`, `email`
@@ -98,6 +98,71 @@ final class UserRepository extends BaseRepository
         }
 
         return $users;
+    }
+
+    public function createUser(\App\Entity\User $user): \App\Entity\User
+    {
+        $query = '
+            INSERT INTO `users`
+                (`name`, `email`, `password`, `createdAt`)
+            VALUES
+                (:name, :email, :password, :createdAt)
+        ';
+        $statement = $this->getDb()->prepare($query);
+        $name = $user->getName();
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+        $created = $user->getCreatedAt();
+        $statement->bindParam('name', $name);
+        $statement->bindParam('email', $email);
+        $statement->bindParam('password', $password);
+        $statement->bindParam('createdAt', $created);
+        $statement->execute();
+
+        return $this->checkAndGetUser((int) $this->getDb()->lastInsertId());
+    }
+
+    public function updateUser(\App\Entity\User $user): \App\Entity\User
+    {
+        $query = '
+            UPDATE `users` 
+            SET 
+                `name` = :name, 
+                `email` = :email, 
+                `password` = :password, 
+                `updatedAt` = :updatedAt 
+            WHERE `id` = :id
+        ';
+        $statement = $this->getDb()->prepare($query);
+        $id = $user->getId();
+        $name = $user->getName();
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+        $updated = $user->getUpdatedAt();
+        $statement->bindParam('id', $id);
+        $statement->bindParam('name', $name);
+        $statement->bindParam('email', $email);
+        $statement->bindParam('password', $password);
+        $statement->bindParam('updatedAt', $updated);
+        $statement->execute();
+
+        return $this->checkAndGetUser((int) $id);
+    }
+
+    public function deleteUser(int $userId): void
+    {
+        $query = 'DELETE FROM `users` WHERE `id` = :id';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('id', $userId);
+        $statement->execute();
+    }
+
+    public function deleteUserTasks(int $userId): void
+    {
+        $query = 'DELETE FROM `tasks` WHERE `userId` = :userId';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('userId', $userId);
+        $statement->execute();
     }
 
     public function loginUser(string $email, string $password): \App\Entity\User
@@ -118,64 +183,5 @@ final class UserRepository extends BaseRepository
         }
 
         return $user;
-    }
-
-    public function create(\App\Entity\User $user): \App\Entity\User
-    {
-        $query = '
-            INSERT INTO `users`
-                (`name`, `email`, `password`, `createdAt`)
-            VALUES
-                (:name, :email, :password, :createdAt)
-        ';
-        $statement = $this->getDb()->prepare($query);
-        $name = $user->getName();
-        $email = $user->getEmail();
-        $password = $user->getPassword();
-        $created = $user->getCreatedAt();
-        $statement->bindParam('name', $name);
-        $statement->bindParam('email', $email);
-        $statement->bindParam('password', $password);
-        $statement->bindParam('createdAt', $created);
-        $statement->execute();
-
-        return $this->getUser((int) $this->getDb()->lastInsertId());
-    }
-
-    public function update(\App\Entity\User $user): \App\Entity\User
-    {
-        $query = '
-            UPDATE `users` SET `name` = :name, `email` = :email, `password` = :password, `updatedAt` = :updatedAt WHERE `id` = :id
-        ';
-        $statement = $this->getDb()->prepare($query);
-        $id = $user->getId();
-        $name = $user->getName();
-        $email = $user->getEmail();
-        $password = $user->getPassword();
-        $updated = $user->getUpdatedAt();
-        $statement->bindParam('id', $id);
-        $statement->bindParam('name', $name);
-        $statement->bindParam('email', $email);
-        $statement->bindParam('password', $password);
-        $statement->bindParam('updatedAt', $updated);
-        $statement->execute();
-
-        return $this->getUser((int) $id);
-    }
-
-    public function delete(int $userId): void
-    {
-        $query = 'DELETE FROM `users` WHERE `id` = :id';
-        $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('id', $userId);
-        $statement->execute();
-    }
-
-    public function deleteUserTasks(int $userId): void
-    {
-        $query = 'DELETE FROM `tasks` WHERE `userId` = :userId';
-        $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('userId', $userId);
-        $statement->execute();
     }
 }

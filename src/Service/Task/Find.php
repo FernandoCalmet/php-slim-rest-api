@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Service\Task;
 
 final class Find extends Base
-{
-    public function getTasks(): array
+{  
+    public function getAllByUser(int $userId): array
     {
-        return $this->taskRepository->getTasks();
+        return $this->taskRepository->getTasksByUserId($userId);
     }
 
-    public function getAll(int $userId): array
+    public function getAll(): array
     {
-        return $this->taskRepository->getAll($userId);
+        return $this->taskRepository->getTasks();
     }
 
     public function getTasksByPage(
@@ -58,6 +58,6 @@ final class Find extends Base
             $status = (int) $status;
         }
 
-        return $this->taskRepository->search($tasksName, $userId, $status);
+        return $this->taskRepository->searchTasks($tasksName, $userId, $status);
     }
 }

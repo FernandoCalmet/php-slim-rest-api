@@ -8,7 +8,7 @@ final class Find extends Base
 {
     public function getAll(): array
     {
-        return $this->userRepository->getAll();
+        return $this->userRepository->getUsers();
     }
 
     public function getUsersByPage(
@@ -45,6 +45,6 @@ final class Find extends Base
 
     public function search(string $usersName): array
     {
-        return $this->userRepository->search($usersName);
+        return $this->userRepository->searchUsers($usersName);
     }
 }
