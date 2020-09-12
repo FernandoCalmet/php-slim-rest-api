@@ -129,8 +129,6 @@ OK (63 tests, 388 assertions)
 
 ## :books: DOCUMENTATION
 
-![Database diagram](extras/img/database.png)
-
 ### ENDPOINTS
 
 #### INFO
