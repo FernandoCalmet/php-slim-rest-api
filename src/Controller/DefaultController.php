@@ -53,7 +53,7 @@ final class DefaultController extends BaseController
 
         return [
             'users' => count($userService->getAll()),
-            'tasks' => count($taskService->getAll()),
+            'tasks' => count($taskService->getTasks()),
             'notes' => count($noteService->getAll()),
         ];
     }

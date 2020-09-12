@@ -6,9 +6,14 @@ namespace App\Service\Task;
 
 final class Find extends Base
 {
-    public function getAll(): array
+    public function getTasks(): array
     {
         return $this->taskRepository->getTasks();
+    }
+
+    public function getAll(int $userId): array
+    {
+        return $this->taskRepository->getAll($userId);
     }
 
     public function getTasksByPage(
