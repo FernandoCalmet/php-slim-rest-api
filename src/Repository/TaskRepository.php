@@ -127,7 +127,7 @@ final class TaskRepository extends BaseRepository
 
         $taskId = (int) $this->database->lastInsertId();
 
-        return $this->checkAndGetTask($taskId, (int) $userId);
+        return $this->checkAndGetTask((int) $taskId, (int) $userId);
     }
 
     public function update(\App\Entity\Task $task): \App\Entity\Task
@@ -152,7 +152,7 @@ final class TaskRepository extends BaseRepository
         $statement->bindParam('updated_at', $updated);
         $statement->execute();
 
-        return $this->checkAndGetTask($id, $userId);
+        return $this->checkAndGetTask((int) $id, (int) $userId);
     }
 
     public function delete(int $taskId, int $userId): void
