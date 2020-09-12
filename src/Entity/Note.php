@@ -15,11 +15,11 @@ final class Note
     /** @var string|null $description */
     private $description;
 
-    /** @var string|null $created_at */
-    private $created_at;
+    /** @var string|null $createdAt */
+    private $createdAt;
 
-    /** @var string|null $updated_at */
-    private $updated_at;
+    /** @var string|null $updatedAt */
+    private $updatedAt;
 
     public function getId(): int
     {
@@ -52,24 +52,24 @@ final class Note
 
     public function getCreatedAt(): ?string
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function updateCreatedAt(?string $created_at): self
+    public function updateCreatedAt(?string $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?string
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function updateUpdatedAt(?string $updated_at): self
+    public function updateUpdatedAt(?string $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -80,8 +80,8 @@ final class Note
         $note->id = $this->getId();
         $note->name = $this->getName();
         $note->description = $this->getDescription();
-        $note->created_at = $this->getCreatedAt();
-        $note->updated_at = $this->getUpdatedAt();
+        $note->createdAt = $this->getCreatedAt();
+        $note->updatedAt = $this->getUpdatedAt();
 
         return $note;
     }

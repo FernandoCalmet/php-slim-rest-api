@@ -108,9 +108,9 @@ final class TaskRepository extends BaseRepository
     {
         $query = '
             INSERT INTO `tasks`
-                (`name`, `description`, `status`, `userId`, `created_at`)
+                (`name`, `description`, `status`, `userId`, `createdAt`)
             VALUES
-                (:name, :description, :status, :userId, :created_at)
+                (:name, :description, :status, :userId, :createdAt)
         ';
         $statement = $this->getDb()->prepare($query);
         $name = $task->getName();
@@ -122,7 +122,7 @@ final class TaskRepository extends BaseRepository
         $statement->bindParam('description', $desc);
         $statement->bindParam('status', $status);
         $statement->bindParam('userId', $userId);
-        $statement->bindParam('created_at', $created);
+        $statement->bindParam('createdAt', $created);
         $statement->execute();
 
         $taskId = (int) $this->getDb()->lastInsertId();
@@ -134,7 +134,7 @@ final class TaskRepository extends BaseRepository
     {
         $query = '
             UPDATE `tasks`
-            SET `name` = :name, `description` = :description, `status` = :status, `updated_at` = :updated_at
+            SET `name` = :name, `description` = :description, `status` = :status, `updatedAt` = :updatedAt
             WHERE `id` = :id AND `userId` = :userId
         ';
         $statement = $this->getDb()->prepare($query);
@@ -149,7 +149,7 @@ final class TaskRepository extends BaseRepository
         $statement->bindParam('description', $desc);
         $statement->bindParam('status', $status);
         $statement->bindParam('userId', $userId);
-        $statement->bindParam('updated_at', $updated);
+        $statement->bindParam('updatedAt', $updated);
         $statement->execute();
 
         return $this->checkAndGetTask((int) $id, (int) $userId);

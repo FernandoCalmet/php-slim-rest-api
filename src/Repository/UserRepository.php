@@ -124,9 +124,9 @@ final class UserRepository extends BaseRepository
     {
         $query = '
             INSERT INTO `users`
-                (`name`, `email`, `password`, `created_at`)
+                (`name`, `email`, `password`, `createdAt`)
             VALUES
-                (:name, :email, :password, :created_at)
+                (:name, :email, :password, :createdAt)
         ';
         $statement = $this->getDb()->prepare($query);
         $name = $user->getName();
@@ -136,7 +136,7 @@ final class UserRepository extends BaseRepository
         $statement->bindParam('name', $name);
         $statement->bindParam('email', $email);
         $statement->bindParam('password', $password);
-        $statement->bindParam('created_at', $created);
+        $statement->bindParam('createdAt', $created);
         $statement->execute();
 
         return $this->getUser((int) $this->getDb()->lastInsertId());
@@ -145,7 +145,7 @@ final class UserRepository extends BaseRepository
     public function update(\App\Entity\User $user): \App\Entity\User
     {
         $query = '
-            UPDATE `users` SET `name` = :name, `email` = :email, `password` = :password, `updated_at` = :updated_at WHERE `id` = :id
+            UPDATE `users` SET `name` = :name, `email` = :email, `password` = :password, `updatedAt` = :updatedAt WHERE `id` = :id
         ';
         $statement = $this->getDb()->prepare($query);
         $id = $user->getId();
@@ -157,7 +157,7 @@ final class UserRepository extends BaseRepository
         $statement->bindParam('name', $name);
         $statement->bindParam('email', $email);
         $statement->bindParam('password', $password);
-        $statement->bindParam('updated_at', $updated);
+        $statement->bindParam('updatedAt', $updated);
         $statement->execute();
 
         return $this->getUser((int) $user->id);

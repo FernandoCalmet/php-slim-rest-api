@@ -18,14 +18,14 @@ final class Task
     /** @var int|null $status */
     private $status;
 
-    /** @var int $user_id */
-    private $user_id;
+    /** @var int $userId */
+    private $userId;
 
-    /** @var string|null $created_at */
-    private $created_at;
+    /** @var string|null $createdAt */
+    private $createdAt;
 
-    /** @var string|null $updated_at */
-    private $updated_at;
+    /** @var string|null $updatedAt */
+    private $updatedAt;
 
     public function getId(): int
     {
@@ -70,36 +70,36 @@ final class Task
 
     public function getUserId(): ?int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function updateUserId(?int $user_id): self
+    public function updateUserId(?int $userId): self
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
 
         return $this;
     }
 
     public function getCreatedAt(): ?string
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function updateCreatedAt(?string $created_at): self
+    public function updateCreatedAt(?string $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?string
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function updateUpdatedAt(?string $updated_at): self
+    public function updateUpdatedAt(?string $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -111,9 +111,9 @@ final class Task
         $task->name = $this->getName();
         $task->description = $this->getDescription();
         $task->status = $this->getStatus();
-        $task->user_id = $this->getUserId();
-        $task->created_at = $this->getCreatedAt();
-        $task->updated_at = $this->getUpdatedAt();
+        $task->userId = $this->getUserId();
+        $task->createdAt = $this->getCreatedAt();
+        $task->updatedAt = $this->getUpdatedAt();
 
         return $task;
     }

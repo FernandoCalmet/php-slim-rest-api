@@ -95,9 +95,9 @@ final class NoteRepository extends BaseRepository
     {
         $query = '
             INSERT INTO `notes`
-                (`name`, `description`, `created_at`)
+                (`name`, `description`, `createdAt`)
             VALUES
-                (:name, :description, :created_at)
+                (:name, :description, :createdAt)
         ';
         $statement = $this->getDb()->prepare($query);
         $name = $note->getName();
@@ -105,7 +105,7 @@ final class NoteRepository extends BaseRepository
         $created = $note->getCreatedAt();
         $statement->bindParam('name', $name);
         $statement->bindParam('description', $desc);
-        $statement->bindParam('created_at', $created);
+        $statement->bindParam('createdAt', $created);
         $statement->execute();
 
         return $this->checkAndGetNote((int) $this->getDb()->lastInsertId());
@@ -115,7 +115,7 @@ final class NoteRepository extends BaseRepository
     {
         $query = '
             UPDATE `notes`
-            SET `name` = :name, `description` = :description, `updated_at` = :updated_at
+            SET `name` = :name, `description` = :description, `updatedAt` = :updatedAt
             WHERE `id` = :id
         ';
         $statement = $this->getDb()->prepare($query);
@@ -126,7 +126,7 @@ final class NoteRepository extends BaseRepository
         $statement->bindParam('id', $id);
         $statement->bindParam('name', $name);
         $statement->bindParam('description', $desc);
-        $statement->bindParam('updated_at', $updated);
+        $statement->bindParam('updatedAt', $updated);
         $statement->execute();
 
         return $this->checkAndGetNote((int) $id);
