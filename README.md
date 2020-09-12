@@ -1,7 +1,6 @@
 # REST API IN SLIM PHP 🐘
 
 [![Build Status](https://travis-ci.com/FernandoCalmet/rest-api-slim-php.svg?branch=master)](https://travis-ci.com/FernandoCalmet/rest-api-slim-php)
-
 [![License](https://img.shields.io/github/license/fernandocalmet/rest-api-slim-php)](https://github.com/FernandoCalmet/rest-api-slim-php/blob/master/LICENSE.md)
 
 Main technologies used: `PHP 7, Slim 3, MySQL, Redis, dotenv, PHPUnit and JSON Web Tokens.`
