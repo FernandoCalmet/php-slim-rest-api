@@ -114,6 +114,8 @@ final class NoteRepository extends BaseRepository
             throw new Note('Create failed: Input incorrect data.', 400);
         }
 
+        $this->database->commit();
+
         return $this->checkAndGetNote((int) $this->database->lastInsertId());
     }
 
@@ -140,6 +142,8 @@ final class NoteRepository extends BaseRepository
             $this->database->rollBack();
             throw new Note('Update failed: Input incorrect data.', 400);
         }
+
+        $this->database->commit();
 
         return $this->checkAndGetNote((int) $id);
     }

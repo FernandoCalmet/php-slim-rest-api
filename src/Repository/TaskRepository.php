@@ -127,6 +127,8 @@ final class TaskRepository extends BaseRepository
             throw new Task('Create failed: Input incorrect data.', 400);
         }
 
+        $this->database->commit();
+
         $taskId = (int) $this->database->lastInsertId();
 
         return $this->checkAndGetTask($taskId, (int) $task->userId);
@@ -154,6 +156,8 @@ final class TaskRepository extends BaseRepository
             $this->database->rollBack();
             throw new Task('Update failed: Input incorrect data.', 400);
         }
+
+        $this->database->commit();
 
         return $this->checkAndGetTask((int) $task->id, (int) $task->userId);
     }

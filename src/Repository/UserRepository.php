@@ -142,6 +142,8 @@ final class UserRepository extends BaseRepository
             throw new User('Create failed: Input incorrect data.', 400);
         }
 
+        $this->database->commit();
+
         return $this->getUser((int) $this->database->lastInsertId());
     }
 
@@ -163,6 +165,8 @@ final class UserRepository extends BaseRepository
             $this->database->rollBack();
             throw new User('Update failed: Input incorrect data.', 400);
         }
+
+        $this->database->commit();
 
         return $this->getUser((int) $user->id);
     }
