@@ -97,15 +97,16 @@ final class NoteRepository extends BaseRepository
 
         $query = '
             INSERT INTO `notes`
-                (`name`, `description`)
+                (`name`, `description`, `created_at`)
             VALUES
-                (:name, :description)
+                (:name, :description, :created_at)
         ';
         $statement = $this->database->prepare($query);
         $name = $note->getName();
         $desc = $note->getDescription();
         $statement->bindParam(':name', $name);
         $statement->bindParam(':description', $desc);
+        $statement->bindParam('created_at', date('Y-m-d H:i:s'));
         $data = $statement->execute();
 
         if (!$data) {
@@ -122,7 +123,7 @@ final class NoteRepository extends BaseRepository
 
         $query = '
             UPDATE `notes`
-            SET `name` = :name, `description` = :description
+            SET `name` = :name, `description` = :description, `updated_at` = :updated_at
             WHERE `id` = :id
         ';
         $statement = $this->database->prepare($query);
@@ -132,6 +133,7 @@ final class NoteRepository extends BaseRepository
         $statement->bindParam(':id', $id);
         $statement->bindParam(':name', $name);
         $statement->bindParam(':description', $desc);
+        $statement->bindParam('updated_at', date('Y-m-d H:i:s'));
         $data = $statement->execute();
 
         if (!$data) {

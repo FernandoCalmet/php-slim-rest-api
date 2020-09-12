@@ -110,15 +110,16 @@ final class TaskRepository extends BaseRepository
 
         $query = '
             INSERT INTO `tasks`
-                (`name`, `description`, `status`, `userId`)
+                (`name`, `description`, `status`, `userId`, `created_at`)
             VALUES
-                (:name, :description, :status, :userId)
+                (:name, :description, :status, :userId, :created_at)
         ';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('name', $task->name);
         $statement->bindParam('description', $task->description);
         $statement->bindParam('status', $task->status);
         $statement->bindParam('userId', $task->userId);
+        $statement->bindParam('created_at', date('Y-m-d H:i:s'));
         $data = $statement->execute();
 
         if (!$data) {
@@ -137,7 +138,7 @@ final class TaskRepository extends BaseRepository
 
         $query = '
             UPDATE `tasks`
-            SET `name` = :name, `description` = :description, `status` = :status
+            SET `name` = :name, `description` = :description, `status` = :status, `updated_at` = :updated_at
             WHERE `id` = :id AND `userId` = :userId
         ';
         $statement = $this->getDb()->prepare($query);
@@ -146,6 +147,7 @@ final class TaskRepository extends BaseRepository
         $statement->bindParam('description', $task->description);
         $statement->bindParam('status', $task->status);
         $statement->bindParam('userId', $task->userId);
+        $statement->bindParam('updated_at', date('Y-m-d H:i:s'));
         $data = $statement->execute();
 
         if (!$data) {

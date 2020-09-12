@@ -126,14 +126,15 @@ final class UserRepository extends BaseRepository
 
         $query = '
             INSERT INTO `users`
-                (`name`, `email`, `password`)
+                (`name`, `email`, `password`, `created_at`)
             VALUES
-                (:name, :email, :password)
+                (:name, :email, :password, :created_at)
         ';
         $statement = $this->database->prepare($query);
         $statement->bindParam('name', $user->name);
         $statement->bindParam('email', $user->email);
         $statement->bindParam('password', $user->password);
+        $statement->bindParam('created_at', date('Y-m-d H:i:s'));
         $data = $statement->execute();
 
         if (!$data) {
@@ -149,12 +150,13 @@ final class UserRepository extends BaseRepository
         $this->database->beginTransaction();
 
         $query = '
-            UPDATE `users` SET `name` = :name, `email` = :email WHERE `id` = :id
+            UPDATE `users` SET `name` = :name, `email` = :email, `updated_at` = :updated_at WHERE `id` = :id
         ';
         $statement = $this->database->prepare($query);
         $statement->bindParam('id', $user->id);
         $statement->bindParam('name', $user->name);
         $statement->bindParam('email', $user->email);
+        $statement->bindParam('updated_at', date('Y-m-d H:i:s'));
         $data = $statement->execute();
 
         if (!$data) {
