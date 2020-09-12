@@ -3,6 +3,10 @@ build:
         my-node:
             services:
                 redis: 4
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
     environment:
         variables:
             DB_HOSTNAME: '127.0.0.1'
