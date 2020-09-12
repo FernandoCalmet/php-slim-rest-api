@@ -11,7 +11,7 @@ final class NoteRepository extends BaseRepository
     public function checkAndGetNote(int $noteId): \App\Entity\Note
     {
         $query = 'SELECT * FROM `notes` WHERE `id` = :id';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $noteId);
         $statement->execute();
         $note = $statement->fetchObject(\App\Entity\Note::class);
@@ -25,7 +25,7 @@ final class NoteRepository extends BaseRepository
     public function getNotes(): array
     {
         $query = 'SELECT * FROM `notes` ORDER BY `id`';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->execute();
 
         return $statement->fetchAll();
@@ -53,7 +53,7 @@ final class NoteRepository extends BaseRepository
             'description' => is_null($description) ? '' : $description,
         ];
         $query = $this->getQueryNotesByPage();
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('name', $params['name']);
         $statement->bindParam('description', $params['description']);
         $statement->execute();
@@ -78,7 +78,7 @@ final class NoteRepository extends BaseRepository
         ';
         $name = '%' . $strNotes . '%';
         $description = '%' . $strNotes . '%';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('name', $name);
         $statement->bindParam('description', $description);
         $statement->execute();
@@ -99,7 +99,7 @@ final class NoteRepository extends BaseRepository
             VALUES
                 (:name, :description, :created_at)
         ';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $name = $note->getName();
         $desc = $note->getDescription();
         $created = $note->getCreatedAt();
@@ -108,7 +108,7 @@ final class NoteRepository extends BaseRepository
         $statement->bindParam('created_at', $created);
         $statement->execute();
 
-        return $this->checkAndGetNote((int) $this->database->lastInsertId());
+        return $this->checkAndGetNote((int) $this->getDb()->lastInsertId());
     }
 
     public function updateNote(\App\Entity\Note $note): \App\Entity\Note
@@ -118,7 +118,7 @@ final class NoteRepository extends BaseRepository
             SET `name` = :name, `description` = :description, `updated_at` = :updated_at
             WHERE `id` = :id
         ';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $id = $note->getId();
         $name = $note->getName();
         $desc = $note->getDescription();
@@ -135,7 +135,7 @@ final class NoteRepository extends BaseRepository
     public function deleteNote(int $noteId): void
     {
         $query = 'DELETE FROM `notes` WHERE `id` = :id';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $noteId);
         $statement->execute();
     }

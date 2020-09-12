@@ -8,7 +8,7 @@ final class Find extends Base
 {
     public function getAll(): array
     {
-        return $this->taskRepository->getAllTasks();
+        return $this->taskRepository->getTasks();
     }
 
     public function getTasksByPage(

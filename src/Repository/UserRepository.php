@@ -11,7 +11,7 @@ final class UserRepository extends BaseRepository
     public function getUser(int $userId): \App\Entity\User
     {
         $query = 'SELECT `id`, `name`, `email` FROM `users` WHERE `id` = :id';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $userId);
         $statement->execute();
         $user = $statement->fetchObject(\App\Entity\User::class);
@@ -25,7 +25,7 @@ final class UserRepository extends BaseRepository
     public function checkUserByEmail(string $email): void
     {
         $query = 'SELECT * FROM `users` WHERE `email` = :email';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('email', $email);
         $statement->execute();
         $user = $statement->fetchObject();
@@ -45,7 +45,7 @@ final class UserRepository extends BaseRepository
             'email' => is_null($email) ? '' : $email,
         ];
         $query = $this->getQueryUsersByPage();
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('name', $params['name']);
         $statement->bindParam('email', $params['email']);
         $statement->execute();
@@ -74,7 +74,7 @@ final class UserRepository extends BaseRepository
     public function getAll(): array
     {
         $query = 'SELECT `id`, `name`, `email` FROM `users` ORDER BY `id`';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->execute();
 
         return $statement->fetchAll();
@@ -89,7 +89,7 @@ final class UserRepository extends BaseRepository
             ORDER BY `id`
         ';
         $name = '%' . $usersName . '%';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('name', $name);
         $statement->execute();
         $users = $statement->fetchAll();
@@ -108,7 +108,7 @@ final class UserRepository extends BaseRepository
             WHERE `email` = :email AND `password` = :password
             ORDER BY `id`
         ';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('email', $email);
         $statement->bindParam('password', $password);
         $statement->execute();
@@ -128,7 +128,7 @@ final class UserRepository extends BaseRepository
             VALUES
                 (:name, :email, :password, :created_at)
         ';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $name = $user->getName();
         $email = $user->getEmail();
         $password = $user->getPassword();
@@ -139,7 +139,7 @@ final class UserRepository extends BaseRepository
         $statement->bindParam('created_at', $created);
         $statement->execute();
 
-        return $this->getUser((int) $this->database->lastInsertId());
+        return $this->getUser((int) $this->getDb()->lastInsertId());
     }
 
     public function update(\App\Entity\User $user): \App\Entity\User
@@ -147,12 +147,12 @@ final class UserRepository extends BaseRepository
         $query = '
             UPDATE `users` SET `name` = :name, `email` = :email, `password` = :password, `updated_at` = :updated_at WHERE `id` = :id
         ';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $id = $user->getId();
         $name = $user->getName();
         $email = $user->getEmail();
         $password = $user->getPassword();
-        $updated = $user->getCreatedAt();
+        $updated = $user->getUpdatedAt();
         $statement->bindParam('id', $id);
         $statement->bindParam('name', $name);
         $statement->bindParam('email', $email);
@@ -166,7 +166,7 @@ final class UserRepository extends BaseRepository
     public function delete(int $userId): void
     {
         $query = 'DELETE FROM `users` WHERE `id` = :id';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $userId);
         $statement->execute();
     }
@@ -174,7 +174,7 @@ final class UserRepository extends BaseRepository
     public function deleteUserTasks(int $userId): void
     {
         $query = 'DELETE FROM `tasks` WHERE `userId` = :userId';
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('userId', $userId);
         $statement->execute();
     }

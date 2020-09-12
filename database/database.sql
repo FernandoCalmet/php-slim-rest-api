@@ -44,7 +44,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('Fernando', 'fcalmetr1@upao.edu.pe', 'B4546706E031C06A2CCCBAC2C11834F4D1A03AC2B6289551E8BD797076464D77B34CBD4A83A22F23C651554C89E5006B22936D21E0BF5D3EBDFF8B077875E7CA', '2020-11-09 01:58:41');
+INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('Fernando', 'fcalmetr1@upao.edu.pe', 'b4546706e031c06A2cccbac2c11834f4d1a03ac2b6289551e8bd797076464d77b34cbd4a83a22f23c651554c89e5006b22936d21e0bf5d3ebdff8b077875e7ca', '2020-11-09 01:58:41');
 INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('Juan', 'juanmartin@mail.com', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e', '2020-11-09 01:58:41');
 INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('James', 'jbond@yahoo.net', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e', '2020-11-09 01:58:41');
 INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('Lionel', 'mess10@gmail.gol', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e', '2020-11-09 01:58:41');

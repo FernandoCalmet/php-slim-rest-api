@@ -8,6 +8,32 @@ use App\Exception\Task;
 
 final class TaskRepository extends BaseRepository
 {
+    public function checkAndGetTask(int $taskId, int $userId): \App\Entity\Task
+    {
+        $query = '
+            SELECT * FROM `tasks` WHERE `id` = :id AND `userId` = :userId
+        ';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('id', $taskId);
+        $statement->bindParam('userId', $userId);
+        $statement->execute();
+        $task = $statement->fetchObject(\App\Entity\Task::class);
+        if (!$task) {
+            throw new Task('Task not found.', 404);
+        }
+
+        return $task;
+    }
+
+    public function getTasks(): array
+    {
+        $query = 'SELECT * FROM `tasks` ORDER BY `id`';
+        $statement = $this->getDb()->prepare($query);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
     public function getQueryTasksByPage(): string
     {
         return "
@@ -36,7 +62,7 @@ final class TaskRepository extends BaseRepository
             'status' => is_null($status) ? '' : $status,
         ];
         $query = $this->getQueryTasksByPage();
-        $statement = $this->database->prepare($query);
+        $statement = $this->getDb()->prepare($query);
         $statement->bindParam('userId', $params['userId']);
         $statement->bindParam('name', $params['name']);
         $statement->bindParam('description', $params['description']);
@@ -53,42 +79,6 @@ final class TaskRepository extends BaseRepository
         );
     }
 
-    public function checkAndGetTask(int $taskId, int $userId): \App\Entity\Task
-    {
-        $query = '
-            SELECT * FROM `tasks` WHERE `id` = :id AND `userId` = :userId
-        ';
-        $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('id', $taskId);
-        $statement->bindParam('userId', $userId);
-        $statement->execute();
-        $task = $statement->fetchObject(\App\Entity\Task::class);
-        if (!$task) {
-            throw new Task('Task not found.', 404);
-        }
-
-        return $task;
-    }
-
-    public function getAllTasks(): array
-    {
-        $query = 'SELECT * FROM `tasks` ORDER BY `id`';
-        $statement = $this->getDb()->prepare($query);
-        $statement->execute();
-
-        return (array) $statement->fetchAll();
-    }
-
-    public function getAll(int $userId): array
-    {
-        $query = 'SELECT * FROM `tasks` WHERE `userId` = :userId ORDER BY `id`';
-        $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('userId', $userId);
-        $statement->execute();
-
-        return (array) $statement->fetchAll();
-    }
-
     public function search(string $tasksName, int $userId, ?int $status): array
     {
         $query = $this->getSearchTasksQuery($status);
@@ -99,6 +89,16 @@ final class TaskRepository extends BaseRepository
         if ($status === 0 || $status === 1) {
             $statement->bindParam('status', $status);
         }
+        $statement->execute();
+
+        return (array) $statement->fetchAll();
+    }
+
+    public function getAll(int $userId): array
+    {
+        $query = 'SELECT * FROM `tasks` WHERE `userId` = :userId ORDER BY `id`';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('userId', $userId);
         $statement->execute();
 
         return (array) $statement->fetchAll();
@@ -125,7 +125,7 @@ final class TaskRepository extends BaseRepository
         $statement->bindParam('created_at', $created);
         $statement->execute();
 
-        $taskId = (int) $this->database->lastInsertId();
+        $taskId = (int) $this->getDb()->lastInsertId();
 
         return $this->checkAndGetTask((int) $taskId, (int) $userId);
     }
@@ -143,7 +143,7 @@ final class TaskRepository extends BaseRepository
         $desc = $task->getDescription();
         $status = $task->getStatus();
         $userId = $task->getUserId();
-        $updated = $task->getCreatedAt();
+        $updated = $task->getUpdatedAt();
         $statement->bindParam('id', $id);
         $statement->bindParam('name', $name);
         $statement->bindParam('description', $desc);
