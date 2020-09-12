@@ -8,9 +8,10 @@ build:
             DB_HOSTNAME: '127.0.0.1'
             DB_DATABASE: 'rest_api_slim_php'
             DB_USERNAME: 'root'
-            DB_PASSWORD: ''
-            SECRET_KEY: 'YourSuperSecret-KeY'
+            DB_PASSWORD: ''            
             DISPLAY_ERROR_DETAILS: true
+            APP_DOMAIN: 'https://rest-api-slim-php-sql.herokuapp.com'
+            SECRET_KEY: 'YourSuperSecret-KeY'
             REDIS_ENABLED: true
             REDIS_URL: 'localhost'
         php:
