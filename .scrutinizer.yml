@@ -2,11 +2,18 @@ build:
     nodes:
         my-node:
             services:
-                redis: 4
+                redis: 4        
         analysis:
             tests:
                 override:
                     - php-scrutinizer-run
+        coverage:
+            tests:
+                override:
+                - command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
+                    coverage:
+                    file: clover.xml
+                    format: clover
     environment:
         variables:
             DB_HOSTNAME: '127.0.0.1'
@@ -30,4 +37,4 @@ build:
                 command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
                 coverage:
                     file: 'clover.xml'
-                    format: 'clover'
+                    format: 'clover'    
