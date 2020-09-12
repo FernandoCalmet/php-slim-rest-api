@@ -19,12 +19,12 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 -- ----------------------------
 -- Records of tasks
 -- ----------------------------
-INSERT INTO `tasks` (`id`, `name`, `status`, `userId`) VALUES (1, 'Go to cinema', 1, 8);
-INSERT INTO `tasks` (`id`, `name`, `status`, `userId`) VALUES (2, 'Buy shoes', 0, 8);
-INSERT INTO `tasks` (`id`, `name`, `status`, `userId`) VALUES (3, 'Go to shopping', 0, 8);
-INSERT INTO `tasks` (`id`, `name`, `status`, `userId`) VALUES (4, 'Pay the credit card ;-)', 1, 8);
-INSERT INTO `tasks` (`id`, `name`, `status`, `userId`) VALUES (5, 'Do math homework...', 0, 8);
-INSERT INTO `tasks` (`id`, `name`, `status`, `userId`) VALUES (6, 'Just Testing...', 1, 1);
+INSERT INTO `tasks` (`id`, `name`, `status`, `userId`, `created_at`) VALUES (1, 'Go to cinema', 1, 8, '2020-11-09 01:58:41');
+INSERT INTO `tasks` (`id`, `name`, `status`, `userId`, `created_at`) VALUES (2, 'Buy shoes', 0, 8, '2020-11-09 01:58:41');
+INSERT INTO `tasks` (`id`, `name`, `status`, `userId`, `created_at`) VALUES (3, 'Go to shopping', 0, 8, '2020-11-09 01:58:41');
+INSERT INTO `tasks` (`id`, `name`, `status`, `userId`, `created_at`) VALUES (4, 'Pay the credit card ;-)', 1, 8, '2020-11-09 01:58:41');
+INSERT INTO `tasks` (`id`, `name`, `status`, `userId`, `created_at`) VALUES (5, 'Do math homework...', 0, 8, '2020-11-09 01:58:41');
+INSERT INTO `tasks` (`id`, `name`, `status`, `userId`, `created_at`) VALUES (6, 'Just Testing...', 1, 1, '2020-11-09 01:58:41');
 
 
 -- ----------------------------
@@ -45,14 +45,14 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` (`name`, `email`, `password`) VALUES ('Fernando', 'fcalmetr1@upao.edu.pe', 'B4546706E031C06A2CCCBAC2C11834F4D1A03AC2B6289551E8BD797076464D77B34CBD4A83A22F23C651554C89E5006B22936D21E0BF5D3EBDFF8B077875E7CA');
-INSERT INTO `users` (`name`, `email`, `password`) VALUES ('James', 'jbond@yahoo.net', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e');
-INSERT INTO `users` (`name`, `email`, `password`) VALUES ('Lionel', 'mess10@gmail.gol', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e');
-INSERT INTO `users` (`name`, `email`, `password`) VALUES ('Carlos', 'bianchini@hotmail.com.ar', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e');
-INSERT INTO `users` (`name`, `email`, `password`) VALUES ('Diego', 'diego1010@gmail.com', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e');
-INSERT INTO `users` (`name`, `email`, `password`) VALUES ('One User', 'one@user.com', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e');
-INSERT INTO `users` (`name`, `email`, `password`) VALUES ('Diegol', 'diego@gol.com.ar', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e');
-INSERT INTO `users` (`name`, `email`, `password`) VALUES ('Test User', 'test@user.com', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e');
+INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('Fernando', 'fcalmetr1@upao.edu.pe', 'B4546706E031C06A2CCCBAC2C11834F4D1A03AC2B6289551E8BD797076464D77B34CBD4A83A22F23C651554C89E5006B22936D21E0BF5D3EBDFF8B077875E7CA', '2020-11-09 01:58:41');
+INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('James', 'jbond@yahoo.net', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e', '2020-11-09 01:58:41');
+INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('Lionel', 'mess10@gmail.gol', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e', '2020-11-09 01:58:41');
+INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('Carlos', 'bianchini@hotmail.com.ar', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e', '2020-11-09 01:58:41');
+INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('Diego', 'diego1010@gmail.com', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e', '2020-11-09 01:58:41');
+INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('One User', 'one@user.com', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e', '2020-11-09 01:58:41');
+INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('Diegol', 'diego@gol.com.ar', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e', '2020-11-09 01:58:41');
+INSERT INTO `users` (`name`, `email`, `password`, `created_at`) VALUES ('Test User', 'test@user.com', 'd5f4da62059760b35de35f8fbd8efb43eee26ac741ef8c6e51782a13ac7d50e927b653160c591616a9dc8a452c877a6b80c00aecba14504756a65f88439fcd1e', '2020-11-09 01:58:41');
 
 -- ----------------------------
 -- Table structure for notes
@@ -70,11 +70,11 @@ CREATE TABLE `notes` (
 -- ----------------------------
 -- Records of notes
 -- ----------------------------
-INSERT INTO `notes` (`id`, `name`, `description`) VALUES ('1', 'My Note 1', 'My first online note');
-INSERT INTO `notes` (`id`, `name`, `description`) VALUES ('2', 'Chinese Proverb', 'Those who say it can not be done, should not interrupt those doing it.');
-INSERT INTO `notes` (`id`, `name`, `description`) VALUES ('3', 'Long Note 3', 'This is a very large note, or maybe not...');
-INSERT INTO `notes` (`id`, `name`, `description`) VALUES ('4', 'Napoleon Hill', 'Whatever the mind of man can conceive and believe, it can achieve.');
-INSERT INTO `notes` (`id`, `name`, `description`) VALUES ('5', 'Note 5', 'A Random Note');
+INSERT INTO `notes` (`id`, `name`, `description`, `created_at`) VALUES ('1', 'My Note 1', 'My first online note', '2020-11-09 01:58:41');
+INSERT INTO `notes` (`id`, `name`, `description`, `created_at`) VALUES ('2', 'Chinese Proverb', 'Those who say it can not be done, should not interrupt those doing it.', '2020-11-09 01:58:41');
+INSERT INTO `notes` (`id`, `name`, `description`, `created_at`) VALUES ('3', 'Long Note 3', 'This is a very large note, or maybe not...', '2020-11-09 01:58:41');
+INSERT INTO `notes` (`id`, `name`, `description`, `created_at`) VALUES ('4', 'Napoleon Hill', 'Whatever the mind of man can conceive and believe, it can achieve.', '2020-11-09 01:58:41');
+INSERT INTO `notes` (`id`, `name`, `description`, `created_at`) VALUES ('5', 'Note 5', 'A Random Note', '2020-11-09 01:58:41');
 
 INSERT INTO `notes`
     (`name`, `description`)
