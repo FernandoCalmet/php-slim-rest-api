@@ -9,7 +9,7 @@ build:
                 override:
                     - command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
                       coverage:
-                        file: target/coverage.xml
+                        file: clover.xml
                         format: clover                    
         my-node:
             services:
