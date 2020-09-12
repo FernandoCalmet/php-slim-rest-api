@@ -14,8 +14,10 @@ abstract class Base extends BaseService
 {
     private const REDIS_KEY = 'task:%s:user:%s';
 
+    /** @var TaskRepository */
     protected $taskRepository;
 
+    /** @var RedisService */
     protected $redisService;
 
     public function __construct(
@@ -33,7 +35,7 @@ abstract class Base extends BaseService
 
     protected static function validateTaskName(string $name): string
     {
-        if (! v::length(1, 100)->validate($name)) {
+        if (!v::length(1, 100)->validate($name)) {
             throw new Task('Invalid name.', 400);
         }
 
@@ -42,7 +44,7 @@ abstract class Base extends BaseService
 
     protected static function validateTaskStatus(int $status): int
     {
-        if (! v::numeric()->between(0, 1)->validate($status)) {
+        if (!v::numeric()->between(0, 1)->validate($status)) {
             throw new Task('Invalid status', 400);
         }
 

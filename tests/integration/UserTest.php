@@ -30,6 +30,25 @@ class UserTest extends BaseTestCase
     }
 
     /**
+     * Test Get Users By Page.
+     */
+    public function testGetUsersByPage(): void
+    {
+        $response = $this->runApp('GET', '/api/v1/users?page=1&perPage=3');
+
+        $result = (string) $response->getBody();
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
+        $this->assertStringContainsString('success', $result);
+        $this->assertStringContainsString('pagination', $result);
+        $this->assertStringContainsString('id', $result);
+        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('email', $result);
+        $this->assertStringNotContainsString('error', $result);
+    }
+
+    /**
      * Test Get One User.
      */
     public function testGetUser(): void
@@ -106,7 +125,8 @@ class UserTest extends BaseTestCase
     public function testCreateUser(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/users',
+            'POST',
+            '/api/v1/users',
             ['name' => 'Esteban', 'email' => 'estu@gmail.com', 'password' => 'AnyPass1000']
         );
 
@@ -180,7 +200,8 @@ class UserTest extends BaseTestCase
     public function testCreateUserWithInvalidName(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/users',
+            'POST',
+            '/api/v1/users',
             ['name' => 'z', 'email' => 'email@example.com']
         );
 
@@ -199,7 +220,8 @@ class UserTest extends BaseTestCase
     public function testCreateUserWithInvalidEmail(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/users',
+            'POST',
+            '/api/v1/users',
             ['name' => 'Esteban', 'email' => 'email.incorrecto', 'password' => 'AnyPass1000']
         );
 
@@ -217,7 +239,8 @@ class UserTest extends BaseTestCase
     public function testCreateUserWithEmailAlreadyExists(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/users',
+            'POST',
+            '/api/v1/users',
             ['name' => 'Esteban', 'email' => 'estu@gmail.com', 'password' => 'AnyPass1000']
         );
 
@@ -274,7 +297,9 @@ class UserTest extends BaseTestCase
     public function testUpdateUserPermissionsFailed(): void
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/users/1', ['name' => 'Victor']
+            'PUT',
+            '/api/v1/users/1',
+            ['name' => 'Victor']
         );
 
         $result = (string) $response->getBody();
@@ -292,7 +317,8 @@ class UserTest extends BaseTestCase
     public function testUpdateUserWithInvalidData(): void
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/users/' . self::$id,
+            'PUT',
+            '/api/v1/users/' . self::$id,
             ['name' => '', 'email' => 'email-incorrecto...']
         );
 

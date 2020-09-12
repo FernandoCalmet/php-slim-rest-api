@@ -6,6 +6,7 @@ namespace App\Repository;
 
 abstract class BaseRepository
 {
+    /** @var \PDO */
     protected $database;
 
     public function __construct(\PDO $database)
@@ -18,12 +19,34 @@ abstract class BaseRepository
         return $this->database;
     }
 
-    protected function getResultByPage($query, $page, $perPage)
-    {
+    protected function getResultsWithPagination(
+        string $query,
+        int $page,
+        int $perPage,
+        array $params,
+        int $total
+    ): array {
+        return [
+            'pagination' => [
+                'totalRows' => $total,
+                'totalPages' => ceil($total / $perPage),
+                'currentPage' => $page,
+                'perPage' => $perPage,
+            ],
+            'data' => $this->getResultByPage($query, $page, $perPage, $params),
+        ];
+    }
+
+    protected function getResultByPage(
+        string $query,
+        int $page,
+        int $perPage,
+        array $params
+    ): array {
         $offset = ($page - 1) * $perPage;
-        $query = $query . " LIMIT $perPage OFFSET $offset";
+        $query .= " LIMIT ${perPage} OFFSET ${offset}";
         $statement = $this->database->prepare($query);
-        $statement->execute();
+        $statement->execute($params);
 
         return $statement->fetchAll();
     }

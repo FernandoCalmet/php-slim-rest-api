@@ -15,7 +15,7 @@ final class UserRepository extends BaseRepository
         $statement->bindParam('id', $userId);
         $statement->execute();
         $user = $statement->fetchObject();
-        if (! $user) {
+        if (!$user) {
             throw new User('User not found.', 404);
         }
 
@@ -32,6 +32,43 @@ final class UserRepository extends BaseRepository
         if ($user) {
             throw new User('Email already exists.', 400);
         }
+    }
+
+    public function getUsersByPage(
+        int $page,
+        int $perPage,
+        ?string $name,
+        ?string $email
+    ): array {
+        $params = [
+            'name' => is_null($name) ? '' : $name,
+            'email' => is_null($email) ? '' : $email,
+        ];
+        $query = $this->getQueryUsersByPage();
+        $statement = $this->database->prepare($query);
+        $statement->bindParam('name', $params['name']);
+        $statement->bindParam('email', $params['email']);
+        $statement->execute();
+        $total = $statement->rowCount();
+
+        return $this->getResultsWithPagination(
+            $query,
+            $page,
+            $perPage,
+            $params,
+            $total
+        );
+    }
+
+    public function getQueryUsersByPage(): string
+    {
+        return "
+            SELECT `id`, `name`, `email`
+            FROM `users`
+            WHERE `name` LIKE CONCAT('%', :name, '%')
+            AND `email` LIKE CONCAT('%', :email, '%')
+            ORDER BY `id`
+        ";
     }
 
     public function getAll(): array
@@ -56,7 +93,7 @@ final class UserRepository extends BaseRepository
         $statement->bindParam('name', $name);
         $statement->execute();
         $users = $statement->fetchAll();
-        if (! $users) {
+        if (!$users) {
             throw new User('User name not found.', 404);
         }
 
@@ -76,7 +113,7 @@ final class UserRepository extends BaseRepository
         $statement->bindParam('password', $password);
         $statement->execute();
         $user = $statement->fetchObject();
-        if (! $user) {
+        if (!$user) {
             throw new User('Login failed: Email or password incorrect.', 400);
         }
 
@@ -85,6 +122,8 @@ final class UserRepository extends BaseRepository
 
     public function create(object $user): object
     {
+        $this->database->beginTransaction();
+
         $query = '
             INSERT INTO `users`
                 (`name`, `email`, `password`)
@@ -95,13 +134,20 @@ final class UserRepository extends BaseRepository
         $statement->bindParam('name', $user->name);
         $statement->bindParam('email', $user->email);
         $statement->bindParam('password', $user->password);
-        $statement->execute();
+        $data = $statement->execute();
+
+        if (!$data) {
+            $this->database->rollBack();
+            throw new User('Create failed: Input incorrect data.', 400);
+        }
 
         return $this->getUser((int) $this->database->lastInsertId());
     }
 
     public function update(object $user): object
     {
+        $this->database->beginTransaction();
+
         $query = '
             UPDATE `users` SET `name` = :name, `email` = :email WHERE `id` = :id
         ';
@@ -109,7 +155,12 @@ final class UserRepository extends BaseRepository
         $statement->bindParam('id', $user->id);
         $statement->bindParam('name', $user->name);
         $statement->bindParam('email', $user->email);
-        $statement->execute();
+        $data = $statement->execute();
+
+        if (!$data) {
+            $this->database->rollBack();
+            throw new User('Update failed: Input incorrect data.', 400);
+        }
 
         return $this->getUser((int) $user->id);
     }

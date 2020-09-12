@@ -9,6 +9,27 @@ use Firebase\JWT\JWT;
 
 final class UserService extends Base
 {
+    public function getUsersByPage(
+        int $page,
+        int $perPage,
+        ?string $name,
+        ?string $email
+    ): array {
+        if ($page < 1) {
+            $page = 1;
+        }
+        if ($perPage < 1) {
+            $perPage = self::DEFAULT_PER_PAGE_PAGINATION;
+        }
+
+        return $this->userRepository->getUsersByPage(
+            $page,
+            $perPage,
+            $name,
+            $email
+        );
+    }
+
     public function getAll(): array
     {
         return $this->userRepository->getAll();
@@ -44,8 +65,8 @@ final class UserService extends Base
     public function update(array $input, int $userId): object
     {
         $user = $this->getUserFromDb($userId);
-        $data = json_decode(json_encode($input), false);
-        if (! isset($data->name) && ! isset($data->email)) {
+        $data = json_decode((string) json_encode($input), false);
+        if (!isset($data->name) && !isset($data->email)) {
             throw new User('Enter the data to update the user.', 400);
         }
         if (isset($data->name)) {
@@ -74,11 +95,11 @@ final class UserService extends Base
 
     public function login(array $input): string
     {
-        $data = json_decode(json_encode($input), false);
-        if (! isset($data->email)) {
+        $data = json_decode((string) json_encode($input), false);
+        if (!isset($data->email)) {
             throw new User('The field "email" is required.', 400);
         }
-        if (! isset($data->password)) {
+        if (!isset($data->password)) {
             throw new User('The field "password" is required.', 400);
         }
         $password = hash('sha512', $data->password);
@@ -91,19 +112,19 @@ final class UserService extends Base
             'exp' => time() + (7 * 24 * 60 * 60),
         ];
 
-        return JWT::encode($token, getenv('SECRET_KEY'));
+        return JWT::encode($token, $_SERVER['SECRET_KEY']);
     }
 
     private function validateUserData(array $input): object
     {
-        $user = json_decode(json_encode($input), false);
-        if (! isset($user->name)) {
+        $user = json_decode((string) json_encode($input), false);
+        if (!isset($user->name)) {
             throw new User('The field "name" is required.', 400);
         }
-        if (! isset($user->email)) {
+        if (!isset($user->email)) {
             throw new User('The field "email" is required.', 400);
         }
-        if (! isset($user->password)) {
+        if (!isset($user->password)) {
             throw new User('The field "password" is required.', 400);
         }
         $user->name = self::validateUserName($user->name);

@@ -8,14 +8,14 @@ use App\Exception\Note;
 
 final class NoteRepository extends BaseRepository
 {
-    public function checkAndGetNote(int $noteId): object
+    public function checkAndGetNote(int $noteId): \App\Entity\Note
     {
         $query = 'SELECT * FROM `notes` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
         $statement->bindParam(':id', $noteId);
         $statement->execute();
-        $note = $statement->fetchObject();
-        if (! $note) {
+        $note = $statement->fetchObject(\App\Entity\Note::class);
+        if (!$note) {
             throw new Note('Note not found.', 404);
         }
 
@@ -31,22 +31,41 @@ final class NoteRepository extends BaseRepository
         return $statement->fetchAll();
     }
 
-    public function getNotesByPage($page, $perPage): array
+    public function getQueryNotesByPage(): string
     {
-        $query = "SELECT * FROM `notes`";
+        return "
+            SELECT *
+            FROM `notes`
+            WHERE `name` LIKE CONCAT('%', :name, '%')
+            AND `description` LIKE CONCAT('%', :description, '%')
+            ORDER BY `id`
+        ";
+    }
+
+    public function getNotesByPage(
+        int $page,
+        int $perPage,
+        ?string $name,
+        ?string $description
+    ): array {
+        $params = [
+            'name' => is_null($name) ? '' : $name,
+            'description' => is_null($description) ? '' : $description,
+        ];
+        $query = $this->getQueryNotesByPage();
         $statement = $this->database->prepare($query);
+        $statement->bindParam('name', $params['name']);
+        $statement->bindParam('description', $params['description']);
         $statement->execute();
         $total = $statement->rowCount();
 
-        return [
-            'pagination' => [
-                'totalRows' => $total,
-                'totalPages' => ceil($total / $perPage),
-                'currentPage' => $page,
-                'perPage' => $perPage,
-            ],
-            'data' => $this->getResultByPage($query, $page, $perPage),
-        ];
+        return $this->getResultsWithPagination(
+            $query,
+            $page,
+            $perPage,
+            $params,
+            $total
+        );
     }
 
     public function searchNotes(string $strNotes): array
@@ -64,7 +83,7 @@ final class NoteRepository extends BaseRepository
         $statement->bindParam('description', $description);
         $statement->execute();
         $notes = $statement->fetchAll();
-        if (! $notes) {
+        if (!$notes) {
             $message = 'No notes were found with that name or description.';
             throw new Note($message, 404);
         }
@@ -72,8 +91,10 @@ final class NoteRepository extends BaseRepository
         return $notes;
     }
 
-    public function createNote(object $data): object
+    public function createNote(\App\Entity\Note $note): \App\Entity\Note
     {
+        $this->database->beginTransaction();
+
         $query = '
             INSERT INTO `notes`
                 (`name`, `description`)
@@ -81,27 +102,44 @@ final class NoteRepository extends BaseRepository
                 (:name, :description)
         ';
         $statement = $this->database->prepare($query);
-        $statement->bindParam(':name', $data->name);
-        $statement->bindParam(':description', $data->description);
-        $statement->execute();
+        $name = $note->getName();
+        $desc = $note->getDescription();
+        $statement->bindParam(':name', $name);
+        $statement->bindParam(':description', $desc);
+        $data = $statement->execute();
+
+        if (!$data) {
+            $this->database->rollBack();
+            throw new Note('Create failed: Input incorrect data.', 400);
+        }
 
         return $this->checkAndGetNote((int) $this->database->lastInsertId());
     }
 
-    public function updateNote(object $note): object
+    public function updateNote(\App\Entity\Note $note): \App\Entity\Note
     {
+        $this->database->beginTransaction();
+
         $query = '
             UPDATE `notes`
             SET `name` = :name, `description` = :description
             WHERE `id` = :id
         ';
         $statement = $this->database->prepare($query);
-        $statement->bindParam(':id', $note->id);
-        $statement->bindParam(':name', $note->name);
-        $statement->bindParam(':description', $note->description);
-        $statement->execute();
+        $id = $note->getId();
+        $name = $note->getName();
+        $desc = $note->getDescription();
+        $statement->bindParam(':id', $id);
+        $statement->bindParam(':name', $name);
+        $statement->bindParam(':description', $desc);
+        $data = $statement->execute();
 
-        return $this->checkAndGetNote((int) $note->id);
+        if (!$data) {
+            $this->database->rollBack();
+            throw new Note('Update failed: Input incorrect data.', 400);
+        }
+
+        return $this->checkAndGetNote((int) $id);
     }
 
     public function deleteNote(int $noteId): void

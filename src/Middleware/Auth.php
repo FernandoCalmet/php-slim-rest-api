@@ -17,15 +17,15 @@ final class Auth extends Base
         Route $next
     ): ResponseInterface {
         $jwtHeader = $request->getHeaderLine('Authorization');
-        if (! $jwtHeader) {
+        if (!$jwtHeader) {
             throw new \App\Exception\Auth('JWT Token required.', 400);
         }
         $jwt = explode('Bearer ', $jwtHeader);
-        if (! isset($jwt[1])) {
+        if (!isset($jwt[1])) {
             throw new \App\Exception\Auth('JWT Token invalid.', 400);
         }
         $decoded = $this->checkToken($jwt[1]);
-        $object = $request->getParsedBody();
+        $object = (array) $request->getParsedBody();
         $object['decoded'] = $decoded;
 
         return $next($request->withParsedBody($object), $response);

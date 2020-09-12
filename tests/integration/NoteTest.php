@@ -27,8 +27,8 @@ class NoteTest extends BaseTestCase
         $this->assertStringContainsString('id', $result);
         $this->assertStringContainsString('name', $result);
         $this->assertStringContainsString('description', $result);
-        $this->assertMatchesRegularExpression('{"code":200,"status":"success"}', $value);
-        $this->assertMatchesRegularExpression('{"name":"[A-Za-z0-9_. ]+","description":"[A-Za-z0-9_. ]+"}', $value);
+        $this->assertMatchesRegularExpression('{"code":200,"status":"success"}', (string) $value);
+        $this->assertMatchesRegularExpression('{"name":"[A-Za-z0-9_. ]+","description":"[A-Za-z0-9_. ]+"}', (string) $value);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -40,7 +40,7 @@ class NoteTest extends BaseTestCase
         $response = $this->runApp('GET', '/api/v1/notes?page=1&perPage=3');
 
         $result = (string) $response->getBody();
-        $value = json_encode(json_decode($result));
+        $value = (string) json_encode(json_decode($result));
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
@@ -52,38 +52,6 @@ class NoteTest extends BaseTestCase
         $this->assertMatchesRegularExpression('{"code":200,"status":"success"}', $value);
         $this->assertMatchesRegularExpression('{"name":"[A-Za-z0-9_. ]+","description":"[A-Za-z0-9_. ]+"}', $value);
         $this->assertStringNotContainsString('error', $result);
-    }
-
-    /**
-     * Test Get Notes By Page With Invalid Page Value.
-     */
-    public function testGetNotesByPageWithInvalidPage(): void
-    {
-        $response = $this->runApp('GET', '/api/v1/notes?page=asd&perPage=3');
-
-        $result = (string) $response->getBody();
-
-        $this->assertEquals(400, $response->getStatusCode());
-        $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
-        $this->assertStringNotContainsString('success', $result);
-        $this->assertStringNotContainsString('description', $result);
-        $this->assertStringContainsString('error', $result);
-    }
-
-    /**
-     * Test Get Notes By Page With Invalid PerPage Value.
-     */
-    public function testGetNotesByPageWithInvalidPerPage(): void
-    {
-        $response = $this->runApp('GET', '/api/v1/notes?page=1&perPage=dsa');
-
-        $result = (string) $response->getBody();
-
-        $this->assertEquals(400, $response->getStatusCode());
-        $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
-        $this->assertStringNotContainsString('success', $result);
-        $this->assertStringNotContainsString('description', $result);
-        $this->assertStringContainsString('error', $result);
     }
 
     /**
@@ -160,7 +128,8 @@ class NoteTest extends BaseTestCase
     public function testCreateNote(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/notes',
+            'POST',
+            '/api/v1/notes',
             ['name' => 'My Test Note', 'description' => 'New Note...']
         );
 
@@ -217,7 +186,8 @@ class NoteTest extends BaseTestCase
     public function testCreateNoteWithInvalidName(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/notes',
+            'POST',
+            '/api/v1/notes',
             ['name' => '']
         );
 
@@ -236,7 +206,8 @@ class NoteTest extends BaseTestCase
     public function testUpdateNote(): void
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/notes/' . self::$id,
+            'PUT',
+            '/api/v1/notes/' . self::$id,
             ['name' => 'Victor Notes', 'description' => 'Pep.']
         );
 
@@ -275,7 +246,9 @@ class NoteTest extends BaseTestCase
     public function testUpdateNoteNotFound(): void
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/notes/123456789', ['name' => 'Note']
+            'PUT',
+            '/api/v1/notes/123456789',
+            ['name' => 'Note']
         );
 
         $result = (string) $response->getBody();

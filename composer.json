@@ -23,22 +23,27 @@
     "require": {
         "php": "^7.3",
         "firebase/php-jwt": "^5.0",
+        "monolog/monolog": "^2.0@dev",
         "palanik/corsslim": "dev-slim3",
         "predis/predis": "^1.1",
         "respect/validation": "^1.1",
         "slim/slim": "^3.12.3",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^5.1"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "^1.14",
         "pestphp/pest": "^0.1.5",
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^9.0",
-        "rector/rector": "^0.7.26"
+        "rector/rector": "^0.7.26",
+        "vimeo/psalm": "^3.15"
     },
     "config": {
         "sort-packages": true,
-        "process-timeout" : 0
+        "process-timeout" : 0,
+        "platform": {
+            "php": "7.3.20"
+        }
     },
     "autoload": {
         "psr-4": {

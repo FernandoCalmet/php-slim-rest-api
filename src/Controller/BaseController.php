@@ -9,15 +9,17 @@ use Slim\Http\Response;
 
 abstract class BaseController
 {
+    /** @var Container */
     protected $container;
-
-    protected const DEFAULT_PER_PAGE_PAGINATION = 5;
 
     public function __construct(Container $container)
     {
         $this->container = $container;
     }
 
+    /**
+     * @param array|object|null $message
+     */
     protected function jsonResponse(
         Response $response,
         string $status,
@@ -35,6 +37,6 @@ abstract class BaseController
 
     protected static function isRedisEnabled(): bool
     {
-        return filter_var(getenv('REDIS_ENABLED'), FILTER_VALIDATE_BOOLEAN);
+        return filter_var($_SERVER['REDIS_ENABLED'], FILTER_VALIDATE_BOOLEAN);
     }
 }

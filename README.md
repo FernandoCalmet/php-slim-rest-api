@@ -1,6 +1,8 @@
-# REST API SLIM PHP 🐘
+# REST API IN SLIM PHP 🐘
 
 [![Build Status](https://travis-ci.com/FernandoCalmet/rest-api-slim-php.svg?branch=master)](https://travis-ci.com/FernandoCalmet/rest-api-slim-php)
+
+![GitHub](https://img.shields.io/github/license/fernandocalmet/rest-api-slim-php)
 
 Main technologies used: `PHP 7, Slim 3, MySQL, Redis, dotenv, PHPUnit and JSON Web Tokens.`
 
@@ -76,7 +78,7 @@ $ make up
 $ make db
 
 # Checkout the API.
-$ curl http://localhost:8081
+$ curl http://localhost:8080
 
 # Stop and remove containers (it's like: docker-compose down).
 $ make down
@@ -108,6 +110,7 @@ composer restart-db
 - [pestphp/pest](https://github.com/pestphp/pest): Pest is an elegant PHP Testing Framework with a focus on simplicity.
 - [nunomaduro/phpinsights](https://github.com/nunomaduro/phpinsights): Instant PHP quality checks from your console.
 - [rector/rector](https://github.com/rectorphp/rector): Instant Upgrades and Instant Refactoring of any PHP 5.3+ code.
+- [vimeo/psalm](https://github.com/vimeo/psalm): A static analysis tool for finding errors in PHP applications.
 
 ## :traffic_light: TESTING
 
@@ -179,8 +182,8 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 :octocat: [Check this project in my repository.](https://github.com/FernandoCalmet/rest-api-slim-php)
   
-## DO YOU LIKE THE PROJECT? ☕💖
+---
 
-You can support this project inviting me a coffee :coffee: :yum: or giving a **star** to this repo :star: :sunglasses:.
+:octocat: [Check more about my repositories](https://github.com/FernandoCalmet)
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/T6T41JKMI)

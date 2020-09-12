@@ -2,11 +2,7 @@
 
 declare(strict_types=1);
 
-final class PostCreateProjectCommand
-{
-    public static function showIntro(): void
-    {
-        echo <<<EOF
+echo <<<EOF
                 _                 _     
                | |               (_)    
   _ __ ___  ___| |_    __ _ _ __  _     
@@ -22,34 +18,24 @@ final class PostCreateProjectCommand
  |___/_|_|_| |_| |_| | .__/|_| |_| .__/ 
                      | |         | |    
                      |_|         |_|    
-EOF;
-    }
 
-    public static function showSuccessMessage(): void
-    {
-        echo <<<EOF
 *************************************************************
 Project: https://github.com/fernandocalmet/rest-api-slim-php
 *************************************************************
-Successfully created project!
-EOF;
-    }
 
-    public static function showFinalMessage(): void
-    {
-        echo <<<EOF
+Successfully created project!
+
 Get started with the following commands:
+
 $ cd [my-api-name]
 $ composer restart-db
 $ composer test
 $ composer start
-(P.S. set your MySQL connection in your .env file)
-Thanks for installing this project!
-Now go build a cool RESTful API ;-)
-EOF;
-    }
-}
 
-PostCreateProjectCommand::showIntro();
-PostCreateProjectCommand::showSuccessMessage();
-PostCreateProjectCommand::showFinalMessage();
+(P.S. set your MySQL connection in your .env file)
+
+Thanks for installing this project!
+
+Now go build a cool RESTful API ;-)
+
+EOF;

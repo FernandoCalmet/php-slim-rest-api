@@ -14,8 +14,10 @@ abstract class Base extends BaseService
 {
     private const REDIS_KEY = 'user:%s';
 
+    /** @var UserRepository */
     protected $userRepository;
 
+    /** @var RedisService */
     protected $redisService;
 
     public function __construct(
@@ -28,7 +30,7 @@ abstract class Base extends BaseService
 
     protected static function validateUserName(string $name): string
     {
-        if (! v::alnum()->length(1, 100)->validate($name)) {
+        if (!v::alnum('ÁÉÍÓÚÑáéíóúñ.')->length(1, 100)->validate($name)) {
             throw new User('Invalid name.', 400);
         }
 
@@ -38,11 +40,11 @@ abstract class Base extends BaseService
     protected static function validateEmail(string $emailValue): string
     {
         $email = filter_var($emailValue, FILTER_SANITIZE_EMAIL);
-        if (! v::email()->validate($email)) {
+        if (!v::email()->validate($email)) {
             throw new User('Invalid email', 400);
         }
 
-        return $email;
+        return (string) $email;
     }
 
     protected function getUserFromCache(int $userId): object
@@ -51,7 +53,7 @@ abstract class Base extends BaseService
         $key = $this->redisService->generateKey($redisKey);
         if ($this->redisService->exists($key)) {
             $data = $this->redisService->get($key);
-            $user = json_decode(json_encode($data), false);
+            $user = json_decode((string) json_encode($data), false);
         } else {
             $user = $this->getUserFromDb($userId);
             $this->redisService->setex($key, $user);

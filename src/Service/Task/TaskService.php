@@ -8,6 +8,31 @@ use App\Exception\Task;
 
 final class TaskService extends Base
 {
+    public function getTasksByPage(
+        int $userId,
+        int $page,
+        int $perPage,
+        ?string $name,
+        ?string $description,
+        ?string $status
+    ): array {
+        if ($page < 1) {
+            $page = 1;
+        }
+        if ($perPage < 1) {
+            $perPage = self::DEFAULT_PER_PAGE_PAGINATION;
+        }
+
+        return $this->getTaskRepository()->getTasksByPage(
+            $userId,
+            $page,
+            $perPage,
+            $name,
+            $description,
+            $status
+        );
+    }
+
     public function getAllTasks(): array
     {
         return $this->getTaskRepository()->getAllTasks();
@@ -29,8 +54,11 @@ final class TaskService extends Base
         return $task;
     }
 
-    public function search(string $tasksName, int $userId, $status): array
-    {
+    public function search(
+        string $tasksName,
+        int $userId,
+        ?string $status
+    ): array {
         if ($status !== null) {
             $status = (int) $status;
         }
@@ -40,8 +68,8 @@ final class TaskService extends Base
 
     public function create(array $input): object
     {
-        $data = json_decode(json_encode($input), false);
-        if (! isset($data->name)) {
+        $data = json_decode((string) json_encode($input), false);
+        if (!isset($data->name)) {
             throw new Task('The field "name" is required.', 400);
         }
         self::validateTaskName($data->name);
@@ -83,8 +111,8 @@ final class TaskService extends Base
     private function validateTask(array $input, int $taskId): object
     {
         $task = $this->getTaskFromDb($taskId, (int) $input['decoded']->sub);
-        $data = json_decode(json_encode($input), false);
-        if (! isset($data->name) && ! isset($data->status)) {
+        $data = json_decode((string) json_encode($input), false);
+        if (!isset($data->name) && !isset($data->status)) {
             throw new Task('Enter the data to update the task.', 400);
         }
         if (isset($data->name)) {
