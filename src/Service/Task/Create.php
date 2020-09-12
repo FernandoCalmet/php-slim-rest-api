@@ -28,7 +28,7 @@ final class Create extends Base
         /** @var \App\Entity\Task $task */
         $task = $this->taskRepository->create($mytask);
         if (self::isRedisEnabled() === true) {
-            $this->saveInCache($task->getId(), $task->getUserId(), $task);
+            $this->saveInCache($task->getId(), $task->getUserId(), $task->getData());
         }
 
         return $task->getData();
