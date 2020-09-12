@@ -25,6 +25,7 @@ final class Create extends Base
         $myuser->updateEmail(self::validateEmail($data->email));
         $myuser->updatePassword(hash('sha512', $data->password));
         $myuser->updateCreatedAt(date('Y-m-d H:i:s'));
+        $this->userRepository->checkUserByEmail($data->email);
         /** @var \App\Entity\User $user */
         $user = $this->userRepository->create($myuser);
         if (self::isRedisEnabled() === true) {
