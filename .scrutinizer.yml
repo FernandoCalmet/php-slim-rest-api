@@ -4,6 +4,13 @@ build:
             tests:
               override:
                 - php-scrutinizer-run
+        coverage:
+            tests:
+                override:
+                    - command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
+                      coverage:
+                        file: target/coverage.xml
+                        format: clover                    
         my-node:
             services:
                 redis: 4 
