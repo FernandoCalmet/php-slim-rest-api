@@ -20,6 +20,8 @@
             "homepage": "https://github.com/fernandocalmet"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "^7.3",
         "firebase/php-jwt": "^5.0",
@@ -50,8 +52,7 @@
             "App\\": "src/",
             "Tests\\": "tests/"
         }
-    },
-    "minimum-stability": "dev",    
+    },      
     "scripts": {
         "post-create-project-cmd": [
             "php -r \"copy('.env.example', '.env');\"",

@@ -141,7 +141,9 @@ class TaskTest extends BaseTestCase
     public function testCreateTask(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'New Task', 'description' => 'My Desc.']
+            'POST',
+            '/api/v1/tasks',
+            ['name' => 'New Task', 'description' => 'My Desc.']
         );
 
         $result = (string) $response->getBody();
@@ -197,7 +199,9 @@ class TaskTest extends BaseTestCase
     public function testCreateTaskWithInvalidTaskName(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => '', 'status' => 1]
+            'POST',
+            '/api/v1/tasks',
+            ['name' => '', 'status' => 1]
         );
 
         $result = (string) $response->getBody();
@@ -214,7 +218,9 @@ class TaskTest extends BaseTestCase
     public function testCreateTaskWithInvalidStatus(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'ToDo', 'status' => 123]
+            'POST',
+            '/api/v1/tasks',
+            ['name' => 'ToDo', 'status' => 123]
         );
 
         $result = (string) $response->getBody();
@@ -233,7 +239,9 @@ class TaskTest extends BaseTestCase
         $auth = self::$jwt;
         self::$jwt = '';
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'my task', 'status' => 0]
+            'POST',
+            '/api/v1/tasks',
+            ['name' => 'my task', 'status' => 0]
         );
         self::$jwt = $auth;
 
@@ -253,7 +261,9 @@ class TaskTest extends BaseTestCase
         $auth = self::$jwt;
         self::$jwt = 'invalidToken';
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'my task', 'status' => 0]
+            'POST',
+            '/api/v1/tasks',
+            ['name' => 'my task', 'status' => 0]
         );
         self::$jwt = $auth;
 
@@ -273,7 +283,9 @@ class TaskTest extends BaseTestCase
         $auth = self::$jwt;
         self::$jwt = 'Bearer eyJ0eXAiOiJK1NiJ9.eyJzdWIiOiI4Ii';
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'my task', 'status' => 0]
+            'POST',
+            '/api/v1/tasks',
+            ['name' => 'my task', 'status' => 0]
         );
         self::$jwt = $auth;
 
@@ -291,7 +303,8 @@ class TaskTest extends BaseTestCase
     public function testUpdateTask(): void
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/tasks/' . self::$id,
+            'PUT',
+            '/api/v1/tasks/' . self::$id,
             ['name' => 'Update Task', 'description' => 'Update Desc', 'status' => 1]
         );
 
@@ -328,7 +341,9 @@ class TaskTest extends BaseTestCase
     public function testUpdateTaskNotFound(): void
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/tasks/123456789', ['name' => 'Task']
+            'PUT',
+            '/api/v1/tasks/123456789',
+            ['name' => 'Task']
         );
 
         $result = (string) $response->getBody();
@@ -346,7 +361,9 @@ class TaskTest extends BaseTestCase
     public function testUpdateTaskOfAnotherUser(): void
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/tasks/6', ['name' => 'Task']
+            'PUT',
+            '/api/v1/tasks/6',
+            ['name' => 'Task']
         );
 
         $result = (string) $response->getBody();
