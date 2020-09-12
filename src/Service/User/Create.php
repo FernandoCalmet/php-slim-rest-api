@@ -12,7 +12,7 @@ final class Create extends Base
     {
         $data = json_decode((string) json_encode($input), false);
         if (!isset($data->name)) {
-            throw new User('Invalid data: name is required.', 400);
+            throw new User('The field "name" is required.', 400);
         }
         if (!isset($data->email)) {
             throw new User('The field "email" is required.', 400);
