@@ -10,6 +10,7 @@ build:
             DB_USERNAME: 'root'
             DB_PASSWORD: ''
             SECRET_KEY: 'YourSuperSecret-KeY'
+            DISPLAY_ERROR_DETAILS: true
             REDIS_ENABLED: true
             REDIS_URL: 'localhost'
         php:
