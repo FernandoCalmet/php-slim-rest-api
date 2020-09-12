@@ -36,7 +36,6 @@ CREATE TABLE `users` (
   `name` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL UNIQUE,
   `password` varchar(128),
-  `status` enum('actived','blocked') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'actived',
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL,
   PRIMARY KEY (`id`)
