@@ -141,7 +141,7 @@ class TaskTest extends BaseTestCase
     public function testCreateTask(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'New Task', 'description' => 'My Desc.', 'created_at' => '2020-11-09 01:58:41']
+            'POST', '/api/v1/tasks', ['name' => 'New Task', 'description' => 'My Desc.']
         );
 
         $result = (string) $response->getBody();
@@ -214,7 +214,7 @@ class TaskTest extends BaseTestCase
     public function testCreateTaskWithInvalidStatus(): void
     {
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'ToDo', 'status' => 123, 'created_at' => '2020-11-09 01:58:41']
+            'POST', '/api/v1/tasks', ['name' => 'ToDo', 'status' => 123]
         );
 
         $result = (string) $response->getBody();
@@ -253,7 +253,7 @@ class TaskTest extends BaseTestCase
         $auth = self::$jwt;
         self::$jwt = 'invalidToken';
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'my task', 'status' => 0, 'created_at' => '2020-11-09 01:58:41']
+            'POST', '/api/v1/tasks', ['name' => 'my task', 'status' => 0]
         );
         self::$jwt = $auth;
 
@@ -273,7 +273,7 @@ class TaskTest extends BaseTestCase
         $auth = self::$jwt;
         self::$jwt = 'Bearer eyJ0eXAiOiJK1NiJ9.eyJzdWIiOiI4Ii';
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'my task', 'status' => 0, 'created_at' => '2020-11-09 01:58:41']
+            'POST', '/api/v1/tasks', ['name' => 'my task', 'status' => 0]
         );
         self::$jwt = $auth;
 
@@ -292,7 +292,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp(
             'PUT', '/api/v1/tasks/' . self::$id,
-            ['name' => 'Update Task', 'description' => 'Update Desc', 'status' => 1, 'updated_at' => '2020-11-09 01:58:41']
+            ['name' => 'Update Task', 'description' => 'Update Desc', 'status' => 1]
         );
 
         $result = (string) $response->getBody();
@@ -328,7 +328,7 @@ class TaskTest extends BaseTestCase
     public function testUpdateTaskNotFound(): void
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/tasks/123456789', ['name' => 'Task', 'updated_at' => '2020-11-09 01:58:41']
+            'PUT', '/api/v1/tasks/123456789', ['name' => 'Task']
         );
 
         $result = (string) $response->getBody();

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-final class Note
+final class Task
 {
     /** @var int $id */
     private $id;
@@ -14,6 +14,12 @@ final class Note
 
     /** @var string|null $description */
     private $description;
+
+    /** @var int|null $status */
+    private $status;
+
+    /** @var int $user_id */
+    private $user_id;
 
     /** @var string|null $created_at */
     private $created_at;
@@ -50,6 +56,30 @@ final class Note
         return $this;
     }
 
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function updateStatus(?int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->user_id;
+    }
+
+    public function updateUserId(?int $user_id): self
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?string
     {
         return $this->created_at;
@@ -76,13 +106,15 @@ final class Note
 
     public function getData(): object
     {
-        $note = new \stdClass();
-        $note->id = $this->getId();
-        $note->name = $this->getName();
-        $note->description = $this->getDescription();
-        $note->created_at = $this->getCreatedAt();
-        $note->updated_at = $this->getUpdatedAt();
+        $task = new \stdClass();
+        $task->id = $this->getId();
+        $task->name = $this->getName();
+        $task->description = $this->getDescription();
+        $task->status = $this->getStatus();
+        $task->user_id = $this->getUserId();
+        $task->created_at = $this->getCreatedAt();
+        $task->updated_at = $this->getUpdatedAt();
 
-        return $note;
+        return $task;
     }
 }

@@ -28,11 +28,6 @@ abstract class Base extends BaseService
         $this->redisService = $redisService;
     }
 
-    protected function getTaskRepository(): TaskRepository
-    {
-        return $this->taskRepository;
-    }
-
     protected static function validateTaskName(string $name): string
     {
         if (!v::length(1, 100)->validate($name)) {
@@ -65,9 +60,9 @@ abstract class Base extends BaseService
         return $task;
     }
 
-    protected function getTaskFromDb(int $taskId, int $userId): object
+    protected function getTaskFromDb(int $taskId, int $userId): \App\Entity\Task
     {
-        return $this->getTaskRepository()->checkAndGetTask($taskId, $userId);
+        return $this->taskRepository->checkAndGetTask($taskId, $userId);
     }
 
     protected function saveInCache(int $taskId, int $userId, object $task): void

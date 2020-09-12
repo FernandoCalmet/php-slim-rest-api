@@ -12,7 +12,7 @@ final class NoteRepository extends BaseRepository
     {
         $query = 'SELECT * FROM `notes` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
-        $statement->bindParam(':id', $noteId);
+        $statement->bindParam('id', $noteId);
         $statement->execute();
         $note = $statement->fetchObject(\App\Entity\Note::class);
         if (!$note) {
@@ -93,8 +93,6 @@ final class NoteRepository extends BaseRepository
 
     public function createNote(\App\Entity\Note $note): \App\Entity\Note
     {
-        $this->database->beginTransaction();
-
         $query = '
             INSERT INTO `notes`
                 (`name`, `description`, `created_at`)
@@ -104,25 +102,17 @@ final class NoteRepository extends BaseRepository
         $statement = $this->database->prepare($query);
         $name = $note->getName();
         $desc = $note->getDescription();
-        $statement->bindParam(':name', $name);
-        $statement->bindParam(':description', $desc);
-        $statement->bindParam('created_at', date('Y-m-d H:i:s'));
-        $data = $statement->execute();
-
-        if (!$data) {
-            $this->database->rollBack();
-            throw new Note('Create failed: Input incorrect data.', 400);
-        }
-
-        $this->database->commit();
+        $created = $note->getCreatedAt();
+        $statement->bindParam('name', $name);
+        $statement->bindParam('description', $desc);
+        $statement->bindParam('created_at', $created);
+        $statement->execute();
 
         return $this->checkAndGetNote((int) $this->database->lastInsertId());
     }
 
     public function updateNote(\App\Entity\Note $note): \App\Entity\Note
     {
-        $this->database->beginTransaction();
-
         $query = '
             UPDATE `notes`
             SET `name` = :name, `description` = :description, `updated_at` = :updated_at
@@ -132,18 +122,12 @@ final class NoteRepository extends BaseRepository
         $id = $note->getId();
         $name = $note->getName();
         $desc = $note->getDescription();
-        $statement->bindParam(':id', $id);
-        $statement->bindParam(':name', $name);
-        $statement->bindParam(':description', $desc);
-        $statement->bindParam('updated_at', date('Y-m-d H:i:s'));
-        $data = $statement->execute();
-
-        if (!$data) {
-            $this->database->rollBack();
-            throw new Note('Update failed: Input incorrect data.', 400);
-        }
-
-        $this->database->commit();
+        $updated = $note->getUpdatedAt();
+        $statement->bindParam('id', $id);
+        $statement->bindParam('name', $name);
+        $statement->bindParam('description', $desc);
+        $statement->bindParam('updated_at', $updated);
+        $statement->execute();
 
         return $this->checkAndGetNote((int) $id);
     }
@@ -152,7 +136,7 @@ final class NoteRepository extends BaseRepository
     {
         $query = 'DELETE FROM `notes` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
-        $statement->bindParam(':id', $noteId);
+        $statement->bindParam('id', $noteId);
         $statement->execute();
     }
 }

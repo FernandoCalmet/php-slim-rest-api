@@ -12,7 +12,7 @@ final class Create extends Base
     public function __invoke(Request $request, Response $response): Response
     {
         $input = (array) $request->getParsedBody();
-        $task = $this->getTaskService()->create($input);
+        $task = $this->getServiceCreateTask()->create($input);
 
         return $this->jsonResponse($response, 'success', $task, 201);
     }

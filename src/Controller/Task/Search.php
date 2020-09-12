@@ -18,7 +18,7 @@ final class Search extends Base
             $query = $args['query'];
         }
         $status = $request->getParam('status', null);
-        $tasks = $this->getTaskService()->search($query, $userId, $status);
+        $tasks = $this->getServiceFindTask()->search($query, $userId, $status);
 
         return $this->jsonResponse($response, 'success', $tasks, 200);
     }

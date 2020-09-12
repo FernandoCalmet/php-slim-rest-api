@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-final class Note
+final class User
 {
     /** @var int $id */
     private $id;
@@ -12,8 +12,11 @@ final class Note
     /** @var string $name */
     private $name;
 
-    /** @var string|null $description */
-    private $description;
+    /** @var string|null $email */
+    private $email;
+
+    /** @var string|null $password */
+    private $password;
 
     /** @var string|null $created_at */
     private $created_at;
@@ -38,14 +41,26 @@ final class Note
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getEmail(): ?string
     {
-        return $this->description;
+        return $this->email;
     }
 
-    public function updateDescription(?string $description): self
+    public function updateEmail(?string $email): self
     {
-        $this->description = $description;
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function updatePassword(?string $password): self
+    {
+        $this->password = $password;
 
         return $this;
     }
@@ -76,13 +91,14 @@ final class Note
 
     public function getData(): object
     {
-        $note = new \stdClass();
-        $note->id = $this->getId();
-        $note->name = $this->getName();
-        $note->description = $this->getDescription();
-        $note->created_at = $this->getCreatedAt();
-        $note->updated_at = $this->getUpdatedAt();
+        $user = new \stdClass();
+        $user->id = $this->getId();
+        $user->name = $this->getName();
+        $user->email = $this->getEmail();
+        $user->password = $this->getPassword();
+        $user->created_at = $this->getCreatedAt();
+        $user->updated_at = $this->getUpdatedAt();
 
-        return $note;
+        return $user;
     }
 }

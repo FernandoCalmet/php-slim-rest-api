@@ -53,7 +53,7 @@ final class TaskRepository extends BaseRepository
         );
     }
 
-    public function checkAndGetTask(int $taskId, int $userId): object
+    public function checkAndGetTask(int $taskId, int $userId): \App\Entity\Task
     {
         $query = '
             SELECT * FROM `tasks` WHERE `id` = :id AND `userId` = :userId
@@ -62,7 +62,7 @@ final class TaskRepository extends BaseRepository
         $statement->bindParam('id', $taskId);
         $statement->bindParam('userId', $userId);
         $statement->execute();
-        $task = $statement->fetchObject();
+        $task = $statement->fetchObject(\App\Entity\Task::class);
         if (!$task) {
             throw new Task('Task not found.', 404);
         }
@@ -104,10 +104,8 @@ final class TaskRepository extends BaseRepository
         return (array) $statement->fetchAll();
     }
 
-    public function create(object $task): object
+    public function create(\App\Entity\Task $task): \App\Entity\Task
     {
-        $this->database->beginTransaction();
-
         $query = '
             INSERT INTO `tasks`
                 (`name`, `description`, `status`, `userId`, `created_at`)
@@ -115,51 +113,46 @@ final class TaskRepository extends BaseRepository
                 (:name, :description, :status, :userId, :created_at)
         ';
         $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('name', $task->name);
-        $statement->bindParam('description', $task->description);
-        $statement->bindParam('status', $task->status);
-        $statement->bindParam('userId', $task->userId);
-        $statement->bindParam('created_at', date('Y-m-d H:i:s'));
-        $data = $statement->execute();
-
-        if (!$data) {
-            $this->database->rollBack();
-            throw new Task('Create failed: Input incorrect data.', 400);
-        }
-
-        $this->database->commit();
+        $name = $task->getName();
+        $desc = $task->getDescription();
+        $status = $task->getStatus();
+        $userId = $task->getUserId();
+        $created = $task->getCreatedAt();
+        $statement->bindParam('name', $name);
+        $statement->bindParam('description', $desc);
+        $statement->bindParam('status', $status);
+        $statement->bindParam('userId', $userId);
+        $statement->bindParam('created_at', $created);
+        $statement->execute();
 
         $taskId = (int) $this->database->lastInsertId();
 
-        return $this->checkAndGetTask($taskId, (int) $task->userId);
+        return $this->checkAndGetTask($taskId, (int) $userId);
     }
 
-    public function update(object $task): object
+    public function update(\App\Entity\Task $task): \App\Entity\Task
     {
-        $this->database->beginTransaction();
-
         $query = '
             UPDATE `tasks`
             SET `name` = :name, `description` = :description, `status` = :status, `updated_at` = :updated_at
             WHERE `id` = :id AND `userId` = :userId
         ';
         $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('id', $task->id);
-        $statement->bindParam('name', $task->name);
-        $statement->bindParam('description', $task->description);
-        $statement->bindParam('status', $task->status);
-        $statement->bindParam('userId', $task->userId);
-        $statement->bindParam('updated_at', date('Y-m-d H:i:s'));
-        $data = $statement->execute();
+        $id = $task->getId();
+        $name = $task->getName();
+        $desc = $task->getDescription();
+        $status = $task->getStatus();
+        $userId = $task->getUserId();
+        $updated = $task->getCreatedAt();
+        $statement->bindParam('id', $id);
+        $statement->bindParam('name', $name);
+        $statement->bindParam('description', $desc);
+        $statement->bindParam('status', $status);
+        $statement->bindParam('userId', $userId);
+        $statement->bindParam('updated_at', $updated);
+        $statement->execute();
 
-        if (!$data) {
-            $this->database->rollBack();
-            throw new Task('Update failed: Input incorrect data.', 400);
-        }
-
-        $this->database->commit();
-
-        return $this->checkAndGetTask((int) $task->id, (int) $task->userId);
+        return $this->checkAndGetTask($id, $userId);
     }
 
     public function delete(int $taskId, int $userId): void

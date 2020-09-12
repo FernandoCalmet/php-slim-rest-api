@@ -16,6 +16,7 @@ final class Update extends Base
         if (isset($data->description)) {
             $note->updateDescription($data->description);
         }
+        $note->updateUpdatedAt(date('Y-m-d H:i:s'));
         /** @var \App\Entity\Note $notes */
         $notes = $this->noteRepository->updateNote($note);
         if (self::isRedisEnabled() === true) {

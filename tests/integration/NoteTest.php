@@ -130,7 +130,7 @@ class NoteTest extends BaseTestCase
         $response = $this->runApp(
             'POST',
             '/api/v1/notes',
-            ['name' => 'My Test Note', 'description' => 'New Note...', 'created_at' => '2020-11-09 01:58:41']
+            ['name' => 'My Test Note', 'description' => 'New Note...']
         );
 
         $result = (string) $response->getBody();
@@ -188,7 +188,7 @@ class NoteTest extends BaseTestCase
         $response = $this->runApp(
             'POST',
             '/api/v1/notes',
-            ['name' => '', 'created_at' => '2020-11-09 01:58:41']
+            ['name' => '']
         );
 
         $result = (string) $response->getBody();
@@ -208,7 +208,7 @@ class NoteTest extends BaseTestCase
         $response = $this->runApp(
             'PUT',
             '/api/v1/notes/' . self::$id,
-            ['name' => 'Victor Notes', 'description' => 'Pep.', 'updated_at' => '2020-11-09 01:58:41']
+            ['name' => 'Victor Notes', 'description' => 'Pep.']
         );
 
         $result = (string) $response->getBody();
@@ -248,7 +248,7 @@ class NoteTest extends BaseTestCase
         $response = $this->runApp(
             'PUT',
             '/api/v1/notes/123456789',
-            ['name' => 'Note', 'updated_at' => '2020-11-09 01:58:41']
+            ['name' => 'Note']
         );
 
         $result = (string) $response->getBody();

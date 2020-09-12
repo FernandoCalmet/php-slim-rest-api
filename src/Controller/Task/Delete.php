@@ -14,7 +14,7 @@ final class Delete extends Base
         $input = (array) $request->getParsedBody();
         $taskId = (int) $args['id'];
         $userId = $this->getAndValidateUserId($input);
-        $this->getTaskService()->delete($taskId, $userId);
+        $this->getServiceDeleteTask()->delete($taskId, $userId);
 
         return $this->jsonResponse($response, 'success', null, 204);
     }

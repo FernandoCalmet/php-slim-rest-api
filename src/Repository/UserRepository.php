@@ -8,13 +8,13 @@ use App\Exception\User;
 
 final class UserRepository extends BaseRepository
 {
-    public function getUser(int $userId): object
+    public function getUser(int $userId): \App\Entity\User
     {
         $query = 'SELECT `id`, `name`, `email` FROM `users` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
         $statement->bindParam('id', $userId);
         $statement->execute();
-        $user = $statement->fetchObject();
+        $user = $statement->fetchObject(\App\Entity\User::class);
         if (!$user) {
             throw new User('User not found.', 404);
         }
@@ -120,10 +120,8 @@ final class UserRepository extends BaseRepository
         return $user;
     }
 
-    public function create(object $user): object
+    public function create(\App\Entity\User $user): \App\Entity\User
     {
-        $this->database->beginTransaction();
-
         $query = '
             INSERT INTO `users`
                 (`name`, `email`, `password`, `created_at`)
@@ -131,42 +129,36 @@ final class UserRepository extends BaseRepository
                 (:name, :email, :password, :created_at)
         ';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('name', $user->name);
-        $statement->bindParam('email', $user->email);
-        $statement->bindParam('password', $user->password);
-        $statement->bindParam('created_at', date('Y-m-d H:i:s'));
-        $data = $statement->execute();
-
-        if (!$data) {
-            $this->database->rollBack();
-            throw new User('Create failed: Input incorrect data.', 400);
-        }
-
-        $this->database->commit();
+        $name = $user->getName();
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+        $created = $user->getCreatedAt();
+        $statement->bindParam('name', $name);
+        $statement->bindParam('email', $email);
+        $statement->bindParam('password', $password);
+        $statement->bindParam('created_at', $created);
+        $statement->execute();
 
         return $this->getUser((int) $this->database->lastInsertId());
     }
 
-    public function update(object $user): object
+    public function update(\App\Entity\User $user): \App\Entity\User
     {
-        $this->database->beginTransaction();
-
         $query = '
-            UPDATE `users` SET `name` = :name, `email` = :email, `updated_at` = :updated_at WHERE `id` = :id
+            UPDATE `users` SET `name` = :name, `email` = :email, `password` = :password, `updated_at` = :updated_at WHERE `id` = :id
         ';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('id', $user->id);
-        $statement->bindParam('name', $user->name);
-        $statement->bindParam('email', $user->email);
-        $statement->bindParam('updated_at', date('Y-m-d H:i:s'));
-        $data = $statement->execute();
-
-        if (!$data) {
-            $this->database->rollBack();
-            throw new User('Update failed: Input incorrect data.', 400);
-        }
-
-        $this->database->commit();
+        $id = $user->getId();
+        $name = $user->getName();
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+        $updated = $user->getCreatedAt();
+        $statement->bindParam('id', $id);
+        $statement->bindParam('name', $name);
+        $statement->bindParam('email', $email);
+        $statement->bindParam('password', $password);
+        $statement->bindParam('updated_at', $updated);
+        $statement->execute();
 
         return $this->getUser((int) $user->id);
     }

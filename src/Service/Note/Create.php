@@ -18,6 +18,7 @@ final class Create extends Base
         $mynote->updateName(self::validateNoteName($data->name));
         $desc = isset($data->description) ? $data->description : null;
         $mynote->updateDescription($desc);
+        $mynote->updateCreatedAt(date('Y-m-d H:i:s'));
         /** @var \App\Entity\Note $note */
         $note = $this->noteRepository->createNote($mynote);
         if (self::isRedisEnabled() === true) {

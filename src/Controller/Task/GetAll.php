@@ -19,7 +19,7 @@ final class GetAll extends Base
         $description = $request->getQueryParam('description', null);
         $status = $request->getQueryParam('status', null);
 
-        $tasks = $this->getTaskService()->getTasksByPage(
+        $tasks = $this->getServiceFindTask()->getTasksByPage(
             $userId,
             (int) $page,
             (int) $perPage,

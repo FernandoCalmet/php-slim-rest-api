@@ -14,7 +14,7 @@ final class GetOne extends Base
         $input = (array) $request->getParsedBody();
         $taskId = (int) $args['id'];
         $userId = $this->getAndValidateUserId($input);
-        $task = $this->getTaskService()->getOne($taskId, $userId);
+        $task = $this->getServiceFindTask()->getOne($taskId, $userId);
 
         return $this->jsonResponse($response, 'success', $task, 200);
     }

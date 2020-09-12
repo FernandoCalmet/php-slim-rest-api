@@ -127,7 +127,7 @@ class UserTest extends BaseTestCase
         $response = $this->runApp(
             'POST',
             '/api/v1/users',
-            ['name' => 'Esteban', 'email' => 'estu@gmail.com', 'password' => 'AnyPass1000', 'created_at' => '2020-11-09 01:58:41']
+            ['name' => 'Esteban', 'email' => 'estu@gmail.com', 'password' => 'AnyPass1000']
         );
 
         $result = (string) $response->getBody();
@@ -222,7 +222,7 @@ class UserTest extends BaseTestCase
         $response = $this->runApp(
             'POST',
             '/api/v1/users',
-            ['name' => 'Esteban', 'email' => 'email.incorrecto', 'password' => 'AnyPass1000', 'created_at' => '2020-11-09 01:58:41']
+            ['name' => 'Esteban', 'email' => 'email.incorrecto', 'password' => 'AnyPass1000']
         );
 
         $result = (string) $response->getBody();
@@ -241,7 +241,7 @@ class UserTest extends BaseTestCase
         $response = $this->runApp(
             'POST',
             '/api/v1/users',
-            ['name' => 'Esteban', 'email' => 'estu@gmail.com', 'password' => 'AnyPass1000', 'created_at' => '2020-11-09 01:58:41']
+            ['name' => 'Esteban', 'email' => 'estu@gmail.com', 'password' => 'AnyPass1000']
         );
 
         $result = (string) $response->getBody();
@@ -257,11 +257,11 @@ class UserTest extends BaseTestCase
      */
     public function testUpdateUser(): void
     {
-        $response0 = $this->runApp('POST', '/login', ['email' => 'estu@gmail.com', 'password' => 'AnyPass1000', 'created_at' => '2020-11-09 01:58:41']);
+        $response0 = $this->runApp('POST', '/login', ['email' => 'estu@gmail.com', 'password' => 'AnyPass1000']);
         $result0 = (string) $response0->getBody();
         self::$jwt = json_decode($result0)->message->Authorization;
 
-        $response = $this->runApp('PUT', '/api/v1/users/' . self::$id, ['name' => 'Stu', 'email' => 'estu@gmail.com', 'updated_at' => '2020-11-09 01:58:41']);
+        $response = $this->runApp('PUT', '/api/v1/users/' . self::$id, ['name' => 'Stu', 'email' => 'estu@gmail.com']);
 
         $result = (string) $response->getBody();
 
