@@ -1,5 +1,9 @@
 build:
     nodes:
+        analysis:
+            tests:
+              override:
+                - php-scrutinizer-run
         my-node:
             services:
                 redis: 4 
