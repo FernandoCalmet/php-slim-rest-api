@@ -100,7 +100,7 @@ final class UserRepository extends BaseRepository
         return $users;
     }
 
-    public function loginUser(string $email, string $password): object
+    public function loginUser(string $email, string $password): \App\Entity\User
     {
         $query = '
             SELECT *
@@ -112,7 +112,7 @@ final class UserRepository extends BaseRepository
         $statement->bindParam('email', $email);
         $statement->bindParam('password', $password);
         $statement->execute();
-        $user = $statement->fetchObject();
+        $user = $statement->fetchObject(\App\Entity\User::class);
         if (!$user) {
             throw new User('Login failed: Email or password incorrect.', 400);
         }
@@ -160,7 +160,7 @@ final class UserRepository extends BaseRepository
         $statement->bindParam('updatedAt', $updated);
         $statement->execute();
 
-        return $this->getUser((int) $user->id);
+        return $this->getUser((int) $id);
     }
 
     public function delete(int $userId): void

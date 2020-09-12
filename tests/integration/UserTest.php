@@ -271,7 +271,6 @@ class UserTest extends BaseTestCase
         $this->assertStringContainsString('id', $result);
         $this->assertStringContainsString('name', $result);
         $this->assertStringContainsString('email', $result);
-        $this->assertStringContainsString('password', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -289,7 +288,6 @@ class UserTest extends BaseTestCase
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
         $this->assertStringNotContainsString('email', $result);
-        $this->assertStringNotContainsString('password', $result);
         $this->assertStringContainsString('error', $result);
     }
 

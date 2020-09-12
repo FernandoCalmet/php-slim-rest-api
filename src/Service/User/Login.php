@@ -21,9 +21,9 @@ final class Login extends Base
         $password = hash('sha512', $data->password);
         $user = $this->userRepository->loginUser($data->email, $password);
         $token = [
-            'sub' => $user->id,
-            'email' => $user->email,
-            'name' => $user->name,
+            'sub' => $user->getId(),
+            'email' => $user->getEmail(),
+            'name' => $user->getName(),
             'iat' => time(),
             'exp' => time() + (7 * 24 * 60 * 60),
         ];
