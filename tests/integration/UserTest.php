@@ -261,7 +261,7 @@ class UserTest extends BaseTestCase
         $result0 = (string) $response0->getBody();
         self::$jwt = json_decode($result0)->message->Authorization;
 
-        $response = $this->runApp('PUT', '/api/v1/users/' . self::$id, ['name' => 'Stu', 'email' => 'estu@gmail.com']);
+        $response = $this->runApp('PUT', '/api/v1/users/' . self::$id, ['name' => 'Stu', 'email' => 'estu@gmail.com', 'password' => 'AnyPass1000']);
 
         $result = (string) $response->getBody();
 
@@ -271,6 +271,7 @@ class UserTest extends BaseTestCase
         $this->assertStringContainsString('id', $result);
         $this->assertStringContainsString('name', $result);
         $this->assertStringContainsString('email', $result);
+        $this->assertStringContainsString('password', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -288,6 +289,7 @@ class UserTest extends BaseTestCase
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
         $this->assertStringNotContainsString('email', $result);
+        $this->assertStringNotContainsString('password', $result);
         $this->assertStringContainsString('error', $result);
     }
 

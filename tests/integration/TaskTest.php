@@ -155,7 +155,6 @@ class TaskTest extends BaseTestCase
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
         $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('description', $result);
         $this->assertStringContainsString('status', $result);
         $this->assertStringNotContainsString('error', $result);
     }
