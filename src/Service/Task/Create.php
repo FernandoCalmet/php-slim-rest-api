@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Task;
 
-use App\Exception\Task;
+use App\Exception\TaskException;
 
 final class Create extends Base
 {
@@ -12,7 +12,7 @@ final class Create extends Base
     {
         $data = json_decode((string) json_encode($input), false);
         if (!isset($data->name)) {
-            throw new Task('The field "name" is required.', 400);
+            throw new TaskException('The field "name" is required.', 400);
         }
         $mytask = new \App\Entity\Task();
         $mytask->updateName(self::validateTaskName($data->name));

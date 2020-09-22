@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\User;
 
-use App\Exception\User;
+use App\Exception\UserException;
 use Firebase\JWT\JWT;
 
 final class Login extends Base
@@ -13,10 +13,10 @@ final class Login extends Base
     {
         $data = json_decode((string) json_encode($input), false);
         if (!isset($data->email)) {
-            throw new User('The field "email" is required.', 400);
+            throw new UserException('The field "email" is required.', 400);
         }
         if (!isset($data->password)) {
-            throw new User('The field "password" is required.', 400);
+            throw new UserException('The field "password" is required.', 400);
         }
         $password = hash('sha512', $data->password);
         $user = $this->userRepository->loginUser($data->email, $password);

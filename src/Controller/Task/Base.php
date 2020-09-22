@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Task;
 
 use App\Controller\BaseController;
-use App\Exception\Task;
+use App\Exception\TaskException;
 use App\Service\Task\Create;
 use App\Service\Task\Delete;
 use App\Service\Task\Find;
@@ -39,6 +39,6 @@ abstract class Base extends BaseController
             return (int) $input['decoded']->sub;
         }
 
-        throw new Task('Invalid task. Permission failed.', 400);
+        throw new TaskException('Invalid task. Permission failed.', 400);
     }
 }

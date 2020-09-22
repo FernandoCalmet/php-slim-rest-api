@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\User;
 
 use App\Controller\BaseController;
-use App\Exception\User;
+use App\Exception\UserException;
 use App\Service\User\Create;
 use App\Service\User\Delete;
 use App\Service\User\Find;
@@ -42,7 +42,7 @@ abstract class Base extends BaseController
     protected function checkUserPermissions(int $userId, int $userIdLogged): void
     {
         if ($userId !== $userIdLogged) {
-            throw new User('User permission failed.', 400);
+            throw new UserException('User permission failed.', 400);
         }
     }
 
@@ -52,6 +52,6 @@ abstract class Base extends BaseController
             return (int) $input['decoded']->sub;
         }
 
-        throw new User('Invalid user. Permission failed.', 400);
+        throw new UserException('Invalid user. Permission failed.', 400);
     }
 }

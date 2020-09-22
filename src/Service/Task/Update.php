@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Task;
 
-use App\Exception\Task;
+use App\Exception\TaskException;
 
 final class Update extends Base
 {
@@ -13,7 +13,7 @@ final class Update extends Base
         $task = $this->getTaskFromDb($taskId, (int) $input['decoded']->sub);
         $data = json_decode((string) json_encode($input), false);
         if (!isset($data->name) && !isset($data->status)) {
-            throw new Task('Enter the data to update the task.', 400);
+            throw new TaskException('Enter the data to update the task.', 400);
         }
         if (isset($data->name)) {
             $task->updateName(self::validateTaskName($data->name));

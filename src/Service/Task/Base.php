@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Task;
 
-use App\Exception\Task;
+use App\Exception\TaskException;
 use App\Repository\TaskRepository;
 use App\Service\BaseService;
 use App\Service\RedisService;
@@ -31,7 +31,7 @@ abstract class Base extends BaseService
     protected static function validateTaskName(string $name): string
     {
         if (!v::length(1, 100)->validate($name)) {
-            throw new Task('Invalid name.', 400);
+            throw new TaskException('Invalid name.', 400);
         }
 
         return $name;
@@ -40,7 +40,7 @@ abstract class Base extends BaseService
     protected static function validateTaskStatus(int $status): int
     {
         if (!v::numeric()->between(0, 1)->validate($status)) {
-            throw new Task('Invalid status', 400);
+            throw new TaskException('Invalid status', 400);
         }
 
         return $status;

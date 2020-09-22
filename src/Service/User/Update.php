@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\User;
 
-use App\Exception\User;
+use App\Exception\UserException;
 
 final class Update extends Base
 {
@@ -13,7 +13,7 @@ final class Update extends Base
         $user = $this->getUserFromDb($userId);
         $data = json_decode((string) json_encode($input), false);
         if (!isset($data->name) && !isset($data->email)) {
-            throw new User('Enter the data to update the user.', 400);
+            throw new UserException('Enter the data to update the user.', 400);
         }
         if (isset($data->name)) {
             $user->updateName(self::validateUserName($data->name));
