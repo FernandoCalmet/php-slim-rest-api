@@ -185,6 +185,10 @@ Además, puede ver la especificación de OpenAPI, utilizando [Swagger UI](https:
 ## :page_facing_up: LICENCIA
 
 Licencia MIT. Puedes verla en el [Archivo de Licencia](LICENSE.md) para más información.
+
+## Autor del proyecto original
+
+[Mauro Bonfietti](https://github.com/maurobonfietti)
   
 ---
 
