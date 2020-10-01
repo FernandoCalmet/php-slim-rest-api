@@ -28,15 +28,22 @@ Esta simple **API RESTful**, permite que las operaciones **CRUD** administren re
 - Redis (Optional).
 - o Docker.
 
-### REDIS
+### Redis
 
-Comando básico
+Comandos básicos
 
 ```bash
-Start Service: redis-cli
-View All cache: keys *
-Clean cache: FLUSHALL
-Query (example of a cached data): get "rest-api-slim-php:test:status"
+# Start Service:
+redis-cli
+
+# View All cache:
+keys *
+
+# Clean cache:
+FLUSHALL
+
+# Query (example of a cached data):
+get "rest-api-slim-php:test:status"
 ```
 
 ### Con Composer
@@ -138,38 +145,29 @@ OK (62 tests, 386 assertions)
 
 ### ENDPOINTS
 
-#### INFO
-
-- Help: `GET /`
-- Status: `GET /status`
-
-#### USERS
-
-- Login User: `POST /login`
-- Get All Users: `GET /api/v1/users`
-- Get One User: `GET /api/v1/users/{id}`
-- Create User: `POST /api/v1/users`
-- Update User: `PUT /api/v1/users/{id}`
-- Delete User: `DELETE /api/v1/users/{id}`
-- Search Users: `GET /api/v1/users/search/{query}`
-
-#### TASKS
-
-- Get All Tasks: `GET /api/v1/tasks`
-- Get One Task: `GET /api/v1/tasks/{id}`
-- Create Task: `POST /api/v1/tasks`
-- Update Task: `PUT /api/v1/tasks/{id}`
-- Delete Task: `DELETE /api/v1/tasks/{id}`
-- Search Tasks: `GET /api/v1/tasks/search/{query}`
-
-#### NOTES
-
-- Get All Notes: `GET /api/v1/notes`
-- Get One Note: `GET /api/v1/notes/{id}`
-- Create Note: `POST /api/v1/notes`
-- Update Note: `PUT /api/v1/notes/{id}`
-- Delete Note: `DELETE /api/v1/notes/{id}`
-- Search Notes: `GET /api/v1/notes/search/{query}`
+HTTP Method | URL | Auth | Descripción
+--- | --- | --- | ---
+GET | `/` | No | Obtiene la versión, estado y las rutas de los endpoints disponibles de la API, si la petición es exitosa, retornará un status **HTTP 200** (OK).
+GET | `/status` | No | Obtiene el estado de los servicios disponibles y la cantidad de los registros en la base de datos, si la petición es exitosa, retornará un status **HTTP 200** (OK). En caso no este conectada la base de datos retornará un status **HTTP 500** (Error).
+POST | `/login` | No | Obtiene el JSON Web Token del usuario, si la petición es exitosa, retornará un status **HTTP 200** (OK). En caso de no encontrar o que no coincidan las creedenciales del usuario correspondiente, retornará un status **HTTP 400** (Bad Request).
+GET | `/api/v1/users` | Si | Obtiene los usuarios, si la petición es exitosa, retornará un status **HTTP 200** (OK). Si no estas autenticado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ningun usuario retornará un status **HTTP 404** (Not Found).
+GET | `/api/v1/users/{id}` | Si | Obtiene un usuario basado en el Id de la cuenta, si la petición es exitosa, retornará un status **HTTP 200** (OK). Si no estas autenticado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ningun usuario retornará un status **HTTP 404** (Not Found).
+POST | `/api/v1/users` | No | Crea un usuario, la petición deberá incluir los datos dentro del cuerpo de la petición. Si el usuario es creado retornará un status **HTTP 201** (Created). En caso de que exista un dato con restricción unica que este duplicado retornará un status **HTTP 403** (Forbidden).
+PUT | `/api/v1/users/{id}` | Si | Actualiza el usuario basado en el Id de la cuenta, si el usuario es actualizado retornará un status **HTTP 200** (OK). Si no estas autenticado retornará un status **HTTP 403** (Forbidden). En caso de que exista un dato con restricción unica que este duplicado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ningun usuario retornará un status **HTTP 404** (Not Found).
+DELETE | `/api/v1/users/{id}` | Si | Elimina un usuario basado en el Id de la cuenta, si el usuario es eliminado retornará un status **HTTP 200** (OK). Si no estas autenticado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ningun usuario retornará un status **HTTP 404** (Not Found).
+GET | `/api/v1/users/search/{query}` | Si | Obtiene resultados relacionados a una busqueda por coincidencias de atributos clave de los usuarios, si se encuentran datos retornará un status **HTTP 200** (OK). Si no estas autenticado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ningun usuario retornará un status **HTTP 404** (Not Found).
+GET | `/api/v1/tasks` | Si | Obtiene las tareas, si la petición es exitosa, retornará un status **HTTP 200** (OK). Si no estas autenticado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ninguna tarea retornará un status **HTTP 404** (Not Found).
+GET | `/api/v1/tasks/{id}` | Si | Obtiene una tarea basado en el Id de la tarea y la sesión del usuario activo, si la petición es exitosa, retornará un status **HTTP 200** (OK). Si no estas autenticado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ninguna tarea retornará un status **HTTP 404** (Not Found).
+POST | `/api/v1/tasks` | Si | Crea una tarea basado en la sesión actual del usuario, la petición deberá incluir los datos dentro del cuerpo de la petición. Si la tarea es creada retornará un status **HTTP 201** (Created). Si no estas autenticado retornará un status **HTTP 403** (Forbidden). En caso de que exista un dato con restricción unica que este duplicado retornará un status **HTTP 403** (Forbidden).
+PUT | `/api/v1/tasks/{id}` | Si | Actualiza una tarea basado en el Id de la tarea y la sesión del usuario activo, si la tarea es actualizada retornará un status **HTTP 200** (OK). Si no estas autenticado retornará un status **HTTP 403** (Forbidden). En caso de que exista un dato con restricción unica que este duplicado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ninguna tarea retornará un status **HTTP 404** (Not Found).
+DELETE | `/api/v1/tasks/{id}` | Si | Elimina una tarea basado en el Id de la tarea y la sesión del usuario activo, si la tarea es eliminada retornará un status **HTTP 200** (OK). Si no estas autenticado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ninguna tarea retornará un status **HTTP 404** (Not Found).
+GET | `/api/v1/tasks/search/{query}` | Si | Obtiene resultados relacionados a una busqueda por coincidencias de atributos clave de las tareas basado en la sesión del usuario activo, si se encuentran datos retornará un status **HTTP 200** (OK). Si no estas autenticado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ninguna tarea retornará un status **HTTP 404** (Not Found).
+GET | `/api/v1/notes` | No | Obtiene las notas, si la petición es exitosa, retornará un status **HTTP 200** (OK). En caso de no encontrar ninguna nota retornará un status **HTTP 404** (Not Found).
+GET | `/api/v1/notes/{id}` | No | Obtiene una nota basado en el Id, si la petición es exitosa, retornará un status **HTTP 200** (OK). En caso de no encontrar ningun usuario retornará un status **HTTP 404** (Not Found).
+POST | `/api/v1/notes` | No | Crea una nota, la petición deberá incluir los datos dentro del cuerpo de la petición. Si la nota es creada retornará un status **HTTP 201** (Created). En caso de que exista un dato con restricción unica que este duplicado retornará un status **HTTP 403** (Forbidden).
+PUT | `/api/v1/notes/{id}` | No | Actualiza la nota basado en el Id, si la nota es creado retornará un status **HTTP 200** (OK). En caso de que exista un dato con restricción unica que este duplicado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ninguna nota retornará un status **HTTP 404** (Not Found).
+DELETE | `/api/v1/notes/{id}` | Si | Elimina una nota basado en el Id, si la nota es eliminada retornará un status **HTTP 200** (OK). En caso de no encontrar ninguna nota retornará un status **HTTP 404** (Not Found).
+GET | `/api/v1/notes/search/{query}` | Si | Obtiene resultados relacionados a una busqueda por coincidencias de atributos clave de las notas, si se encuentran datos retornará un status **HTTP 200** (OK). En caso de no encontrar ninguna nota retornará un status **HTTP 404** (Not Found).
 
 ### AYUDA Y DOCUMENTACIÓN
 
@@ -187,9 +185,7 @@ Además, puede ver la especificación de OpenAPI, utilizando [Swagger UI](https:
 
 Licencia MIT. Puedes verla en el [Archivo de Licencia](LICENSE.md) para más información.
 
-## Autor del proyecto original
-
-[Mauro Bonfietti](https://github.com/maurobonfietti)
+[Autor](https://github.com/maurobonfietti) de la base de este proyecto, y modificado por el [colaborador](https://github.com/fernandocalmet).
   
 ---
 
