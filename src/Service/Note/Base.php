@@ -8,6 +8,7 @@ use App\Exception\NoteException;
 use App\Repository\NoteRepository;
 use App\Service\BaseService;
 use App\Service\RedisService;
+use App\Service\LoggerService;
 use Respect\Validation\Validator as v;
 
 abstract class Base extends BaseService
@@ -20,12 +21,17 @@ abstract class Base extends BaseService
     /** @var RedisService */
     protected $redisService;
 
+    /** @var LoggerService */
+    protected $loggerService;
+
     public function __construct(
         NoteRepository $noteRepository,
-        RedisService $redisService
+        RedisService $redisService,
+        LoggerService $loggerService
     ) {
         $this->noteRepository = $noteRepository;
         $this->redisService = $redisService;
+        $this->loggerService = $loggerService;
     }
 
     protected static function validateNoteName(string $name): string

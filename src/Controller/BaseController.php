@@ -39,4 +39,9 @@ abstract class BaseController
     {
         return filter_var($_SERVER['REDIS_ENABLED'], FILTER_VALIDATE_BOOLEAN);
     }
+
+    protected static function isLoggerEnabled(): bool
+    {
+        return filter_var($_SERVER['LOGS_ENABLED'], FILTER_VALIDATE_BOOLEAN);
+    }
 }

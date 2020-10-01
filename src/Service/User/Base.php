@@ -7,6 +7,7 @@ namespace App\Service\User;
 use App\Exception\UserException;
 use App\Repository\UserRepository;
 use App\Service\BaseService;
+use App\Service\LoggerService;
 use App\Service\RedisService;
 use Respect\Validation\Validator as v;
 
@@ -20,12 +21,17 @@ abstract class Base extends BaseService
     /** @var RedisService */
     protected $redisService;
 
+    /** @var LoggerService */
+    protected $loggerService;
+
     public function __construct(
         UserRepository $userRepository,
-        RedisService $redisService
+        RedisService $redisService,
+        LoggerService $loggerService
     ) {
         $this->userRepository = $userRepository;
         $this->redisService = $redisService;
+        $this->loggerService = $loggerService;
     }
 
     protected static function validateUserName(string $name): string

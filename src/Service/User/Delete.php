@@ -14,5 +14,8 @@ final class Delete extends Base
         if (self::isRedisEnabled() === true) {
             $this->deleteFromCache($userId);
         }
+        if (self::isLoggerEnabled() === true) {
+            $this->loggerService->setInfo('The user with the ID ' . $userId . ' has deleted successfully.');
+        }
     }
 }

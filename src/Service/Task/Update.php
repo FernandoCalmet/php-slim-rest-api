@@ -26,12 +26,15 @@ final class Update extends Base
         }
         $task->updateUserId((int) $data->decoded->sub);
         $task->updateUpdatedAt(date('Y-m-d H:i:s'));
-        /** @var \App\Entity\Task $tasks */
-        $tasks = $this->taskRepository->updateTask($task);
+        /** @var \App\Entity\Task $response */
+        $response = $this->taskRepository->updateTask($task);
         if (self::isRedisEnabled() === true) {
-            $this->saveInCache($tasks->getId(), $tasks->getUserId(), $tasks->getData());
+            $this->saveInCache($response->getId(), $response->getUserId(), $response->getData());
+        }
+        if (self::isLoggerEnabled() === true) {
+            $this->loggerService->setInfo('The task with the ID ' . $response->getId() . ' has updated successfully.');
         }
 
-        return $tasks->getData();
+        return $response->getData();
     }
 }

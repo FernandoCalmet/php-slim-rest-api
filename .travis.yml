@@ -1,8 +1,8 @@
 language: php
 
 php:
-  - '7.3'
-  - '7.4'
+  - "7.3"
+  - "7.4"
 
 services:
   - mysql
@@ -20,6 +20,7 @@ env:
     - SECRET_KEY=YourSuperSecret-KeY
     - REDIS_ENABLED=true
     - REDIS_URL=localhost
+    - LOGS_ENABLED=true
 
 before_install:
   - mysql -e 'CREATE DATABASE rest_api_slim_php;'
@@ -27,8 +28,8 @@ before_install:
 before_script:
   - mysql rest_api_slim_php < database/database.sql
   - composer install
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter 
-  - chmod +x ./cc-test-reporter 
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 
 script:

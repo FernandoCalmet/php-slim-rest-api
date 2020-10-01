@@ -20,11 +20,12 @@ build:
             DB_DATABASE: 'rest_api_slim_php'
             DB_USERNAME: 'root'
             DB_PASSWORD: ''            
-            DISPLAY_ERROR_DETAILS: true
+            DISPLAY_ERROR_DETAILS: true            
             APP_DOMAIN: 'https://rest-api-slim-php-sql.herokuapp.com'
             SECRET_KEY: 'YourSuperSecret-KeY'
             REDIS_ENABLED: true
             REDIS_URL: 'localhost'
+            LOGS_ENABLED: true
         php:
             version: 7.4
     project_setup:

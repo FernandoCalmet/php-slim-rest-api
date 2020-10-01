@@ -17,12 +17,15 @@ final class Update extends Base
             $note->updateDescription($data->description);
         }
         $note->updateUpdatedAt(date('Y-m-d H:i:s'));
-        /** @var \App\Entity\Note $notes */
-        $notes = $this->noteRepository->updateNote($note);
+        /** @var \App\Entity\Note $response */
+        $response = $this->noteRepository->updateNote($note);
         if (self::isRedisEnabled() === true) {
-            $this->saveInCache($notes->getId(), $notes->getData());
+            $this->saveInCache($response->getId(), $response->getData());
+        }
+        if (self::isLoggerEnabled() === true) {
+            $this->loggerService->setInfo('The note with the ID ' . $response->getId() . ' has updated successfully.');
         }
 
-        return $notes->getData();
+        return $response->getData();
     }
 }

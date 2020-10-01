@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\User;
 
 use App\Exception\UserException;
+use App\Entity\User;
 
 final class Create extends Base
 {
@@ -20,18 +21,21 @@ final class Create extends Base
         if (!isset($data->password)) {
             throw new UserException('The field "password" is required.', 400);
         }
-        $myuser = new \App\Entity\User();
-        $myuser->updateName(self::validateUserName($data->name));
-        $myuser->updateEmail(self::validateEmail($data->email));
-        $myuser->updatePassword(hash('sha512', $data->password));
-        $myuser->updateCreatedAt(date('Y-m-d H:i:s'));
+        $user = new User();
+        $user->updateName(self::validateUserName($data->name));
+        $user->updateEmail(self::validateEmail($data->email));
+        $user->updatePassword(hash('sha512', $data->password));
+        $user->updateCreatedAt(date('Y-m-d H:i:s'));
         $this->userRepository->checkUserByEmail($data->email);
-        /** @var \App\Entity\User $user */
-        $user = $this->userRepository->createUser($myuser);
+        /** @var \App\Entity\User $response */
+        $response = $this->userRepository->createUser($user);
         if (self::isRedisEnabled() === true) {
-            $this->saveInCache($user->getId(), $user->getData());
+            $this->saveInCache($response->getId(), $response->getData());
+        }
+        if (self::isLoggerEnabled() === true) {
+            $this->loggerService->setInfo('The user with the ID ' . $response->getId() . ' has created successfully.');
         }
 
-        return $user->getData();
+        return $response->getData();
     }
 }

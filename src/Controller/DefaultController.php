@@ -9,7 +9,7 @@ use Slim\Http\Response;
 
 final class DefaultController extends BaseController
 {
-    public const API_VERSION = '1.5.0';
+    public const API_VERSION = '1.6.0';
 
     public function getHelp(Request $request, Response $response): Response
     {
@@ -38,6 +38,7 @@ final class DefaultController extends BaseController
             'stats' => $this->getDbStats(),
             'MySQL' => 'OK',
             'Redis' => $this->checkRedisConnection(),
+            'Logger' => $this->checkLoggerConnection(),
             'version' => self::API_VERSION,
             'timestamp' => time(),
         ];
@@ -69,5 +70,15 @@ final class DefaultController extends BaseController
         }
 
         return $redis;
+    }
+
+    private function checkLoggerConnection(): string
+    {
+        $logger = 'Disabled';
+        if (self::isLoggerEnabled() === true){
+            $logger = 'Enabled';
+        }
+
+        return $logger;
     }
 }

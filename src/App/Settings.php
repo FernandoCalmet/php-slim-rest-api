@@ -15,7 +15,8 @@ return [
             'enabled' => $_SERVER['REDIS_ENABLED'],
             'url' => $_SERVER['REDIS_URL'],
         ],
-        'log' => [
+        'logger' => [
+            'enabled' => $_SERVER['LOGS_ENABLED'],
             'path' => 'logs/',
             'channel' => 'channel_api'
         ],

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Note;
 
 use App\Exception\NoteException;
+use App\Entity\Note;
 
 final class Create extends Base
 {
@@ -14,17 +15,17 @@ final class Create extends Base
         if (!isset($data->name)) {
             throw new NoteException('Invalid data: name is required.', 400);
         }
-        $mynote = new \App\Entity\Note();
-        $mynote->updateName(self::validateNoteName($data->name));
+        $note = new Note();
+        $note->updateName(self::validateNoteName($data->name));
         $desc = isset($data->description) ? $data->description : null;
-        $mynote->updateDescription($desc);
-        $mynote->updateCreatedAt(date('Y-m-d H:i:s'));
-        /** @var \App\Entity\Note $note */
-        $note = $this->noteRepository->createNote($mynote);
+        $note->updateDescription($desc);
+        $note->updateCreatedAt(date('Y-m-d H:i:s'));
+        /** @var \App\Entity\Note $response */
+        $response = $this->noteRepository->createNote($note);
         if (self::isRedisEnabled() === true) {
-            $this->saveInCache($note->getId(), $note->getData());
+            $this->saveInCache($response->getId(), $response->getData());
         }
 
-        return $note->getData();
+        return $response->getData();
     }
 }

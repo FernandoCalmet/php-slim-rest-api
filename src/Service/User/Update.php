@@ -25,12 +25,15 @@ final class Update extends Base
             $user->updatePassword(hash('sha512', $data->password));
         }
         $user->updateUpdatedAt(date('Y-m-d H:i:s'));
-        /** @var \App\Entity\User $users */
-        $users = $this->userRepository->updateUser($user);
+        /** @var \App\Entity\User $response */
+        $response = $this->userRepository->updateUser($user);
         if (self::isRedisEnabled() === true) {
-            $this->saveInCache($users->getId(), $users->getData());
+            $this->saveInCache($response->getId(), $response->getData());
+        }
+        if (self::isLoggerEnabled() === true) {
+            $this->loggerService->setInfo('The user with the ID ' . $response->getId() . ' has updated successfully.');
         }
 
-        return $users->getData();
+        return $response->getData();
     }
 }

@@ -13,5 +13,8 @@ final class Delete extends Base
         if (self::isRedisEnabled() === true) {
             $this->deleteFromCache($noteId);
         }
+        if (self::isLoggerEnabled() === true) {
+            $this->loggerService->setInfo('The note with the ID ' . $noteId . ' has deleted successfully.');
+        }
     }
 }

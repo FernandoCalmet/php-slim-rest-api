@@ -8,6 +8,7 @@ use App\Exception\TaskException;
 use App\Repository\TaskRepository;
 use App\Service\BaseService;
 use App\Service\RedisService;
+use App\Service\LoggerService;
 use Respect\Validation\Validator as v;
 
 abstract class Base extends BaseService
@@ -20,12 +21,17 @@ abstract class Base extends BaseService
     /** @var RedisService */
     protected $redisService;
 
+    /** @var LoggerService */
+    protected $loggerService;
+
     public function __construct(
         TaskRepository $taskRepository,
-        RedisService $redisService
+        RedisService $redisService,
+        LoggerService $loggerService
     ) {
         $this->taskRepository = $taskRepository;
         $this->redisService = $redisService;
+        $this->loggerService = $loggerService;
     }
 
     protected static function validateTaskName(string $name): string

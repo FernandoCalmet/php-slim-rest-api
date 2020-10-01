@@ -9,7 +9,7 @@
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=FernandoCalmet_rest-api-slim-php)](https://sonarcloud.io/dashboard?id=FernandoCalmet_rest-api-slim-php)
 
-Principales tecnologías utilizadas: `PHP 7, Slim 3, MySQL, Redis, dotenv, PHPUnit y JSON Web Tokens.`
+Principales tecnologías utilizadas: `PHP 7, Slim 3, MySQL, Monolog, Redis, dotenv, PHPUnit y JSON Web Tokens.`
 
 Además, se utilizo otras herramientas adicionales como: `Docker & Docker Compose, Travis CI, Swagger, Scrutinizer, Sonar Cloud, PHPStan, PHP Insights, Heroku and CORS.`
 
@@ -107,6 +107,7 @@ composer restart-db
 - [vlucas/phpdotenv](https://github.com/vlucas/phpdotenv): Carga variables de entorno desde `.env` a `getenv()`,`$ _ENV` y `$ _SERVER` automágicamente.
 - [predis/predis](https://github.com/nrk/predis/): Cliente Redis flexible y con todas las funciones para PHP y HHVM.
 - [firebase/php-jwt](https://github.com/firebase/php-jwt): Una biblioteca simple para codificar y decodificar JSON Web Tokens (JWT) en PHP.
+- [monolog/monolog](https://github.com/Seldaek/monolog): Monolog envía sus registros a archivos, sockets, bandejas de entrada, bases de datos y varios servicios web. Consulte la lista completa de controladores a continuación. Los controladores especiales le permiten crear estrategias de registro avanzadas.
 
 ### LISTA DE DEPENDENCIAS DE DESARROLLO
 

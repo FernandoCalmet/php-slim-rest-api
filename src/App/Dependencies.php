@@ -3,12 +3,13 @@
 declare(strict_types=1);
 
 use App\Handler\ApiError;
+use App\Service\LoggerService;
 use App\Service\RedisService;
 use Psr\Container\ContainerInterface;
 
 $container['db'] = static function (ContainerInterface $container): PDO {
     $db = $container->get('settings')['db'];
-    $dsn = sprintf('mysql:host=%s;dbname=%s', $db['hostname'], $db['database']);
+    $dsn = sprintf('mysql:host=%s;dbname=%s;charset=utf8', $db['hostname'], $db['database']);
     $pdo = new PDO($dsn, $db['username'], $db['password']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -27,11 +28,12 @@ $container['redis_service'] = static function ($container): RedisService {
     return new RedisService(new \Predis\Client($redis['url']));
 };
 
-$container['logger'] = static function ($container) {
-    $channel = $container->get('settings')['log']['channel'];
-    $path = $container->get('settings')['log']['path'];
+$container['logger_service'] = static function ($container): LoggerService {
+    $channel = $container->get('settings')['logger']['channel'];
+    $path = $container->get('settings')['logger']['path'];
     $logger = new \Monolog\Logger($channel);
     $file_handler = new \Monolog\Handler\StreamHandler($path . date('Ymd') . '.log');
     $logger->pushHandler($file_handler);
-    return $logger;
+
+    return new LoggerService($logger);
 };

@@ -13,5 +13,8 @@ final class Delete extends Base
         if (self::isRedisEnabled() === true) {
             $this->deleteFromCache($taskId, $userId);
         }
+        if (self::isLoggerEnabled() === true) {
+            $this->loggerService->setInfo('The task with the ID ' . $taskId . ' from the User with the Id ' . $userId . ' has deleted successfully.');
+        }
     }
 }
