@@ -11,7 +11,7 @@ final class DefaultController extends BaseController
 {
     public const API_VERSION = '1.6.0';
 
-    public function getHelp(Request $request, Response $response): Response
+    public function getHelp(Response $response): Response
     {
         $app = $this->container->get('settings')['app'];
         $url = $app['domain'];
@@ -32,7 +32,7 @@ final class DefaultController extends BaseController
         return $this->jsonResponse($response, 'success', $message, 200);
     }
 
-    public function getStatus(Request $request, Response $response): Response
+    public function getStatus(Response $response): Response
     {
         $status = [
             'stats' => $this->getDbStats(),

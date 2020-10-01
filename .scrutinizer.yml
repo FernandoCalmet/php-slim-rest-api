@@ -10,17 +10,17 @@ build:
                     - command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
                       coverage:
                         file: clover.xml
-                        format: clover                    
+                        format: clover
         my-node:
             services:
-                redis: 4 
+                redis: 4
     environment:
         variables:
             DB_HOSTNAME: '127.0.0.1'
             DB_DATABASE: 'rest_api_slim_php'
             DB_USERNAME: 'root'
-            DB_PASSWORD: ''            
-            DISPLAY_ERROR_DETAILS: true            
+            DB_PASSWORD: ''
+            DISPLAY_ERROR_DETAILS: true
             APP_DOMAIN: 'https://rest-api-slim-php-sql.herokuapp.com'
             SECRET_KEY: 'YourSuperSecret-KeY'
             REDIS_ENABLED: true
@@ -38,4 +38,4 @@ build:
                 command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
                 coverage:
                     file: 'clover.xml'
-                    format: 'clover'    
+                    format: 'clover'

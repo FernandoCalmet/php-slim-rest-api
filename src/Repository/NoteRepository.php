@@ -83,7 +83,7 @@ final class NoteRepository extends BaseRepository
         $statement->bindParam('name', $name);
         $statement->bindParam('description', $description);
         $statement->execute();
-        $notes = $statement->fetchAll();
+        $notes = (array) $statement->fetchAll();
         if (!$notes) {
             $message = 'No notes were found with that name or description.';
             throw new NoteException($message, 404);
