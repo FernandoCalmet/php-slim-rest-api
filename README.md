@@ -166,8 +166,8 @@ GET | `/api/v1/notes` | No | Obtiene las notas, si la petición es exitosa, reto
 GET | `/api/v1/notes/{id}` | No | Obtiene una nota basado en el Id, si la petición es exitosa, retornará un status **HTTP 200** (OK). En caso de no encontrar ningun usuario retornará un status **HTTP 404** (Not Found).
 POST | `/api/v1/notes` | No | Crea una nota, la petición deberá incluir los datos dentro del cuerpo de la petición. Si la nota es creada retornará un status **HTTP 201** (Created). En caso de que exista un dato con restricción unica que este duplicado retornará un status **HTTP 403** (Forbidden).
 PUT | `/api/v1/notes/{id}` | No | Actualiza la nota basado en el Id, si la nota es creado retornará un status **HTTP 200** (OK). En caso de que exista un dato con restricción unica que este duplicado retornará un status **HTTP 403** (Forbidden). En caso de no encontrar ninguna nota retornará un status **HTTP 404** (Not Found).
-DELETE | `/api/v1/notes/{id}` | Si | Elimina una nota basado en el Id, si la nota es eliminada retornará un status **HTTP 200** (OK). En caso de no encontrar ninguna nota retornará un status **HTTP 404** (Not Found).
-GET | `/api/v1/notes/search/{query}` | Si | Obtiene resultados relacionados a una busqueda por coincidencias de atributos clave de las notas, si se encuentran datos retornará un status **HTTP 200** (OK). En caso de no encontrar ninguna nota retornará un status **HTTP 404** (Not Found).
+DELETE | `/api/v1/notes/{id}` | No | Elimina una nota basado en el Id, si la nota es eliminada retornará un status **HTTP 200** (OK). En caso de no encontrar ninguna nota retornará un status **HTTP 404** (Not Found).
+GET | `/api/v1/notes/search/{query}` | No | Obtiene resultados relacionados a una busqueda por coincidencias de atributos clave de las notas, si se encuentran datos retornará un status **HTTP 200** (OK). En caso de no encontrar ninguna nota retornará un status **HTTP 404** (Not Found).
 
 ### AYUDA Y DOCUMENTACIÓN
 
