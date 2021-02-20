@@ -6,25 +6,12 @@ namespace App\Entity;
 
 final class Task
 {
-    /** @var int $id */
-    private $id;
-
-    /** @var string $name */
-    private $name;
-
-    /** @var string|null $description */
-    private $description;
-
-    /** @var int|null $status */
-    private $status;
-
-    /** @var int $userId */
-    private $userId;
-
-    /** @var string|null $createdAt */
+    private int $id;
+    private string $name;
+    private ?string $description;
+    private int $status;
+    private int $userId;
     private $createdAt;
-
-    /** @var string|null $updatedAt */
     private $updatedAt;
 
     public function getId(): int
@@ -104,17 +91,8 @@ final class Task
         return $this;
     }
 
-    public function getData(): object
+    public function toJson(): object
     {
-        $task = new \stdClass();
-        $task->id = $this->getId();
-        $task->name = $this->getName();
-        $task->description = $this->getDescription();
-        $task->status = $this->getStatus();
-        $task->userId = $this->getUserId();
-        $task->createdAt = $this->getCreatedAt();
-        $task->updatedAt = $this->getUpdatedAt();
-
-        return $task;
+        return json_decode((string) json_encode(get_object_vars($this)), false);
     }
 }

@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use Monolog\Logger;
+
 final class LoggerService
 {
-    /** @var \Monolog\Logger */
-    private $logger;
+    private Logger $logger;
 
-    public function __construct(\Monolog\Logger $logger)
+    public function __construct(Logger $logger)
     {
         $this->logger = $logger;
     }

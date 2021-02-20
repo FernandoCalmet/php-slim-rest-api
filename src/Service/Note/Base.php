@@ -14,15 +14,9 @@ use Respect\Validation\Validator as v;
 abstract class Base extends BaseService
 {
     private const REDIS_KEY = 'note:%s';
-
-    /** @var NoteRepository */
-    protected $noteRepository;
-
-    /** @var RedisService */
-    protected $redisService;
-
-    /** @var LoggerService */
-    protected $loggerService;
+    protected NoteRepository $noteRepository;
+    protected RedisService $redisService;
+    protected LoggerService $loggerService;
 
     public function __construct(
         NoteRepository $noteRepository,
@@ -50,7 +44,7 @@ abstract class Base extends BaseService
         if ($this->redisService->exists($key)) {
             $note = $this->redisService->get($key);
         } else {
-            $note = $this->getOneFromDb($noteId)->getData();
+            $note = $this->getOneFromDb($noteId)->toJson();
             $this->redisService->setex($key, $note);
         }
 

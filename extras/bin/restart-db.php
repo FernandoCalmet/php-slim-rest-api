@@ -6,21 +6,27 @@ require __DIR__ . '/../../src/App/App.php';
 
 try {
     $db = $container->get('settings')['db'];
-    $hostname = $db['hostname'];
-    $database = $db['database'];
-    $username = $db['username'];
-    $password = $db['password'];
+    $host = $database['host'];
+    $name = $database['name'];
+    $user = $database['user'];
+    $pass = $database['pass'];
+    $port = $database['port'];
 
-    $pdo = new PDO("mysql:host=${hostname};charset=utf8", $username, $password);
+    $dsn = sprintf(
+        'mysql:host=%s;port=%s;charset=utf8',
+        getenv('DB_HOST'),
+        getenv('DB_PORT')
+    );
+    $pdo = new PDO($dsn, getenv('DB_USER'), getenv('DB_PASS'));
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $pdo->exec("DROP DATABASE IF EXISTS ${database}");
-    echo '[OK] Database droped successfully' . PHP_EOL;
+    $pdo->exec("DROP DATABASE IF EXISTS ${name}");
+    echo '[OK] Database dropped successfully' . PHP_EOL;
 
-    $pdo->exec("CREATE DATABASE ${database}");
+    $pdo->exec("CREATE DATABASE ${name}");
     echo '[OK] Database created successfully' . PHP_EOL;
 
-    $pdo->exec("USE ${database}");
+    $pdo->exec("USE ${name}");
     echo '[OK] Database selected successfully' . PHP_EOL;
 
     $sql = file_get_contents(__DIR__ . '/../../database/database.sql');

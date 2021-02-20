@@ -41,7 +41,7 @@ final class UserRepository extends BaseRepository
         $statement = $this->getDb()->prepare($query);
         $statement->execute();
 
-        return $statement->fetchAll();
+        return (array) $statement->fetchAll();
     }
 
     public function getQueryUsersByPage(): string

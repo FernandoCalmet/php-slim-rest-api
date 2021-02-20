@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use Predis\Client;
+
 final class RedisService
 {
     public const PROJECT_NAME = 'rest-api-slim-php';
+    private Client $redis;
 
-    /** @var \Predis\Client */
-    private $redis;
-
-    public function __construct(\Predis\Client $redis)
+    public function __construct(Client $redis)
     {
         $this->redis = $redis;
     }

@@ -23,7 +23,7 @@ Esta simple **API RESTful**, permite que las operaciones **CRUD** administren re
 
 - Git.
 - Composer.
-- PHP 7.3+.
+- PHP 7.4+.
 - MySQL/MariaDB.
 - Redis (Optional).
 - o Docker.
@@ -132,13 +132,13 @@ Ejecute todas las pruebas de PHPUnit con `composer test`.
 ```bash
 $ composer test
 > phpunit
-PHPUnit 9.4 by Sebastian Bergmann and contributors.
+PHPUnit 9.3.10 by Sebastian Bergmann and contributors.
 
-...............................................................   62 / 62 (100%)
+...............................................................   63 / 63 (100%)
 
-Time: 00:04.683, Memory: 16.00 MB
+Time: 00:02.279, Memory: 18.00 MB
 
-OK (62 tests, 386 assertions)
+OK (63 tests, 390 assertions)
 ```
 
 ## :books: DOCUMENTACIÓN

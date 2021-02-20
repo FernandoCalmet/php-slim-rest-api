@@ -46,7 +46,7 @@ final class Find extends Base
         if (self::isRedisEnabled() === true) {
             $task = $this->getTaskFromCache($taskId, $userId);
         } else {
-            $task = $this->getTaskFromDb($taskId, $userId)->getData();
+            $task = $this->getTaskFromDb($taskId, $userId)->toJson();
         }
 
         return $task;

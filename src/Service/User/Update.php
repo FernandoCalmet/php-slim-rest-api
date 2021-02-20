@@ -28,12 +28,12 @@ final class Update extends Base
         /** @var \App\Entity\User $response */
         $response = $this->userRepository->updateUser($user);
         if (self::isRedisEnabled() === true) {
-            $this->saveInCache($response->getId(), $response->getData());
+            $this->saveInCache($response->getId(), $response->toJson());
         }
         if (self::isLoggerEnabled() === true) {
             $this->loggerService->setInfo('The user with the ID ' . $response->getId() . ' has updated successfully.');
         }
 
-        return $response->getData();
+        return $response->toJson();
     }
 }

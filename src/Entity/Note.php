@@ -6,19 +6,10 @@ namespace App\Entity;
 
 final class Note
 {
-    /** @var int $id */
-    private $id;
-
-    /** @var string $name */
-    private $name;
-
-    /** @var string|null $description */
-    private $description;
-
-    /** @var string|null $createdAt */
+    private int $id;
+    private string $name;
+    private ?string $description;
     private $createdAt;
-
-    /** @var string|null $updatedAt */
     private $updatedAt;
 
     public function getId(): int
@@ -74,15 +65,8 @@ final class Note
         return $this;
     }
 
-    public function getData(): object
+    public function toJson(): object
     {
-        $note = new \stdClass();
-        $note->id = $this->getId();
-        $note->name = $this->getName();
-        $note->description = $this->getDescription();
-        $note->createdAt = $this->getCreatedAt();
-        $note->updatedAt = $this->getUpdatedAt();
-
-        return $note;
+        return json_decode((string) json_encode(get_object_vars($this)), false);
     }
 }

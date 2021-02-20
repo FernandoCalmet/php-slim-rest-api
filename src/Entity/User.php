@@ -6,22 +6,11 @@ namespace App\Entity;
 
 final class User
 {
-    /** @var int $id */
-    private $id;
-
-    /** @var string $name */
-    private $name;
-
-    /** @var string|null $email */
-    private $email;
-
-    /** @var string|null $password */
-    private $password;
-
-    /** @var string|null $createdAt */
+    private int $id;
+    private string $name;
+    private string $email;
+    private string $password;
     private $createdAt;
-
-    /** @var string|null $updatedAt */
     private $updatedAt;
 
     public function getId(): int
@@ -89,16 +78,8 @@ final class User
         return $this;
     }
 
-    public function getData(): object
+    public function toJson(): object
     {
-        $user = new \stdClass();
-        $user->id = $this->getId();
-        $user->name = $this->getName();
-        $user->email = $this->getEmail();
-        $user->password = $this->getPassword();
-        $user->createdAt = $this->getCreatedAt();
-        $user->updatedAt = $this->getUpdatedAt();
-
-        return $user;
+        return json_decode((string) json_encode(get_object_vars($this)), false);
     }
 }

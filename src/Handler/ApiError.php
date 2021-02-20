@@ -36,7 +36,7 @@ final class ApiError extends \Slim\Handlers\Error
         if (
             is_int($exception->getCode()) &&
             $exception->getCode() >= 400 &&
-            $exception->getCode() <= 599
+            $exception->getCode() <= 500
         ) {
             $statusCode = $exception->getCode();
         }

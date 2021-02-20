@@ -29,12 +29,12 @@ final class Create extends Base
         /** @var \App\Entity\Task $response */
         $response = $this->taskRepository->createTask($task);
         if (self::isRedisEnabled() === true) {
-            $this->saveInCache($response->getId(), $response->getUserId(), $response->getData());
+            $this->saveInCache($response->getId(), $response->getUserId(), $response->toJson());
         }
         if (self::isLoggerEnabled() === true) {
             $this->loggerService->setInfo('The task with the ID ' . $response->getId() . ' has created successfully.');
         }
 
-        return $response->getData();
+        return $response->toJson();
     }
 }

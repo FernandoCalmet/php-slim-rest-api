@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 return [
     'settings' => [
-        'displayErrorDetails' => $_SERVER['DISPLAY_ERROR_DETAILS'],
+        'displayErrorDetails' => filter_var($_SERVER['DISPLAY_ERROR_DETAILS'], FILTER_VALIDATE_BOOLEAN),
         'db' => [
-            'hostname' => $_SERVER['DB_HOSTNAME'],
-            'database' => $_SERVER['DB_DATABASE'],
-            'username' => $_SERVER['DB_USERNAME'],
-            'password' => $_SERVER['DB_PASSWORD'],
+            'host' => $_SERVER['DB_HOST'],
+            'name' => $_SERVER['DB_NAME'],
+            'user' => $_SERVER['DB_USER'],
+            'pass' => $_SERVER['DB_PASS'],
+            'port' => $_SERVER['DB_PORT'],
         ],
         'redis' => [
             'enabled' => $_SERVER['REDIS_ENABLED'],
@@ -18,7 +19,7 @@ return [
         'logger' => [
             'enabled' => $_SERVER['LOGS_ENABLED'],
             'path' => 'logs/',
-            'channel' => 'channel_api'
+            'channel' => 'channel_api',
         ],
         'app' => [
             'domain' => $_SERVER['APP_DOMAIN'],

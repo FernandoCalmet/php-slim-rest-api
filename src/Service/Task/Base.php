@@ -14,15 +14,9 @@ use Respect\Validation\Validator as v;
 abstract class Base extends BaseService
 {
     private const REDIS_KEY = 'task:%s:user:%s';
-
-    /** @var TaskRepository */
-    protected $taskRepository;
-
-    /** @var RedisService */
-    protected $redisService;
-
-    /** @var LoggerService */
-    protected $loggerService;
+    protected TaskRepository $taskRepository;
+    protected RedisService $redisService;
+    protected LoggerService $loggerService;
 
     public function __construct(
         TaskRepository $taskRepository,
@@ -59,7 +53,7 @@ abstract class Base extends BaseService
         if ($this->redisService->exists($key)) {
             $task = $this->redisService->get($key);
         } else {
-            $task = $this->getTaskFromDb($taskId, $userId)->getData();
+            $task = $this->getTaskFromDb($taskId, $userId)->toJson();
             $this->redisService->setex($key, $task);
         }
 

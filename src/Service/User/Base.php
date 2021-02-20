@@ -14,15 +14,9 @@ use Respect\Validation\Validator as v;
 abstract class Base extends BaseService
 {
     private const REDIS_KEY = 'user:%s';
-
-    /** @var UserRepository */
-    protected $userRepository;
-
-    /** @var RedisService */
-    protected $redisService;
-
-    /** @var LoggerService */
-    protected $loggerService;
+    protected UserRepository $userRepository;
+    protected RedisService $redisService;
+    protected LoggerService $loggerService;
 
     public function __construct(
         UserRepository $userRepository,
@@ -61,7 +55,7 @@ abstract class Base extends BaseService
             $data = $this->redisService->get($key);
             $user = json_decode((string) json_encode($data), false);
         } else {
-            $user = $this->getUserFromDb($userId)->getData();
+            $user = $this->getUserFromDb($userId)->toJson();
             $this->redisService->setex($key, $user);
         }
 

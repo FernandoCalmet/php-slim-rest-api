@@ -23,7 +23,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.3",
+        "php": "^7.4",
         "firebase/php-jwt": "^5.0",
         "monolog/monolog": "^2.0@dev",
         "palanik/corsslim": "dev-slim3",
@@ -37,14 +37,13 @@
         "pestphp/pest": "^0.1.5",
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^9.0",
-        "rector/rector": "^0.7.26",
         "vimeo/psalm": "^3.15"
     },
     "config": {
         "sort-packages": true,
         "process-timeout" : 0,
         "platform": {
-            "php": "7.3.20"
+            "php": "7.4.0"
         }
     },
     "autoload": {
@@ -60,7 +59,7 @@
         ],
         "coverage": "phpunit --coverage-html=coverage --coverage-text",
         "database": "php extras/bin/restart-db.php",
-        "phpstan": "./vendor/bin/phpstan analyse src tests --level=6",
+        "phpstan": "./vendor/bin/phpstan analyse src tests --level=max",
         "restart": "php extras/bin/restart-db.php",
         "restart-db": "php extras/bin/restart-db.php",
         "start": "php -S localhost:8080 -t public public/index.php",
