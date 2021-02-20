@@ -6,6 +6,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/?branch=master)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=FernandoCalmet_rest-api-slim-php&metric=alert_status)](https://sonarcloud.io/dashboard?id=FernandoCalmet_rest-api-slim-php)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=FernandoCalmet_rest-api-slim-php)](https://sonarcloud.io/dashboard?id=FernandoCalmet_rest-api-slim-php)
 
