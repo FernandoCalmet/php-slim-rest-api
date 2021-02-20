@@ -30,7 +30,8 @@ build:
         php:
             version: 7.4
     project_setup:
-        before:            
+        before:    
+            - sudo service start mysql || true        
             - mysql -e "CREATE DATABASE rest_api_slim_php"
             - mysql rest_api_slim_php < database/database.sql
         override:
