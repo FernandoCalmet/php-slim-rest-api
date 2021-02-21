@@ -5,7 +5,7 @@ declare(strict_types=1);
 require __DIR__ . '/../../src/App/App.php';
 
 try {
-    $db = $container->get('settings')['db'];
+    $database = $container->get('settings')['db'];
     $host = $database['host'];
     $name = $database['name'];
     $user = $database['user'];
