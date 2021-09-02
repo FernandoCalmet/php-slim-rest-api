@@ -43,6 +43,6 @@ $container['logger_service'] = static function ($container): LoggerService {
 
 $container['notFoundHandler'] = static function () {
     return static function ($request, $response): void {
-        throw new \Exception('Route Not Found.', 404);
+        throw new \App\Exception\NotFoundException('Route Not Found.', 404);
     };
 };

@@ -23,7 +23,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.4",
+        "php": "^7.4 || ^8.0",
+        "composer/composer": "1.10.22",
         "firebase/php-jwt": "^5.0",
         "monolog/monolog": "^2.0@dev",
         "palanik/corsslim": "dev-slim3",
@@ -34,7 +35,7 @@
     },
     "require-dev": {
         "nunomaduro/phpinsights": "^1.14",
-        "pestphp/pest": "^0.1.5",
+        "pestphp/pest": "^1.7",
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^9.0",
         "vimeo/psalm": "^3.15"
