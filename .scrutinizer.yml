@@ -37,13 +37,11 @@ build:
             - sudo service mysql restart
             - mysql -e "CREATE DATABASE php_slim_rest_api"
             - mysql php_slim_rest_api < database/database.sql
+            - composer update
         override:
             - php-scrutinizer-run
             # -
             #     command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
-            #     command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --whitelist src'
-            #     command: 'vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml'
-            #     command: 'vendor/bin/phpunit --coverage-html=coverage --coverage-text'
             #     coverage:
             #         file: 'clover.xml'
             #         format: 'clover'
