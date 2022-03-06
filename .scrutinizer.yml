@@ -7,10 +7,12 @@ build:
         coverage:
             tests:
                 override:
-                    - command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
-                      coverage:
-                        file: clover.xml
-                        format: clover
+                    - 
+                        #command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
+                        command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml'
+                        coverage:
+                            file: clover.xml
+                            format: clover
         my-node:
             services:
                 redis: 4
@@ -39,7 +41,8 @@ build:
         override:
             - php-scrutinizer-run
             -
-                command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
+                #command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
+                command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml'
                 coverage:
                     file: 'clover.xml'
                     format: 'clover'
