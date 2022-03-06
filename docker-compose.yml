@@ -3,7 +3,7 @@ version: '3'
 services:
   nginx:
     image: nginx:latest
-    container_name: rest-api-slim-php-nginx-container
+    container_name: php-slim-rest-api-nginx-container
     ports:
       - "8081:80"
     volumes:
@@ -12,7 +12,7 @@ services:
 
   php-fpm:
     build: ./docker/php7
-    container_name: rest-api-slim-php-php-container
+    container_name: php-slim-rest-api-php-container
     links:
       - mysql
       - redis
@@ -22,7 +22,7 @@ services:
       - PHP_FPM_SERVER_PORT=9000
       - PHP_FPM_TIMEOUT=${HTTPD_TIMEOUT_TO_PHP_FPM:-180}
       - DB_HOST=mysql
-      - DB_NAME=rest_api_slim_php
+      - DB_NAME=php_slim_rest_api
       - DB_USER=root
       - DB_PASS=
       - DB_PORT=3306
@@ -44,7 +44,7 @@ services:
       - 33060:3306
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: rest_api_slim_php
+      MYSQL_DATABASE: php_slim_rest_api
       MYSQL_USER: root
       MYSQL_PASSWORD: 
       MYSQL_ROOT_PASSWORD: 

@@ -9,8 +9,14 @@ use Slim\Http\Response;
 
 final class Search extends Base
 {
-    public function __invoke(Request $request, Response $response, array $args): Response
-    {
+    /**
+     * @param array<string> $args
+     */
+    public function __invoke(
+        Request $request,
+        Response $response,
+        array $args
+    ): Response {
         $input = (array) $request->getParsedBody();
         $userId = $this->getAndValidateUserId($input);
         $query = '';
@@ -18,7 +24,7 @@ final class Search extends Base
             $query = $args['query'];
         }
         $status = $request->getParam('status', null);
-        $tasks = $this->getServiceFindTask()->search($query, $userId, $status);
+        $tasks = $this->getTaskService()->search($query, $userId, $status);
 
         return $this->jsonResponse($response, 'success', $tasks, 200);
     }

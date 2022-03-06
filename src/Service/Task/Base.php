@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Task;
 
-use App\Exception\TaskException;
+use App\Entity\Task;
 use App\Repository\TaskRepository;
 use App\Service\BaseService;
 use App\Service\RedisService;
@@ -14,24 +14,23 @@ use Respect\Validation\Validator as v;
 abstract class Base extends BaseService
 {
     private const REDIS_KEY = 'task:%s:user:%s';
-    protected TaskRepository $taskRepository;
-    protected RedisService $redisService;
-    protected LoggerService $loggerService;
 
     public function __construct(
-        TaskRepository $taskRepository,
-        RedisService $redisService,
-        LoggerService $loggerService
+        protected TaskRepository $taskRepository,
+        protected RedisService $redisService,
+        protected LoggerService $loggerService
     ) {
-        $this->taskRepository = $taskRepository;
-        $this->redisService = $redisService;
-        $this->loggerService = $loggerService;
+    }
+
+    protected function getTaskRepository(): TaskRepository
+    {
+        return $this->taskRepository;
     }
 
     protected static function validateTaskName(string $name): string
     {
         if (!v::length(1, 100)->validate($name)) {
-            throw new TaskException('Invalid name.', 400);
+            throw new \App\Exception\TaskException('Invalid name.', 400);
         }
 
         return $name;
@@ -40,7 +39,7 @@ abstract class Base extends BaseService
     protected static function validateTaskStatus(int $status): int
     {
         if (!v::numeric()->between(0, 1)->validate($status)) {
-            throw new TaskException('Invalid status', 400);
+            throw new \App\Exception\TaskException('Invalid status', 400);
         }
 
         return $status;
@@ -60,7 +59,7 @@ abstract class Base extends BaseService
         return $task;
     }
 
-    protected function getTaskFromDb(int $taskId, int $userId): \App\Entity\Task
+    protected function getTaskFromDb(int $taskId, int $userId): Task
     {
         return $this->taskRepository->checkAndGetTask($taskId, $userId);
     }

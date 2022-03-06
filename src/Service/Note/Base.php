@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Note;
 
-use App\Exception\NoteException;
+use App\Entity\Note;
 use App\Repository\NoteRepository;
 use App\Service\BaseService;
 use App\Service\RedisService;
@@ -14,24 +14,18 @@ use Respect\Validation\Validator as v;
 abstract class Base extends BaseService
 {
     private const REDIS_KEY = 'note:%s';
-    protected NoteRepository $noteRepository;
-    protected RedisService $redisService;
-    protected LoggerService $loggerService;
 
     public function __construct(
-        NoteRepository $noteRepository,
-        RedisService $redisService,
-        LoggerService $loggerService
+        protected NoteRepository $noteRepository,
+        protected RedisService $redisService,
+        protected LoggerService $loggerService
     ) {
-        $this->noteRepository = $noteRepository;
-        $this->redisService = $redisService;
-        $this->loggerService = $loggerService;
     }
 
     protected static function validateNoteName(string $name): string
     {
         if (!v::length(1, 50)->validate($name)) {
-            throw new NoteException('The name of the note is invalid.', 400);
+            throw new \App\Exception\NoteException('The name of the note is invalid.', 400);
         }
 
         return $name;
@@ -51,7 +45,7 @@ abstract class Base extends BaseService
         return $note;
     }
 
-    protected function getOneFromDb(int $noteId): \App\Entity\Note
+    protected function getOneFromDb(int $noteId): Note
     {
         return $this->noteRepository->checkAndGetNote($noteId);
     }

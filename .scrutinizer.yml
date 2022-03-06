@@ -17,12 +17,12 @@ build:
     environment:
         variables:
             DB_HOST: '127.0.0.1'
-            DB_NAME: 'rest_api_slim_php'
+            DB_NAME: 'php_slim_rest_api'
             DB_USER: 'root'
             DB_PASS: ''
             DB_PORT: '3306'
             DISPLAY_ERROR_DETAILS: true
-            APP_DOMAIN: 'https://rest-api-slim-php-sql.herokuapp.com'
+            APP_DOMAIN: 'https://php-slim-rest-api-sql.herokuapp.com'
             SECRET_KEY: 'YourSuperSecret-KeY'
             REDIS_ENABLED: true
             REDIS_URL: 'localhost'
@@ -32,8 +32,8 @@ build:
     project_setup:
         before:    
             - sudo service start mysql || true        
-            - mysql -e "CREATE DATABASE rest_api_slim_php"
-            - mysql rest_api_slim_php < database/database.sql
+            - mysql -e "CREATE DATABASE php_slim_rest_api"
+            - mysql php_slim_rest_api < database/database.sql
         override:
             - php-scrutinizer-run
             -

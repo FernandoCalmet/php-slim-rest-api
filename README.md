@@ -1,13 +1,16 @@
 # REST API IN SLIM PHP 🐘
 
-[![License](https://img.shields.io/github/license/fernandocalmet/rest-api-slim-php)](https://github.com/FernandoCalmet/rest-api-slim-php/blob/master/LICENSE.md)
-[![Build Status](https://travis-ci.com/FernandoCalmet/rest-api-slim-php.svg?branch=master)](https://travis-ci.com/FernandoCalmet/rest-api-slim-php)
-[![Build Status](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/badges/build.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/build-status/master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/?branch=master)
+[![Github][github-shield]][github-url]
+[![Kofi][kofi-shield]][kofi-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+[![Khanakat][khanakat-shield]][khanakat-url]
+[![License](https://img.shields.io/github/license/fernandocalmet/php-slim-rest-api)](https://github.com/FernandoCalmet/php-slim-rest-api/blob/master/LICENSE.md)
+[![Build Status](https://travis-ci.com/FernandoCalmet/php-slim-rest-api.svg?branch=master)](https://travis-ci.com/FernandoCalmet/php-slim-rest-api)
+[![Build Status](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/badges/build.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/?branch=master)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=FernandoCalmet_rest-api-slim-php&metric=alert_status)](https://sonarcloud.io/dashboard?id=FernandoCalmet_rest-api-slim-php)
-[![Code Intelligence Status](https://scrutinizer-ci.com/g/FernandoCalmet/rest-api-slim-php/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
-
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=FernandoCalmet_rest-api-slim-php)](https://sonarcloud.io/dashboard?id=FernandoCalmet_rest-api-slim-php)
 
 Principales tecnologías utilizadas: `PHP 7, Slim 3, MySQL, Monolog, Redis, dotenv, PHPUnit y JSON Web Tokens.`
@@ -44,7 +47,7 @@ keys *
 FLUSHALL
 
 # Query (example of a cached data):
-get "rest-api-slim-php:test:status"
+get "php-slim-rest-api:test:status"
 ```
 
 ### Con Composer
@@ -52,7 +55,7 @@ get "rest-api-slim-php:test:status"
 Puede crear un nuevo proyecto ejecutando los siguientes comandos:
 
 ```bash
-composer create-project fernandocalmet/rest-api-slim-php [my-api-name]
+composer create-project fernandocalmet/php-slim-rest-api [my-api-name]
 cd [my-api-name]
 composer restart-db
 composer test
@@ -64,7 +67,7 @@ composer start
 En su terminal, ejecute estos comandos:
 
 ```bash
-git clone https://github.com/fernandocalmet/rest-api-slim-php.git && cd rest-api-slim-php
+git clone https://github.com/fernandocalmet/php-slim-rest-api.git && cd php-slim-rest-api
 cp .env.example .env
 composer install
 composer restart-db
@@ -180,16 +183,18 @@ Toda la información de la API, preparada para descargar y usar como colección 
 
 ### OPEN API SPEC
 
-Además, puede ver la especificación de OpenAPI, utilizando [Swagger UI](https://rest-api-slim-php-sql.herokuapp.com/docs/index.html).
+Además, puede ver la especificación de OpenAPI, utilizando [Swagger UI](https://php-slim-rest-api-sql.herokuapp.com/docs/index.html).
 
 ## :page_facing_up: LICENCIA
 
 Licencia MIT. Puedes verla en el [Archivo de Licencia](LICENSE.md) para más información.
 
-[Autor](https://github.com/maurobonfietti) de la base de este proyecto, y modificado por el [colaborador](https://github.com/fernandocalmet).
-  
----
-
-:octocat: [Puedes seguirme en Github.](https://github.com/FernandoCalmet)
-
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/T6T41JKMI)
+<!--- reference style links --->
+[github-shield]: https://img.shields.io/badge/-@fernandocalmet-%23181717?style=flat-square&logo=github
+[github-url]: https://github.com/fernandocalmet
+[kofi-shield]: https://img.shields.io/badge/-@fernandocalmet-%231DA1F2?style=flat-square&logo=kofi&logoColor=ff5f5f
+[kofi-url]: https://ko-fi.com/fernandocalmet
+[linkedin-shield]: https://img.shields.io/badge/-fernandocalmet-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/fernandocalmet
+[linkedin-url]: https://www.linkedin.com/in/fernandocalmet
+[khanakat-shield]: https://img.shields.io/badge/khanakat.com-brightgreen?style=flat-square
+[khanakat-url]: https://khanakat.com

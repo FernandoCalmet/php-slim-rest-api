@@ -12,12 +12,7 @@ try {
     $pass = $database['pass'];
     $port = $database['port'];
 
-    $dsn = sprintf(
-        'mysql:host=%s;port=%s;charset=utf8',
-        getenv('DB_HOST'),
-        getenv('DB_PORT')
-    );
-    $pdo = new PDO($dsn, getenv('DB_USER'), getenv('DB_PASS'));
+    $pdo = new PDO("mysql:host=${host};port=${port};charset=utf8", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $pdo->exec("DROP DATABASE IF EXISTS ${name}");

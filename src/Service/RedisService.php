@@ -8,12 +8,10 @@ use Predis\Client;
 
 final class RedisService
 {
-    public const PROJECT_NAME = 'rest-api-slim-php';
-    private Client $redis;
+    public const PROJECT_NAME = 'php-slim-rest-api';
 
-    public function __construct(Client $redis)
+    public function __construct(private Client $redis)
     {
-        $this->redis = $redis;
     }
 
     public function generateKey(string $value): string
@@ -41,6 +39,9 @@ final class RedisService
         $this->redis->setex($key, $ttl, json_encode($value));
     }
 
+    /**
+     * @param array<string> $keys
+     */
     public function del(array $keys): void
     {
         $this->redis->del($keys);

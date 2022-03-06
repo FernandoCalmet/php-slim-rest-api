@@ -20,7 +20,7 @@ echo <<<EOF
                      |_|         |_|    
 
 *************************************************************
-Project: https://github.com/fernandocalmet/rest-api-slim-php
+Project: https://github.com/fernandocalmet/php-slim-rest-api
 *************************************************************
 
 Successfully created project!

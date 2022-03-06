@@ -6,11 +6,8 @@ namespace App\Repository;
 
 abstract class BaseRepository
 {
-    protected \PDO $database;
-
-    public function __construct(\PDO $database)
+    public function __construct(protected \PDO $database)
     {
-        $this->database = $database;
     }
 
     protected function getDb(): \PDO
@@ -36,6 +33,10 @@ abstract class BaseRepository
         ];
     }
 
+    /**
+     * @param array<string> $params
+     * @return array<float|int|string>
+     */
     protected function getResultByPage(
         string $query,
         int $page,
@@ -47,6 +48,6 @@ abstract class BaseRepository
         $statement = $this->database->prepare($query);
         $statement->execute($params);
 
-        return $statement->fetchAll();
+        return (array) $statement->fetchAll();
     }
 }

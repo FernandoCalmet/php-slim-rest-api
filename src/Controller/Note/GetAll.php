@@ -14,12 +14,12 @@ final class GetAll extends Base
         Response $response
     ): Response {
         $page = $request->getQueryParam('page', null);
-        $perPage = $request->getQueryParam('perPage', null);
+        $perPage = (int) $request->getQueryParam('perPage', null);
         $name = $request->getQueryParam('name', null);
         $description = $request->getQueryParam('description', null);
 
         $notes = $this->getServiceFindNote()
-            ->getNotesByPage((int) $page, (int) $perPage, $name, $description);
+            ->getNotesByPage((int) $page, $perPage, $name, $description);
 
         return $this->jsonResponse($response, 'success', $notes, 200);
     }

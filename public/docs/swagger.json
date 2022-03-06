@@ -1,14 +1,14 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "rest-api-slim-php",
+    "title": "php-slim-rest-api",
     "description": "Example of REST API with [Slim PHP micro framework](http://www.slimframework.com).\n\nThis simple RESTful API made in Slim version 3, allows CRUD operations to manage entities like: Users, Tasks and Notes :-)\n",
     "contact": {},
     "version": "1.0"
   },
   "servers": [
     {
-      "url": "https://rest-api-slim-php-sql.herokuapp.com",
+      "url": "https://php-slim-rest-api-sql.herokuapp.com",
       "variables": {}
     }
   ],

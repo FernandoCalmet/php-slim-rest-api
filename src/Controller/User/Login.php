@@ -9,8 +9,10 @@ use Slim\Http\Response;
 
 final class Login extends Base
 {
-    public function __invoke(Request $request, Response $response): Response
-    {
+    public function __invoke(
+        Request $request,
+        Response $response
+    ): Response {
         $input = (array) $request->getParsedBody();
         $jwt = $this->getServiceLoginUser()->login($input);
         $message = [

@@ -9,12 +9,19 @@ use Slim\Http\Response;
 
 final class Update extends Base
 {
-    public function __invoke(Request $request, Response $response, array $args): Response
-    {
+    /**
+     * @param array<string> $args
+     */
+    public function __invoke(
+        Request $request,
+        Response $response,
+        array $args
+    ): Response {
         $input = (array) $request->getParsedBody();
-        $userIdLogged = $this->getAndValidateUserId($input);
-        $this->checkUserPermissions((int) $args['id'], (int) $userIdLogged);
-        $user = $this->getServiceUpdateUser()->update($input, (int) $args['id']);
+        $id = (int) $args['id'];
+        $userIdLogged = (int) $this->getAndValidateUserId($input);
+        $this->checkUserPermissions($id, $userIdLogged);
+        $user = $this->getServiceUpdateUser()->update($input, $id);
 
         return $this->jsonResponse($response, 'success', $user, 200);
     }

@@ -6,6 +6,9 @@ namespace App\Service\Note;
 
 final class Update extends Base
 {
+    /**
+     * @param array<string> $input
+     */
     public function update(array $input, int $noteId): object
     {
         $note = $this->getOneFromDb($noteId);
@@ -17,8 +20,8 @@ final class Update extends Base
             $note->updateDescription($data->description);
         }
         $note->updateUpdatedAt(date('Y-m-d H:i:s'));
-        /** @var \App\Entity\Note $response */
-        $response = $this->noteRepository->updateNote($note);
+        /** @var Note $notes */
+        $response = $this->noteRepository->update($note);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($response->getId(), $response->toJson());
         }

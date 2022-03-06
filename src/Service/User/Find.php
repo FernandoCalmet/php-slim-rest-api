@@ -6,11 +6,17 @@ namespace App\Service\User;
 
 final class Find extends Base
 {
+    /**
+     * @return array<string>
+     */
     public function getAll(): array
     {
-        return $this->userRepository->getUsers();
+        return $this->userRepository->getAllUsers();
     }
 
+    /**
+     * @return array<string>
+     */
     public function getUsersByPage(
         int $page,
         int $perPage,
@@ -45,6 +51,6 @@ final class Find extends Base
 
     public function search(string $usersName): array
     {
-        return $this->userRepository->searchUsers($usersName);
+        return $this->userRepository->search($usersName);
     }
 }

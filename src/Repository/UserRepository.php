@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Exception\UserException;
 use App\Entity\User;
 
 final class UserRepository extends BaseRepository
@@ -17,7 +16,7 @@ final class UserRepository extends BaseRepository
         $statement->execute();
         $user = $statement->fetchObject(User::class);
         if (!$user) {
-            throw new UserException('User not found.', 404);
+            throw new \App\Exception\UserException('User not found.', 404);
         }
 
         return $user;
@@ -31,11 +30,11 @@ final class UserRepository extends BaseRepository
         $statement->execute();
         $user = $statement->fetchObject();
         if ($user) {
-            throw new UserException('Email already exists.', 400);
+            throw new \App\Exception\UserException('Email already exists.', 400);
         }
     }
 
-    public function getUsers(): array
+    public function getAllUsers(): array
     {
         $query = 'SELECT `id`, `name`, `email` FROM `users` ORDER BY `id`';
         $statement = $this->getDb()->prepare($query);
@@ -81,7 +80,7 @@ final class UserRepository extends BaseRepository
         );
     }
 
-    public function searchUsers(string $usersName): array
+    public function search(string $usersName): array
     {
         $query = '
             SELECT `id`, `name`, `email`
@@ -95,13 +94,13 @@ final class UserRepository extends BaseRepository
         $statement->execute();
         $users = $statement->fetchAll();
         if (!$users) {
-            throw new UserException('User name not found.', 404);
+            throw new \App\Exception\UserException('User name not found.', 404);
         }
 
         return $users;
     }
 
-    public function createUser(User $user): User
+    public function create(User $user): User
     {
         $query = '
             INSERT INTO `users`
@@ -123,7 +122,7 @@ final class UserRepository extends BaseRepository
         return $this->checkAndGetUser((int) $this->getDb()->lastInsertId());
     }
 
-    public function updateUser(User $user): User
+    public function update(User $user): User
     {
         $query = '
             UPDATE `users` 
@@ -150,7 +149,7 @@ final class UserRepository extends BaseRepository
         return $this->checkAndGetUser((int) $id);
     }
 
-    public function deleteUser(int $userId): void
+    public function delete(int $userId): void
     {
         $query = 'DELETE FROM `users` WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
@@ -166,7 +165,7 @@ final class UserRepository extends BaseRepository
         $statement->execute();
     }
 
-    public function loginUser(string $email, string $password): User
+    public function login(string $email, string $password): User
     {
         $query = '
             SELECT *
@@ -180,7 +179,7 @@ final class UserRepository extends BaseRepository
         $statement->execute();
         $user = $statement->fetchObject(User::class);
         if (!$user) {
-            throw new UserException('Login failed: Email or password incorrect.', 400);
+            throw new \App\Exception\UserException('Login failed: Email or password incorrect.', 400);
         }
 
         return $user;

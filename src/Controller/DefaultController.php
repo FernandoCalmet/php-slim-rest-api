@@ -9,12 +9,11 @@ use Slim\Http\Response;
 
 final class DefaultController extends BaseController
 {
-    public const API_VERSION = '1.8.0';
+    public const API_VERSION = '1.9.0';
 
     public function getHelp(Request $request, Response $response): Response
     {
-        $app = $this->container->get('settings')['app'];
-        $url = $app['domain'];
+        $url = $this->container->get('settings')['app']['domain'];
         $endpoints = [
             'tasks' => $url . '/api/v1/tasks',
             'users' => $url . '/api/v1/users',
@@ -75,7 +74,7 @@ final class DefaultController extends BaseController
     private function checkLoggerConnection(): string
     {
         $logger = 'Disabled';
-        if (self::isLoggerEnabled() === true){
+        if (self::isLoggerEnabled() === true) {
             $logger = 'Enabled';
         }
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\User;
 
-use App\Exception\UserException;
+use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\BaseService;
 use App\Service\LoggerService;
@@ -14,24 +14,18 @@ use Respect\Validation\Validator as v;
 abstract class Base extends BaseService
 {
     private const REDIS_KEY = 'user:%s';
-    protected UserRepository $userRepository;
-    protected RedisService $redisService;
-    protected LoggerService $loggerService;
 
     public function __construct(
-        UserRepository $userRepository,
-        RedisService $redisService,
-        LoggerService $loggerService
+        protected UserRepository $userRepository,
+        protected RedisService $redisService,
+        protected LoggerService $loggerService
     ) {
-        $this->userRepository = $userRepository;
-        $this->redisService = $redisService;
-        $this->loggerService = $loggerService;
     }
 
     protected static function validateUserName(string $name): string
     {
         if (!v::alnum('ÁÉÍÓÚÑáéíóúñ.')->length(1, 100)->validate($name)) {
-            throw new UserException('Invalid name.', 400);
+            throw new \App\Exception\UserException('Invalid name.', 400);
         }
 
         return $name;
@@ -41,7 +35,7 @@ abstract class Base extends BaseService
     {
         $email = filter_var($emailValue, FILTER_SANITIZE_EMAIL);
         if (!v::email()->validate($email)) {
-            throw new UserException('Invalid email', 400);
+            throw new \App\Exception\UserException('Invalid email', 400);
         }
 
         return (string) $email;
@@ -62,7 +56,7 @@ abstract class Base extends BaseService
         return $user;
     }
 
-    protected function getUserFromDb(int $userId): \App\Entity\User
+    protected function getUserFromDb(int $userId): User
     {
         return $this->userRepository->checkAndGetUser($userId);
     }

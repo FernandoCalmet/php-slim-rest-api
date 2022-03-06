@@ -10,7 +10,7 @@ final class Delete extends Base
     {
         $this->getUserFromDb($userId);
         $this->userRepository->deleteUserTasks($userId);
-        $this->userRepository->deleteUser($userId);
+        $this->userRepository->delete($userId);
         if (self::isRedisEnabled() === true) {
             $this->deleteFromCache($userId);
         }

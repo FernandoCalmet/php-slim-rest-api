@@ -1,7 +1,7 @@
 {
-    "name": "rest-api-slim-php",
+    "name": "php-slim-rest-api",
     "description": "Slim4 Restful CRUD Application",
-    "repository": "https://github.com/fernandocalmet/rest-api-slim-php",
-    "logo": "https://raw.githubusercontent.com/fernandocalmet/rest-api-slim-php/master/extras/img/php-logo.jpg",
+    "repository": "https://github.com/fernandocalmet/php-slim-rest-api",
+    "logo": "https://raw.githubusercontent.com/fernandocalmet/php-slim-rest-api/master/extras/img/php-logo.jpg",
     "keywords": ["php", "slim-micro-framework", "rest-api", "mysql", "slim3", "slim", "rest", "api"]
 }

@@ -9,7 +9,7 @@ final class Delete extends Base
     public function delete(int $noteId): void
     {
         $this->getOneFromDb($noteId);
-        $this->noteRepository->deleteNote($noteId);
+        $this->noteRepository->delete($noteId);
         if (self::isRedisEnabled() === true) {
             $this->deleteFromCache($noteId);
         }

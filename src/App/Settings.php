@@ -22,7 +22,7 @@ return [
             'channel' => 'channel_api',
         ],
         'app' => [
-            'domain' => $_SERVER['APP_DOMAIN'],
+            'domain' => $_SERVER['APP_DOMAIN'] ?? '',
             'secret' => $_SERVER['SECRET_KEY'],
         ],
     ],

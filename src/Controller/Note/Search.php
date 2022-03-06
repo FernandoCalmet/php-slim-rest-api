@@ -9,6 +9,9 @@ use Slim\Http\Response;
 
 final class Search extends Base
 {
+    /**
+     * @param array<string> $args
+     */
     public function __invoke(
         Request $request,
         Response $response,

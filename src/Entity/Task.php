@@ -43,19 +43,19 @@ final class Task
         return $this;
     }
 
-    public function getStatus(): ?int
+    public function getStatus(): int
     {
         return $this->status;
     }
 
-    public function updateStatus(?int $status): self
+    public function updateStatus(int $status): self
     {
         $this->status = $status;
 
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getUserId(): int
     {
         return $this->userId;
     }

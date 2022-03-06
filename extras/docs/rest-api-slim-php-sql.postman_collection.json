@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "add666f2-55e0-4c77-bc5e-65a8e5f17426",
-		"name": "rest-api-slim-php",
+		"name": "php-slim-rest-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [

@@ -23,7 +23,7 @@ final class NoteRepository extends BaseRepository
         return $note;
     }
 
-    public function getNotes(): array
+    public function getAllNotes(): array
     {
         $query = 'SELECT * FROM `notes` ORDER BY `id`';
         $statement = $this->getDb()->prepare($query);
@@ -69,7 +69,7 @@ final class NoteRepository extends BaseRepository
         );
     }
 
-    public function searchNotes(string $strNotes): array
+    public function search(string $strNotes): array
     {
         $query = '
             SELECT *
@@ -92,7 +92,7 @@ final class NoteRepository extends BaseRepository
         return $notes;
     }
 
-    public function createNote(Note $note): Note
+    public function create(Note $note): Note
     {
         $query = '
             INSERT INTO `notes`
@@ -112,7 +112,7 @@ final class NoteRepository extends BaseRepository
         return $this->checkAndGetNote((int) $this->getDb()->lastInsertId());
     }
 
-    public function updateNote(Note $note): Note
+    public function update(Note $note): Note
     {
         $query = '
             UPDATE `notes`
@@ -136,7 +136,7 @@ final class NoteRepository extends BaseRepository
         return $this->checkAndGetNote((int) $id);
     }
 
-    public function deleteNote(int $noteId): void
+    public function delete(int $noteId): void
     {
         $query = 'DELETE FROM `notes` WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);

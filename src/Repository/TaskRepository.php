@@ -27,7 +27,7 @@ final class TaskRepository extends BaseRepository
         return $task;
     }
 
-    public function getTasks(): array
+    public function getAllTasks(): array
     {
         $query = 'SELECT * FROM `tasks` ORDER BY `id`';
         $statement = $this->getDb()->prepare($query);
@@ -105,7 +105,7 @@ final class TaskRepository extends BaseRepository
         ";
     }
 
-    public function searchTasks(string $tasksName, int $userId, ?int $status): array
+    public function search(string $tasksName, int $userId, ?int $status): array
     {
         $query = $this->getSearchTasksQuery($status);
         $name = '%' . $tasksName . '%';
@@ -125,7 +125,7 @@ final class TaskRepository extends BaseRepository
         return $tasks;
     }
 
-    public function createTask(Task $task): Task
+    public function create(Task $task): Task
     {
         $query = '
             INSERT INTO `tasks`
@@ -151,7 +151,7 @@ final class TaskRepository extends BaseRepository
         return $this->checkAndGetTask((int) $taskId, (int) $userId);
     }
 
-    public function updateTask(Task $task): Task
+    public function update(Task $task): Task
     {
         $query = '
             UPDATE `tasks`
@@ -180,7 +180,7 @@ final class TaskRepository extends BaseRepository
         return $this->checkAndGetTask((int) $id, (int) $userId);
     }
 
-    public function deleteTask(int $taskId, int $userId): void
+    public function delete(int $taskId, int $userId): void
     {
         $query = 'DELETE FROM `tasks` WHERE `id` = :id AND `userId` = :userId';
         $statement = $this->getDb()->prepare($query);

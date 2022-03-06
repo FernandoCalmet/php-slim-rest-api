@@ -11,7 +11,7 @@
     </exclude>
   </coverage>
   <testsuites>
-    <testsuite name="rest-api-slim-php">
+    <testsuite name="php-slim-rest-api">
       <directory>tests</directory>
     </testsuite>
   </testsuites>

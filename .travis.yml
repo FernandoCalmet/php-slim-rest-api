@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - "7.4.0"
   - '8.0.0'
 
 services:
@@ -12,7 +11,7 @@ env:
   global:
     - CC_TEST_REPORTER_ID=5acc45b5f48d4ca2a5baa0d22ee9a10890b29a76b3ef34a936fdd0ba8c5d7ba8
     - DB_HOST=127.0.0.1
-    - DB_NAME=rest_api_slim_php
+    - DB_NAME=php_slim_rest_api
     - DB_USER=root
     - DB_PASS=
     - DB_PORT=3306
@@ -24,10 +23,10 @@ env:
     - LOGS_ENABLED=true
 
 before_install:
-  - mysql -e 'CREATE DATABASE rest_api_slim_php;'
+  - mysql -e 'CREATE DATABASE php_slim_rest_api;'
 
 before_script:
-  - mysql rest_api_slim_php < database/database.sql
+  - mysql php_slim_rest_api < database/database.sql
   - composer install
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
@@ -35,4 +34,4 @@ before_script:
 
 script:
   - vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --whitelist src
-  - if [ $(phpenv version-name) = "7.4" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+#  - if [ $(phpenv version-name) = "8.0" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi

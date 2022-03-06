@@ -1,6 +1,6 @@
 {
-    "name": "fernandocalmet/rest-api-slim-php",
-    "description": "Rest API Slim PHP SQL",  
+    "name": "fernandocalmet/php-slim-rest-api",
+    "description": "Rest API with Slim PHP Framework",
     "keywords": [
         "php",
         "slim-micro-framework",
@@ -11,7 +11,7 @@
         "rest",
         "api"
     ],
-    "homepage": "https://github.com/fernandocalmet/rest-api-slim-php",
+    "homepage": "https://github.com/fernandocalmet/php-slim-rest-api",
     "license": "MIT", 
     "authors": [
         {
@@ -23,8 +23,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.4 || ^8.0",
-        "composer/composer": "1.10.23",
+        "php": "^8.0",
+        "composer/composer": "^2.0",
         "firebase/php-jwt": "^5.0",
         "monolog/monolog": "^2.0@dev",
         "palanik/corsslim": "dev-slim3",
@@ -34,17 +34,20 @@
         "vlucas/phpdotenv": "^5.1"
     },
     "require-dev": {
-        "nunomaduro/phpinsights": "^1.14",
+        "nunomaduro/phpinsights": "^2.0",
         "pestphp/pest": "^1.7",
-        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan": "^1.2",
         "phpunit/phpunit": "^9.0",
-        "vimeo/psalm": "^3.15"
+        "rector/rector": "^0.12.4",
+        "vimeo/psalm": "^4.18"
     },
     "config": {
         "sort-packages": true,
         "process-timeout" : 0,
-        "platform": {
-            "php": "7.4.0"
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "composer/package-versions-deprecated": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "autoload": {
