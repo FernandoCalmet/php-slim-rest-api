@@ -7,7 +7,6 @@
 
 [![License](https://img.shields.io/github/license/fernandocalmet/php-slim-rest-api)](https://github.com/FernandoCalmet/php-slim-rest-api/blob/master/LICENSE.md)
 [![Build Status](https://travis-ci.com/FernandoCalmet/php-slim-rest-api.svg?branch=master)](https://travis-ci.com/FernandoCalmet/php-slim-rest-api)
-[![Build Status](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/badges/build.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/?branch=master)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=FernandoCalmet_rest-api-slim-php&metric=alert_status)](https://sonarcloud.io/dashboard?id=FernandoCalmet_rest-api-slim-php)
