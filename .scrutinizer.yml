@@ -38,6 +38,7 @@ build:
             - mysql -e "CREATE DATABASE php_slim_rest_api"
             - mysql php_slim_rest_api < database/database.sql
             - composer update
+            - composer install
         override:
             - php-scrutinizer-run
             # -
