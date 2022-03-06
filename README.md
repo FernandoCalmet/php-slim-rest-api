@@ -15,7 +15,7 @@
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=FernandoCalmet_rest-api-slim-php)](https://sonarcloud.io/dashboard?id=FernandoCalmet_rest-api-slim-php)
 
-Principales tecnologías utilizadas: `PHP 7, Slim 3, MySQL, Monolog, Redis, dotenv, PHPUnit y JSON Web Tokens.`
+Principales tecnologías utilizadas: `PHP 8, Slim 3, MySQL, Monolog, Redis, dotenv, PHPUnit y JSON Web Tokens.`
 
 Además, se utilizo otras herramientas adicionales como: `Docker & Docker Compose, Travis CI, Swagger, Scrutinizer, Sonar Cloud, PHPStan, PHP Insights, Heroku and CORS.`
 
