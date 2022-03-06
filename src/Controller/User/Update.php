@@ -19,7 +19,7 @@ final class Update extends Base
     ): Response {
         $input = (array) $request->getParsedBody();
         $id = (int) $args['id'];
-        $userIdLogged = (int) $this->getAndValidateUserId($input);
+        $userIdLogged = $this->getAndValidateUserId($input);
         $this->checkUserPermissions($id, $userIdLogged);
         $user = $this->getServiceUpdateUser()->update($input, $id);
 
