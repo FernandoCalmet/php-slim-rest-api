@@ -9,7 +9,8 @@ build:
                 override:
                     - 
                         #command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
-                        command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --whitelist src'
+                        #command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --whitelist src'
+                        command: 'vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml'
                         coverage:
                             file: clover.xml
                             format: clover
@@ -42,7 +43,8 @@ build:
             - php-scrutinizer-run
             -
                 #command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
-                command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --whitelist src'
+                #command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --whitelist src'
+                command: 'vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml'
                 coverage:
                     file: 'clover.xml'
                     format: 'clover'
