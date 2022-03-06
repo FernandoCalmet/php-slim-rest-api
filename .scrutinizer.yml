@@ -31,8 +31,9 @@ build:
             version: 8
     project_setup:
         before:    
-            - sudo apt-get install mysql-server
-            - sudo service start mysql || true        
+            #- sudo apt-get install mysql-server
+            #- sudo service start mysql || true
+            - sudo service mysql restart
             - mysql -e "CREATE DATABASE php_slim_rest_api"
             - mysql php_slim_rest_api < database/database.sql
         override:
