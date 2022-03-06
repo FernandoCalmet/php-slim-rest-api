@@ -27,6 +27,7 @@ before_install:
 
 before_script:
   - mysql php_slim_rest_api < database/database.sql
+  - composer update
   - composer install
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
