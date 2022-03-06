@@ -50,7 +50,7 @@ class UserTest extends BaseTestCase
      */
     public function testGetUser(): void
     {
-        $response = $this->runApp('GET', '/api/v1/users/5');
+        $response = $this->runApp('GET', '/api/v1/users/8');
 
         $result = (string) $response->getBody();
 
@@ -77,41 +77,6 @@ class UserTest extends BaseTestCase
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
         $this->assertStringNotContainsString('name', $result);
-        $this->assertStringNotContainsString('email', $result);
-        $this->assertStringContainsString('error', $result);
-    }
-
-    /**
-     * Test Search Users.
-     */
-    public function testSearchUsers(): void
-    {
-        $response = $this->runApp('GET', '/api/v1/users/search/j');
-
-        $result = (string) $response->getBody();
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
-        $this->assertStringContainsString('success', $result);
-        $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('email', $result);
-        $this->assertStringNotContainsString('error', $result);
-    }
-
-    /**
-     * Test Search User Not Found.
-     */
-    public function testSearchUserNotFound(): void
-    {
-        $response = $this->runApp('GET', '/api/v1/users/search/123456789');
-
-        $result = (string) $response->getBody();
-
-        $this->assertEquals(404, $response->getStatusCode());
-        $this->assertEquals('application/problem+json', $response->getHeaderLine('Content-Type'));
-        $this->assertStringNotContainsString('success', $result);
-        $this->assertStringNotContainsString('id', $result);
         $this->assertStringNotContainsString('email', $result);
         $this->assertStringContainsString('error', $result);
     }
@@ -258,7 +223,7 @@ class UserTest extends BaseTestCase
         $result0 = (string) $response0->getBody();
         self::$jwt = json_decode($result0)->message->Authorization;
 
-        $response = $this->runApp('PUT', '/api/v1/users/' . self::$id, ['name' => 'Stu', 'email' => 'estu@gmail.com', 'password' => 'AnyPass1000']);
+        $response = $this->runApp('PUT', '/api/v1/users/' . self::$id, ['name' => 'Stu', 'email' => 'estu@gmail.com']);
 
         $result = (string) $response->getBody();
 
