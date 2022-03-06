@@ -8,10 +8,10 @@ build:
             tests:
                 override:
                     - 
-                        #command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
+                        command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
                         #command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --whitelist src'
                         #command: 'vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml'
-                        command: 'vendor/bin/phpunit --coverage-html=coverage --coverage-text'
+                        #command: 'vendor/bin/phpunit --coverage-html=coverage --coverage-text'
                         coverage:
                             file: clover.xml
                             format: clover
@@ -32,7 +32,7 @@ build:
             REDIS_URL: 'localhost'
             LOGS_ENABLED: false
         php:
-            version: 8
+            version: 8.0.0
     project_setup:
         before:    
             #- sudo apt-get install mysql-server
@@ -43,10 +43,10 @@ build:
         override:
             - php-scrutinizer-run
             -
-                #command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
+                command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
                 #command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --whitelist src'
                 #command: 'vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml'
-                command: 'vendor/bin/phpunit --coverage-html=coverage --coverage-text'
+                #command: 'vendor/bin/phpunit --coverage-html=coverage --coverage-text'
                 coverage:
                     file: 'clover.xml'
                     format: 'clover'
