@@ -51,7 +51,8 @@ $container['task_service'] = static fn (
     ContainerInterface $container
 ): TaskService => new TaskService(
     $container->get('task_repository'),
-    $container->get('redis_service')
+    $container->get('redis_service'),
+    $container->get('logger_service')
 );
 
 $container['find_note_service'] = static fn (

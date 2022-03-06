@@ -7,7 +7,6 @@ use App\Controller\Task;
 use App\Controller\User;
 use App\Middleware\Auth;
 
-/** @var \Slim\App $app */
 return function ($app) {
     $app->get('/', 'App\Controller\DefaultController:getHelp');
     $app->get('/status', 'App\Controller\DefaultController:getStatus');
