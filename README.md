@@ -3,7 +3,8 @@
 [![Github][github-shield]][github-url]
 [![Kofi][kofi-shield]][kofi-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-[![Khanakat][khanakat-shield]][khanakat-url]
+[![Khanakat][khanakat-shield]][khanakat-url]  
+
 [![License](https://img.shields.io/github/license/fernandocalmet/php-slim-rest-api)](https://github.com/FernandoCalmet/php-slim-rest-api/blob/master/LICENSE.md)
 [![Build Status](https://travis-ci.com/FernandoCalmet/php-slim-rest-api.svg?branch=master)](https://travis-ci.com/FernandoCalmet/php-slim-rest-api)
 [![Build Status](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/badges/build.png?b=master)](https://scrutinizer-ci.com/g/FernandoCalmet/php-slim-rest-api/build-status/master)
