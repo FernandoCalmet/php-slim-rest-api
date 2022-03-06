@@ -20,8 +20,25 @@ class TaskTest extends BaseTestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         $this->assertStringContainsString('success', $result);
-        $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('pagination', $result);
+        $this->assertStringContainsString('data', $result);
+        $this->assertStringNotContainsString('error', $result);
+    }
+
+    /**
+     * Test Get Tasks By Page.
+     */
+    public function testGetTasksByPage(): void
+    {
+        $response = $this->runApp('GET', '/api/v1/tasks?page=1&perPage=3');
+
+        $result = (string) $response->getBody();
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
+        $this->assertStringContainsString('success', $result);
+        $this->assertStringContainsString('pagination', $result);
+        $this->assertStringContainsString('data', $result);
         $this->assertStringContainsString('status', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -58,78 +75,6 @@ class TaskTest extends BaseTestCase
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
         $this->assertStringContainsString('error', $result);
-    }
-
-    /**
-     * Test Search All Tasks.
-     */
-    public function testSearchAllTasks(): void
-    {
-        $response = $this->runApp('GET', '/api/v1/tasks/search/');
-
-        $result = (string) $response->getBody();
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
-        $this->assertStringContainsString('success', $result);
-        $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('status', $result);
-        $this->assertStringNotContainsString('error', $result);
-    }
-
-    /**
-     * Test Search Tasks By Name.
-     */
-    public function testSearchTasksByName(): void
-    {
-        $response = $this->runApp('GET', '/api/v1/tasks/search/cine');
-
-        $result = (string) $response->getBody();
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
-        $this->assertStringContainsString('success', $result);
-        $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('status', $result);
-        $this->assertStringNotContainsString('error', $result);
-    }
-
-    /**
-     * Test Search Tasks with Status Done.
-     */
-    public function testSearchTasksWithStatusDone(): void
-    {
-        $response = $this->runApp('GET', '/api/v1/tasks/search/?status=1');
-
-        $result = (string) $response->getBody();
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
-        $this->assertStringContainsString('success', $result);
-        $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('status', $result);
-        $this->assertStringNotContainsString('error', $result);
-    }
-
-    /**
-     * Test Search Tasks with status = 0.
-     */
-    public function testSearchTasksWithStatusToDo(): void
-    {
-        $response = $this->runApp('GET', '/api/v1/tasks/search/?status=0');
-
-        $result = (string) $response->getBody();
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
-        $this->assertStringContainsString('success', $result);
-        $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('status', $result);
-        $this->assertStringNotContainsString('error', $result);
     }
 
     /**
