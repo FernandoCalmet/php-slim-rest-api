@@ -9,7 +9,7 @@ build:
                 override:
                     - 
                         #command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
-                        command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml'
+                        command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --whitelist src'
                         coverage:
                             file: clover.xml
                             format: clover
@@ -28,7 +28,7 @@ build:
             SECRET_KEY: 'YourSuperSecret-KeY'
             REDIS_ENABLED: true
             REDIS_URL: 'localhost'
-            LOGS_ENABLED: true
+            LOGS_ENABLED: false
         php:
             version: 8
     project_setup:
@@ -42,7 +42,7 @@ build:
             - php-scrutinizer-run
             -
                 #command: 'vendor/bin/phpunit --coverage-clover=clover.xml'
-                command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml'
+                command: 'vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --whitelist src'
                 coverage:
                     file: 'clover.xml'
                     format: 'clover'
