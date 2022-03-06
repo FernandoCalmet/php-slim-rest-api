@@ -129,7 +129,6 @@ final class UserRepository extends BaseRepository
             SET 
                 `name` = :name, 
                 `email` = :email, 
-                `password` = :password, 
                 `updatedAt` = :updatedAt 
             WHERE `id` = :id
         ';
@@ -137,12 +136,10 @@ final class UserRepository extends BaseRepository
         $id = $user->getId();
         $name = $user->getName();
         $email = $user->getEmail();
-        $password = $user->getPassword();
         $updated = $user->getUpdatedAt();
         $statement->bindParam('id', $id);
         $statement->bindParam('name', $name);
         $statement->bindParam('email', $email);
-        $statement->bindParam('password', $password);
         $statement->bindParam('updatedAt', $updated);
         $statement->execute();
 
