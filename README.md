@@ -29,28 +29,10 @@ Esta simple **API RESTful**, permite que las operaciones **CRUD** administren re
 
 - Git.
 - Composer.
-- PHP 7.4+.
+- PHP 8+.
 - MySQL/MariaDB.
 - Redis (Optional).
 - o Docker.
-
-### Redis
-
-Comandos básicos
-
-```bash
-# Start Service:
-redis-cli
-
-# View All cache:
-keys *
-
-# Clean cache:
-FLUSHALL
-
-# Query (example of a cached data):
-get "php-slim-rest-api:test:status"
-```
 
 ### Con Composer
 
@@ -108,6 +90,24 @@ $ make down
 
 ```bash
 composer restart-db
+```
+
+### Redis
+
+Comandos básicos
+
+```bash
+# Start Service:
+redis-cli
+
+# View All cache:
+keys *
+
+# Clean cache:
+FLUSHALL
+
+# Query (example of a cached data):
+get "php-slim-rest-api:test:status"
 ```
 
 ## :inbox_tray: DEPENDENCIAS
